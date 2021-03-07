@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import { Router } from "@reach/router"
 // Pages
-import Onboarding from "../dynamic-components/Onboarding"
-import Details from "../dynamic-components/Details"
+import StepOne from "../dynamic-components/StepOne"
+import StepTwo from "../dynamic-components/StepTwo"
 
 export class Calculator extends Component {
   state = {
@@ -20,16 +20,16 @@ export class Calculator extends Component {
 
   render() {
     return (
-      <Router basepath="/calculator">
-        <Onboarding
+      <Router basepath="/onboarding">
+        <StepOne
           {...this.state}
           handleChange={this.handleChange}
-          path="/onboarding"
+          path="/step-one"
         />
-        <Details
+        <StepTwo
           {...this.state}
           handleChange={this.handleChange}
-          path="/details"
+          path="/step-two"
         />
       </Router>
     )

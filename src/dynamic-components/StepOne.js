@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import Layout from "../components/Layout"
 import SEO from "../components/Seo"
 import { Container } from "react-bootstrap"
-import StateViewer from "../dynamic-components/StateViewer"
+import StateViewer from "./StateViewer"
 import { Link } from "gatsby"
 
 export class Onboarding extends Component {
