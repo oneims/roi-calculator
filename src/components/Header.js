@@ -1,8 +1,8 @@
 import React from "react"
 import { Container } from "react-bootstrap"
 import { colors } from "../theme/variables"
-import Button from "./Button"
 import styled from "styled-components"
+import { Button } from "./StyledElements"
 
 const StyledHeader = styled.header`
   background-color: ${colors.white};
@@ -52,7 +52,7 @@ const Header = () => {
                 <span>ca.</span>
               </StyledLogo>
             </StyledLogoBox>
-            <Button />
+            <Button>Get Started</Button>
           </StyledHeaderWrap>
         </Container>
       </StyledHeader>

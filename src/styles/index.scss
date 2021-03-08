@@ -6,7 +6,8 @@ html {
     overflow-x: hidden;
   }
   color: #000;
-  line-height: 1.7;
+  line-height: 1.5;
+  font-weight: 300;
 }
 
 h1,
@@ -26,5 +27,19 @@ textarea {
   &:focus {
     outline: none;
     box-shadow: none;
+  }
+}
+
+.text-inverted {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul li,
+  ol li {
+    color: #fff !important;
   }
 }
