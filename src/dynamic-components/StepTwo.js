@@ -4,36 +4,41 @@ import SEO from "../components/Seo"
 import { Container } from "react-bootstrap"
 import StateViewer from "./StateViewer"
 import { Link } from "gatsby"
+import {
+  Section,
+  ContentBox,
+  PageHeading,
+  Subtitle,
+  ProgressBarWrapper,
+  ProgressBar,
+} from "../components/StyledElements"
 
 export class Details extends Component {
   render() {
     const { companyCity, companyState, handleChange } = this.props
     return (
-      <Layout>
-        <SEO title="Details" />
-        <Container>
-          <StateViewer {...this.props} />
-          <h1>Details</h1>
-          <p>Change Company City Below: </p>
-          <input
-            type="text"
-            name="companyCity"
-            placeholder=""
-            value={companyCity}
-            onChange={handleChange}
-          />
-          <p>Change Company State below: </p>
-          <input
-            type="text"
-            name="companyState"
-            placeholder=""
-            value={companyState}
-            onChange={handleChange}
-          />
-          <div className="mt-4">
-            <Link to={`/calculator/onboarding`}>Back</Link>
-          </div>
-        </Container>
+      <Layout
+        App
+        backDestination="/onboarding/step-one"
+        nextDestination="/onboarding/step-two"
+        nextButtonText="Next"
+      >
+        <SEO title="Onboarding" />
+        <Section>
+          <Container>
+            <ContentBox MW800 className="text-center ml-auto mr-auto">
+              <PageHeading GradientText>Onboarding</PageHeading>
+              <Subtitle>Please fill out the details below</Subtitle>
+            </ContentBox>
+            <ContentBox MW600 className="ml-auto mr-auto mt-4">
+              <ProgressBarWrapper>
+                <ProgressBar Filled />
+                <ProgressBar Filled />
+                <ProgressBar />
+              </ProgressBarWrapper>
+            </ContentBox>
+          </Container>
+        </Section>
       </Layout>
     )
   }

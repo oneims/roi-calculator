@@ -13,12 +13,34 @@ const StyledMain = styled.main`
 
 class Layout extends Component {
   render() {
-    const { children } = this.props
+    const {
+      children,
+      backDestination,
+      nextDestination,
+      nextButtonText,
+    } = this.props
     return (
       <>
-        <Header />
+        {this.props.App ? (
+          <Header
+            App
+            backDestination={backDestination}
+            nextDestination={nextDestination}
+            nextButtonText={nextButtonText}
+          />
+        ) : (
+          <Header />
+        )}
         <StyledMain>{children}</StyledMain>
-        <Footer />
+        {this.props.App ? (
+          <Footer
+            App
+            nextButtonText={nextButtonText}
+            nextDestination={nextDestination}
+          />
+        ) : (
+          <Footer />
+        )}
       </>
     )
   }

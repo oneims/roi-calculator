@@ -106,9 +106,48 @@ export const Button = styled.button`
   -webkit-transition: 0.2s ease;
   transition: 0.2s ease;
   border: none;
+  display: ${props => (props.Flex ? "flex" : "")};
   font-size: ${props => (props.Large ? "1.4rem" : "1rem")};
+  svg {
+    margin-right: 0.5rem;
+  }
   &:hover {
     background-color: ${colors.primaryHover};
     transition: 0.2s ease;
   }
+`
+
+export const LinkButton = styled.button`
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-weight: 800;
+  -webkit-transition: 0.2s ease;
+  border: none;
+  display: flex;
+  font-size: 1.2rem;
+  align-items: center;
+  svg {
+    margin-right: 0.5rem;
+  }
+  &:hover {
+    color: ${colors.primary};
+    text-decoration: none;
+  }
+`
+
+// Progress Bar
+
+export const ProgressBarWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+export const ProgressBar = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 32%;
+  height: 8px;
+  border-radius: 100px;
+  background-color: ${props => (props.Filled ? colors.primary : "#ddd")};
 `
