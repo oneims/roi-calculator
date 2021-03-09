@@ -8,6 +8,7 @@ import Footer from "./Footer"
 
 const StyledMain = styled.main`
   padding-top: 78.19px;
+  min-height: 97vh;
 `
 
 class Layout extends Component {

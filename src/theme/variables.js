@@ -5,4 +5,5 @@ export const colors = {
   lightBlue: "#09f",
   white: "#fff",
   silver: "#ccc",
+  gradientText: "linear-gradient( -70deg,#0055ff,#8dc1fd)",
 }

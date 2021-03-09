@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
+import Pattern from "../images/pattern.svg"
 import { Container } from "react-bootstrap"
 import {
   Section,
@@ -9,6 +10,7 @@ import {
   PageHeading,
   Subtitle,
   Button,
+  PatternWrapper,
 } from "../components/StyledElements"
 
 const HP__Hero = ({
@@ -20,9 +22,12 @@ const HP__Hero = ({
 }) => {
   return (
     <Section>
+      <PatternWrapper PatternWrapperFull>
+        <Pattern />
+      </PatternWrapper>
       <Container>
         <ContentBox className="ml-auto mr-auto text-center">
-          {heading ? <PageHeading>{heading}</PageHeading> : ``}
+          {heading ? <PageHeading GradientText>{heading}</PageHeading> : ``}
           {subtitle ? <Subtitle>{subtitle}</Subtitle> : ``}
           {buttonText ? (
             <Link to={buttonDestination}>

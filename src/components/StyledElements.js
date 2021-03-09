@@ -9,8 +9,28 @@ const VerticallyCenetered = `
   align-items: center;
 `
 
+const GradientText = `
+  background: ${colors.gradientText};
+  -webkit-background-clip: text; 
+  background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  -webkit-box-decoration-break: clone;
+`
+
+const PatternWrapperFull = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+`
+
 // Containers
 export const Section = styled.section`
+  position: relative;
+  overflow: hidden;
   padding: 4rem 0;
   min-height: ${props => (props.MinHeight ? "90vh" : "")};
   ${props =>
@@ -22,6 +42,7 @@ export const Section = styled.section`
 `
 
 export const ContentBox = styled.div`
+  position: relative;
   max-width: ${props => (props.MW1000 ? "1000px" : "")};
   max-width: ${props => (props.MW900 ? "900px" : "")};
   max-width: ${props => (props.MW800 ? "800px" : "")};
@@ -30,9 +51,31 @@ export const ContentBox = styled.div`
   max-width: ${props => (props.MW500 ? "500px" : "")};
 `
 
+export const PatternWrapper = styled.div`
+  svg {
+    height: 100%;
+    @media (min-width: 992px) {
+      width: 100%;
+      height: auto;
+    }
+  }
+  ${props =>
+    props.PatternWrapperFull
+      ? css`
+          ${PatternWrapperFull}
+        `
+      : ""}
+`
+
 // Elements
 export const PageHeading = styled.h1`
   font-weight: 900;
+  ${props =>
+    props.GradientText
+      ? css`
+          ${GradientText}
+        `
+      : ""}
   @media (min-width: 992px) {
     font-size: 3.5rem;
   }
