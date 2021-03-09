@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
+import Img from "gatsby-image"
 import { Container } from "react-bootstrap"
 import {
   Section,
@@ -10,15 +11,38 @@ import {
   Button,
 } from "../components/StyledElements"
 
-const HP__Hero = ({ heading, subtitle, buttonText }) => {
+const HP__Hero = ({
+  heading,
+  subtitle,
+  buttonText,
+  buttonDestination,
+  image,
+}) => {
   return (
     <Section>
       <Container>
-        <ContentBox MW800 className="ml-auto mr-auto text-center">
+        <ContentBox className="ml-auto mr-auto text-center">
           {heading ? <PageHeading>{heading}</PageHeading> : ``}
           {subtitle ? <Subtitle>{subtitle}</Subtitle> : ``}
-          {buttonText ? <Button Large>{buttonText}</Button> : ``}
+          {buttonText ? (
+            <Link to={buttonDestination}>
+              <Button Large className="mt-2">
+                {buttonText}
+              </Button>
+            </Link>
+          ) : (
+            ``
+          )}
         </ContentBox>
+        {image ? (
+          <Img
+            className="mt-5 mt-md-5 BoxShadowActive"
+            fluid={image}
+            alt="ROI Calculator App Screen"
+          />
+        ) : (
+          ``
+        )}
       </Container>
     </Section>
   )

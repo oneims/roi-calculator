@@ -1,10 +1,24 @@
-import PropTypes from "prop-types"
 import styled, { css } from "styled-components"
 import { colors } from "../theme/variables"
+
+// Blocks
+const VerticallyCenetered = `
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
 
 // Containers
 export const Section = styled.section`
   padding: 4rem 0;
+  min-height: ${props => (props.MinHeight ? "90vh" : "")};
+  ${props =>
+    props.VerticallyCentered
+      ? css`
+          ${VerticallyCenetered}
+        `
+      : ""}
 `
 
 export const ContentBox = styled.div`

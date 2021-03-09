@@ -1,7 +1,40 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
+const path = require("path")
 
-// You can delete this file if you're not using it
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions
+  const templates = {
+    HomepageTemplate: path.resolve("src/templates/HomepageTemplate.js"),
+  }
+
+  return graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            frontmatter {
+              path
+              template
+            }
+          }
+        }
+      }
+    }
+  `).then(res => {
+    if (res.errors) return Promise.reject(res.errors)
+    // Create Pages
+    const pages = res.data.allMarkdownRemark.edges
+    pages.forEach(page => {
+      createPage({
+        path:
+          page.node.frontmatter.template === "HomepageTemplate"
+            ? `/`
+            : `${page.node.frontmatter.path}`,
+        component: (() => {
+          if (page.node.frontmatter.template === "HomepageTemplate") {
+            return templates.HomepageTemplate
+          }
+        })(),
+      })
+    })
+  })
+}

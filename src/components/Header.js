@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap"
 import { colors } from "../theme/variables"
 import styled from "styled-components"
 import { Button } from "./StyledElements"
+import { Link } from "gatsby"
 
 const StyledHeader = styled.header`
   background-color: ${colors.white};
@@ -48,11 +49,15 @@ const Header = () => {
         <Container>
           <StyledHeaderWrap>
             <StyledLogoBox>
-              <StyledLogo>
-                <span>ca.</span>
-              </StyledLogo>
+              <Link to="/">
+                <StyledLogo>
+                  <span>++</span>
+                </StyledLogo>
+              </Link>
             </StyledLogoBox>
-            <Button>Get Started</Button>
+            <Link to="/onboarding/step-one">
+              <Button>Get Started</Button>
+            </Link>
           </StyledHeaderWrap>
         </Container>
       </StyledHeader>

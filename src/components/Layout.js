@@ -4,6 +4,7 @@ import "../styles/index.scss"
 import styled from "styled-components"
 // Components
 import Header from "./Header"
+import Footer from "./Footer"
 
 const StyledMain = styled.main`
   padding-top: 78.19px;
@@ -16,6 +17,7 @@ class Layout extends Component {
       <>
         <Header />
         <StyledMain>{children}</StyledMain>
+        <Footer />
       </>
     )
   }
