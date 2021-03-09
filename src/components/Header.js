@@ -58,7 +58,7 @@ const Header = ({ App, backDestination, nextDestination, nextButtonText }) => {
                     viewBox="0 0 24 24"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M19 11H7.414l3.293-3.293a.999.999 0 1 0-1.414-1.414l-5 5a.999.999 0 0 0 0 1.414l5 5a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L7.414 13H19a1 1 0 1 0 0-2"
                     ></path>
                   </svg>

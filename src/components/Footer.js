@@ -10,6 +10,7 @@ const StyledFooter = styled.footer``
 const StyledAppFooter = styled.footer`
   padding: 1rem 0;
   position: fixed;
+  background-color: #fff;
   bottom: 0;
   left: 0;
   width: 100%;

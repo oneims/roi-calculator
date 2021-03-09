@@ -31,7 +31,7 @@ const PatternWrapperFull = `
 export const Section = styled.section`
   position: relative;
   overflow: hidden;
-  padding: 4rem 0;
+  padding: ${props => (props.Small ? "2rem 0" : "4rem 0")};
   min-height: ${props => (props.MinHeight ? "90vh" : "")};
   ${props =>
     props.VerticallyCentered
@@ -151,3 +151,90 @@ export const ProgressBar = styled.div`
   border-radius: 100px;
   background-color: ${props => (props.Filled ? colors.primary : "#ddd")};
 `
+
+// Form
+
+export const FormWrapper = styled.div``
+
+export const StyledFormWrapper = styled.div`
+  min-height: 80vh;
+  @media (min-width: 768px) {
+    min-height: 50vh;
+  }
+`
+export const StyledFieldWrapper = styled.div`
+  @media (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    align-items: center;
+  }
+`
+
+export const Label = styled.label`
+  font-weight: 600;
+  font-size: 0.9rem;
+`
+
+export const StyledField = styled.div`
+  width: 100%;
+  margin-bottom: 1.5rem;
+  @media (min-width: 768px) {
+    width: ${props => (props.TwoColumn ? "49%" : "100%")};
+    margin-bottom: 0;
+  }
+`
+
+// Select
+
+const dot = (color = "#ccc") => ({
+  alignItems: "center",
+  display: "flex",
+
+  ":before": {
+    backgroundColor: color,
+    borderRadius: 10,
+    content: '" "',
+    display: "block",
+    marginRight: 8,
+    height: 10,
+    width: 10,
+  },
+})
+
+export const ColorStyles = {
+  control: styles => ({
+    ...styles,
+    backgroundColor: "white",
+    minHeight: "50px",
+  }),
+  option: (styles, { isDisabled, isFocused, isSelected }) => {
+    const color = colors.primary
+    return {
+      ...styles,
+      backgroundColor: isDisabled
+        ? null
+        : isSelected
+        ? colors.primary
+        : isFocused
+        ? `#eee`
+        : null,
+      color: isDisabled
+        ? "#ccc"
+        : isSelected
+        ? 10 > 2
+          ? "white"
+          : "black"
+        : `#000`,
+      cursor: isDisabled ? "not-allowed" : "default",
+
+      ":active": {
+        ...styles[":active"],
+        backgroundColor: !isDisabled && (isSelected ? colors.primary : "#eee"),
+      },
+    }
+  },
+  input: styles => ({ ...styles, ...dot() }),
+  placeholder: styles => ({ ...styles, ...dot() }),
+  singleValue: (styles, { data }) => ({ ...styles, ...dot(colors.primary) }),
+}
