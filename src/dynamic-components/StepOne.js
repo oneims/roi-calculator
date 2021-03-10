@@ -24,7 +24,7 @@ const options = [
   {
     annual_revenue_as_a_range: [
       { value: "100-200", label: "$100K to $200K" },
-      { value: "200-300", label: "$200Kto $300K" },
+      { value: "200-300", label: "$200K to $300K" },
       { value: "300-400", label: "$300K to $400K" },
       { value: "400-500", label: "$400K to $500K" },
     ],
