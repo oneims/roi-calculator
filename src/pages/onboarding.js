@@ -24,6 +24,12 @@ export class Calculator extends Component {
     this.setState({
       [event.target.name]: event.target.value,
     })
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        event.target.name,
+        JSON.stringify(event.target.value)
+      )
+    }
   }
 
   handleSelectChange = (value, target) => {

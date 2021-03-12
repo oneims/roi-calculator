@@ -3,8 +3,6 @@ import Layout from "../components/Layout"
 import SEO from "../components/Seo"
 import { Container } from "react-bootstrap"
 import Select from "react-select"
-import styled from "styled-components"
-import { colors } from "../theme/variables"
 import {
   Section,
   ContentBox,
