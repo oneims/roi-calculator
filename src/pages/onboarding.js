@@ -6,15 +6,14 @@ import StepTwo from "../dynamic-components/StepTwo"
 
 export class Calculator extends Component {
   state = {
-    annual_revenue_as_a_range:
-      typeof window !== "undefined" &&
-      window.localStorage.getItem("annual_revenue_as_a_range")
-        ? JSON.parse(localStorage.annual_revenue_as_a_range)
+    industry:
+      typeof window !== "undefined" && window.localStorage.getItem("industry")
+        ? JSON.parse(localStorage.industry)
         : "",
-    growth_rate:
+    current_annual_revenue:
       typeof window !== "undefined" &&
-      window.localStorage.getItem("growth_rate")
-        ? JSON.parse(localStorage.growth_rate)
+      window.localStorage.getItem("current_annual_revenue")
+        ? JSON.parse(localStorage.current_annual_revenue)
         : "",
     average_revenue_per_customer_or_order: "",
     estimated_gross_margin_per_sale: "",
@@ -46,6 +45,7 @@ export class Calculator extends Component {
       <Router basepath="/onboarding">
         <StepOne
           {...this.state}
+          handleChange={this.handleChange}
           handleSelectChange={this.handleSelectChange}
           path="/step-one"
         />

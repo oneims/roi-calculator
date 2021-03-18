@@ -3,6 +3,7 @@ import Layout from "../components/Layout"
 import SEO from "../components/Seo"
 import { Container } from "react-bootstrap"
 import Select from "react-select"
+import NumberFormat from "react-number-format"
 import {
   Section,
   ContentBox,
@@ -16,21 +17,18 @@ import {
   Label,
   StyledField,
   ColorStyles,
+  StyledInput,
 } from "../components/StyledElements"
 
 const options = [
   {
-    annual_revenue_as_a_range: [
-      { value: "100-200", label: "$100K to $200K" },
-      { value: "200-300", label: "$200K to $300K" },
-      { value: "300-400", label: "$300K to $400K" },
-      { value: "400-500", label: "$400K to $500K" },
-    ],
-    growth_rate: [
-      { value: "5%", label: "5%" },
-      { value: "10%", label: "10%" },
-      { value: "15%", label: "15%" },
-      { value: "20%", label: "20%" },
+    industry: [
+      { value: "retail", label: "Retail" },
+      { value: "finance", label: "Finance" },
+      { value: "trade", label: "Trade" },
+      { value: "transport", label: "Transport" },
+      { value: "construction", label: "Construction" },
+      { value: "health_care", label: "Health Care" },
     ],
   },
 ]
@@ -38,8 +36,8 @@ const options = [
 export class Onboarding extends Component {
   render() {
     const {
-      annual_revenue_as_a_range,
-      growth_rate,
+      industry,
+      current_annual_revenue,
       average_revenue_per_customer_or_order,
       estimated_gross_margin_per_sale,
       handleChange,
@@ -71,35 +69,36 @@ export class Onboarding extends Component {
                 <StyledFormWrapper>
                   <StyledFieldWrapper>
                     <StyledField TwoColumn>
-                      <Label htmlFor="annual_revenue_as_a_range">
-                        Annual Revenue as a Range
-                      </Label>
+                      <Label htmlFor="industry">Select Industry</Label>
                       <Select
                         className="roi-input roi-input__select"
-                        name="annual_revenue_as_a_range"
+                        name="industry"
                         styles={ColorStyles}
-                        value={annual_revenue_as_a_range}
+                        value={industry}
                         onChange={handleSelectChange}
-                        options={options[0].annual_revenue_as_a_range}
+                        options={options[0].industry}
                       />
                     </StyledField>
                     <StyledField TwoColumn>
-                      <Label htmlFor="growth_rate">Growth Rate</Label>
-                      <Select
-                        className="roi-input roi-input__select"
-                        name="growth_rate"
-                        styles={ColorStyles}
-                        value={growth_rate}
-                        onChange={handleSelectChange}
-                        options={options[0].growth_rate}
-                      />
+                      <Label htmlFor="current_annual_revenue">
+                        Current Annual Revenue
+                      </Label>
+                      <StyledInput>
+                        <NumberFormat
+                          thousandSeparator={true}
+                          prefix={"$"}
+                          name="current_annual_revenue"
+                          value={current_annual_revenue}
+                          onChange={handleChange}
+                        />
+                      </StyledInput>
                     </StyledField>
                   </StyledFieldWrapper>
 
                   <StyledFieldWrapper>
                     <StyledField TwoColumn>
                       <Label htmlFor="average_revenue_per_customer_or_order">
-                        Average revenue per customer or order
+                        YOY Growth Rate
                       </Label>
                       <Select
                         className="roi-input roi-input__select"
@@ -110,7 +109,7 @@ export class Onboarding extends Component {
                     </StyledField>
                     <StyledField TwoColumn>
                       <Label htmlFor="estimated_gross_margin_per_sale">
-                        Estimated Gross Margin Per Sale
+                        Revenue Growth Goal
                       </Label>
                       <Select
                         className="roi-input roi-input__select"

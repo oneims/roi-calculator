@@ -185,6 +185,61 @@ export const StyledField = styled.div`
   }
 `
 
+// Inpiut
+
+export const StyledInput = styled.div`
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: white;
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  cursor: default;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  min-height: 50px;
+  outline: 0 !important;
+  position: relative;
+  -webkit-transition: all 100ms;
+  transition: all 100ms;
+  box-sizing: border-box;
+  font-weight: 600;
+  padding: 0 0.6rem;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  span {
+    position: relative;
+    z-index: 1;
+  }
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-weight: inherit;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 0.6rem;
+  }
+`
+
 // Select
 
 const dot = (color = "#ccc") => ({
