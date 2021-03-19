@@ -3,6 +3,7 @@ import { Router } from "@reach/router"
 // Pages
 import StepOne from "../dynamic-components/StepOne"
 import StepTwo from "../dynamic-components/StepTwo"
+import StepThree from "../dynamic-components/StepThree"
 
 export class Calculator extends Component {
   state = {
@@ -15,8 +16,49 @@ export class Calculator extends Component {
       window.localStorage.getItem("current_annual_revenue")
         ? JSON.parse(localStorage.current_annual_revenue)
         : "",
-    average_revenue_per_customer_or_order: "",
-    estimated_gross_margin_per_sale: "",
+    yoy_growth_rate:
+      typeof window !== "undefined" &&
+      window.localStorage.getItem("yoy_growth_rate")
+        ? JSON.parse(localStorage.yoy_growth_rate)
+        : "",
+    revenue_growth_goal:
+      typeof window !== "undefined" &&
+      window.localStorage.getItem("revenue_growth_goal")
+        ? JSON.parse(localStorage.revenue_growth_goal)
+        : "",
+    average_revenue_per_customer:
+      typeof window !== "undefined" &&
+      window.localStorage.getItem("average_revenue_per_customer")
+        ? JSON.parse(localStorage.average_revenue_per_customer)
+        : "",
+    gross_margin_per_sale:
+      typeof window !== "undefined" &&
+      window.localStorage.getItem("gross_margin_per_sale")
+        ? JSON.parse(localStorage.gross_margin_per_sale)
+        : "",
+    average_conversion_rate_on_meetings_to_opportunities:
+      typeof window !== "undefined" &&
+      window.localStorage.getItem(
+        "average_conversion_rate_on_meetings_to_opportunities"
+      )
+        ? JSON.parse(
+            localStorage.average_conversion_rate_on_meetings_to_opportunities
+          )
+        : "",
+    average_close_ratio_from_opportunities_to_deals:
+      typeof window !== "undefined" &&
+      window.localStorage.getItem(
+        "average_close_ratio_from_opportunities_to_deals"
+      )
+        ? JSON.parse(
+            localStorage.average_close_ratio_from_opportunities_to_deals
+          )
+        : "",
+    estimated_sales_cycle:
+      typeof window !== "undefined" &&
+      window.localStorage.getItem("estimated_sales_cycle")
+        ? JSON.parse(localStorage.estimated_sales_cycle)
+        : "",
   }
 
   handleChange = event => {
@@ -49,7 +91,16 @@ export class Calculator extends Component {
           handleSelectChange={this.handleSelectChange}
           path="/step-one"
         />
-        <StepTwo {...this.state} path="/step-two" />
+        <StepTwo
+          {...this.state}
+          handleChange={this.handleChange}
+          path="/step-two"
+        />
+        <StepThree
+          {...this.state}
+          handleChange={this.handleChange}
+          path="/step-three"
+        />
       </Router>
     )
   }

@@ -33,19 +33,20 @@ const options = [
   },
 ]
 
-export class Onboarding extends Component {
+export class StepOne extends Component {
   render() {
     const {
       industry,
       current_annual_revenue,
-      average_revenue_per_customer_or_order,
-      estimated_gross_margin_per_sale,
+      yoy_growth_rate,
+      revenue_growth_goal,
       handleChange,
       handleSelectChange,
     } = this.props
     return (
       <Layout
         App
+        currentStep="step__one"
         backDestination="/"
         nextDestination="/onboarding/step-two"
         nextButtonText="Next"
@@ -54,7 +55,7 @@ export class Onboarding extends Component {
         <Section Small>
           <Container>
             <ContentBox MW800 className="text-center ml-auto mr-auto">
-              <PageHeading GradientText>Onboarding</PageHeading>
+              <PageHeading GradientText>Basics</PageHeading>
               <Subtitle>Please fill out the details below</Subtitle>
             </ContentBox>
             <ContentBox MW600 className="ml-auto mr-auto mt-4">
@@ -86,6 +87,7 @@ export class Onboarding extends Component {
                       <StyledInput>
                         <NumberFormat
                           thousandSeparator={true}
+                          placeholder="$"
                           prefix={"$"}
                           name="current_annual_revenue"
                           value={current_annual_revenue}
@@ -97,26 +99,33 @@ export class Onboarding extends Component {
 
                   <StyledFieldWrapper>
                     <StyledField TwoColumn>
-                      <Label htmlFor="average_revenue_per_customer_or_order">
-                        YOY Growth Rate
+                      <Label htmlFor="yoy_growth_rate">
+                        YOY Growth Rate in %
                       </Label>
-                      <Select
-                        className="roi-input roi-input__select"
-                        name="average_revenue_per_customer_or_order"
-                        styles={ColorStyles}
-                        options={options}
-                      />
+                      <StyledInput>
+                        <NumberFormat
+                          suffix={"%"}
+                          placeholder="%"
+                          name="yoy_growth_rate"
+                          value={yoy_growth_rate}
+                          onChange={handleChange}
+                        />
+                      </StyledInput>
                     </StyledField>
                     <StyledField TwoColumn>
-                      <Label htmlFor="estimated_gross_margin_per_sale">
+                      <Label htmlFor="revenue_growth_goal">
                         Revenue Growth Goal
                       </Label>
-                      <Select
-                        className="roi-input roi-input__select"
-                        name="estimated_gross_margin_per_sale"
-                        styles={ColorStyles}
-                        options={options}
-                      />
+                      <StyledInput>
+                        <NumberFormat
+                          thousandSeparator={true}
+                          placeholder="$"
+                          prefix={"$"}
+                          name="revenue_growth_goal"
+                          value={revenue_growth_goal}
+                          onChange={handleChange}
+                        />
+                      </StyledInput>
                     </StyledField>
                   </StyledFieldWrapper>
                 </StyledFormWrapper>
@@ -129,4 +138,4 @@ export class Onboarding extends Component {
   }
 }
 
-export default Onboarding
+export default StepOne

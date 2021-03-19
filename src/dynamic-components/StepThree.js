@@ -18,7 +18,7 @@ import {
   StyledInput,
 } from "../components/StyledElements"
 
-export class StepTwo extends Component {
+export class StepThree extends Component {
   render() {
     const {
       average_revenue_per_customer,
@@ -31,23 +31,24 @@ export class StepTwo extends Component {
     return (
       <Layout
         App
-        currentStep="step__two"
-        backDestination="/onboarding/step-one"
-        nextDestination="/onboarding/step-three"
-        nextButtonText="Next"
+        backDestination="/onboarding/step-two"
+        nextDestination=""
+        nextButtonText="Build My Report"
       >
         <SEO title="Onboarding" />
         <Section Small>
           <Container>
             <ContentBox MW800 className="text-center ml-auto mr-auto">
-              <PageHeading GradientText>Additional Information</PageHeading>
-              <Subtitle>Please fill out the details below</Subtitle>
+              <PageHeading GradientText>Let's Do This!</PageHeading>
+              <Subtitle>
+                Almost There! Please complete the details below
+              </Subtitle>
             </ContentBox>
             <ContentBox MW600 className="ml-auto mr-auto mt-4">
               <ProgressBarWrapper>
                 <ProgressBar Filled />
                 <ProgressBar Filled />
-                <ProgressBar />
+                <ProgressBar Filled />
               </ProgressBarWrapper>
             </ContentBox>
             <ContentBox MW800 className="mt-5 ml-auto mr-auto">
@@ -146,4 +147,4 @@ export class StepTwo extends Component {
   }
 }
 
-export default StepTwo
+export default StepThree

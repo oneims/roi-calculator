@@ -1,9 +1,23 @@
 import React from "react"
 import { Container } from "react-bootstrap"
 import { colors } from "../theme/variables"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { Button, LinkButton } from "./StyledElements"
 import { Link } from "gatsby"
+
+// Blocks
+const WithProgressBar = `
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  width: 100%;
+  max-width: 0;
+  max-width: ${props => props.quizProgress};
+  transition: 0.3s ease;
+  height: 5px;
+  background-color: ${colors.primary};
+`
 
 const StyledHeader = styled.header`
   background-color: ${colors.white};
@@ -12,6 +26,14 @@ const StyledHeader = styled.header`
   width: 100%;
   top: 0;
   box-shadow: 0 1px 0 rgb(0 0 0 / 5%);
+  &:before {
+    ${props =>
+      props.WithProgressBar
+        ? css`
+            ${WithProgressBar}
+          `
+        : ""}
+  }
 `
 
 const StyledHeaderWrap = styled.div`
@@ -42,11 +64,17 @@ const StyledLogo = styled.div`
   }
 `
 
-const Header = ({ App, backDestination, nextDestination, nextButtonText }) => {
+const Header = ({
+  App,
+  backDestination,
+  nextDestination,
+  nextButtonText,
+  currentStep,
+}) => {
   return (
     <>
       {App ? (
-        <StyledHeader>
+        <StyledHeader WithProgressBar currentStep={currentStep}>
           <Container>
             <StyledHeaderWrap>
               <Link to={backDestination}>

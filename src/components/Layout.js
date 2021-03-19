@@ -18,12 +18,15 @@ class Layout extends Component {
       backDestination,
       nextDestination,
       nextButtonText,
+      currentStep,
     } = this.props
     return (
       <>
         {this.props.App ? (
           <Header
             App
+            WithProgressBar
+            currentStep={currentStep}
             backDestination={backDestination}
             nextDestination={nextDestination}
             nextButtonText={nextButtonText}
