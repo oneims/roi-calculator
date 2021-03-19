@@ -19,6 +19,15 @@ import {
 } from "../components/StyledElements"
 
 export class StepThree extends Component {
+  componentDidMount() {
+    this.props.updateHeaderState(
+      "step__three",
+      "/onboarding/step-two",
+      "",
+      "Build My Report"
+    )
+  }
+
   render() {
     const {
       average_revenue_per_customer,
@@ -29,12 +38,7 @@ export class StepThree extends Component {
       estimated_sales_cycle,
     } = this.props
     return (
-      <Layout
-        App
-        backDestination="/onboarding/step-two"
-        nextDestination=""
-        nextButtonText="Build My Report"
-      >
+      <>
         <SEO title="Onboarding" />
         <Section Small>
           <Container>
@@ -142,7 +146,7 @@ export class StepThree extends Component {
             </ContentBox>
           </Container>
         </Section>
-      </Layout>
+      </>
     )
   }
 }

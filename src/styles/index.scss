@@ -58,14 +58,23 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-// .step__one {
-//   &::before {
-//     max-width: 25% !important;
-//   }
-// }
+.step__one {
+  &::before {
+    max-width: 25% !important;
+    transition-delay: 0.2s;
+  }
+}
 
-// .step__two {
-//   &::before {
-//     max-width: 50% !important;
-//   }
-// }
+.step__two {
+  &::before {
+    max-width: 50% !important;
+    transition: 0.3s ease;
+  }
+}
+
+.step__three {
+  &::before {
+    max-width: 75% !important;
+    transition: 0.3s ease;
+  }
+}

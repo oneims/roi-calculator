@@ -13,9 +13,9 @@ const WithProgressBar = `
   width: 0;
   width: 100%;
   max-width: 0;
-  max-width: ${props => props.quizProgress};
-  transition: 0.3s ease;
-  height: 5px;
+  transition: 0.4s ease;
+  height: 3px;
+  opacity: 0.5;
   background-color: ${colors.primary};
 `
 
@@ -74,7 +74,11 @@ const Header = ({
   return (
     <>
       {App ? (
-        <StyledHeader WithProgressBar currentStep={currentStep}>
+        <StyledHeader
+          WithProgressBar
+          currentStep={currentStep}
+          className={currentStep}
+        >
           <Container>
             <StyledHeaderWrap>
               <Link to={backDestination}>

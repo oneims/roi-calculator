@@ -1,11 +1,12 @@
 import React, { Component } from "react"
 import { Router } from "@reach/router"
+import Layout from "../components/Layout"
 // Pages
 import StepOne from "../dynamic-components/StepOne"
 import StepTwo from "../dynamic-components/StepTwo"
 import StepThree from "../dynamic-components/StepThree"
 
-export class Calculator extends Component {
+export class Onboarding extends Component {
   state = {
     industry:
       typeof window !== "undefined" && window.localStorage.getItem("industry")
@@ -59,6 +60,10 @@ export class Calculator extends Component {
       window.localStorage.getItem("estimated_sales_cycle")
         ? JSON.parse(localStorage.estimated_sales_cycle)
         : "",
+    currentStep: "",
+    backDestination: "",
+    nextDestination: "",
+    nextButtonText: "",
   }
 
   handleChange = event => {
@@ -82,28 +87,53 @@ export class Calculator extends Component {
     }
   }
 
+  updateHeaderState = (
+    newStep,
+    newBackDestination,
+    newNextDestination,
+    newButtonText
+  ) => {
+    this.setState({
+      currentStep: newStep,
+      backDestination: newBackDestination,
+      nextDestination: newNextDestination,
+      nextButtonText: newButtonText,
+    })
+  }
+
   render() {
     return (
-      <Router basepath="/onboarding">
-        <StepOne
-          {...this.state}
-          handleChange={this.handleChange}
-          handleSelectChange={this.handleSelectChange}
-          path="/step-one"
-        />
-        <StepTwo
-          {...this.state}
-          handleChange={this.handleChange}
-          path="/step-two"
-        />
-        <StepThree
-          {...this.state}
-          handleChange={this.handleChange}
-          path="/step-three"
-        />
-      </Router>
+      <Layout
+        App
+        currentStep={this.state.currentStep}
+        backDestination={this.state.backDestination}
+        nextDestination={this.state.nextDestination}
+        nextButtonText={this.state.nextButtonText}
+      >
+        <Router basepath="/onboarding">
+          <StepOne
+            {...this.state}
+            handleChange={this.handleChange}
+            handleSelectChange={this.handleSelectChange}
+            updateHeaderState={this.updateHeaderState}
+            path="/step-one"
+          />
+          <StepTwo
+            {...this.state}
+            handleChange={this.handleChange}
+            updateHeaderState={this.updateHeaderState}
+            path="/step-two"
+          />
+          <StepThree
+            {...this.state}
+            handleChange={this.handleChange}
+            updateHeaderState={this.updateHeaderState}
+            path="/step-three"
+          />
+        </Router>
+      </Layout>
     )
   }
 }
 
-export default Calculator
+export default Onboarding

@@ -34,6 +34,15 @@ const options = [
 ]
 
 export class StepOne extends Component {
+  componentDidMount() {
+    this.props.updateHeaderState(
+      "step__one",
+      "/",
+      "/onboarding/step-two",
+      "Next"
+    )
+  }
+
   render() {
     const {
       industry,
@@ -44,13 +53,7 @@ export class StepOne extends Component {
       handleSelectChange,
     } = this.props
     return (
-      <Layout
-        App
-        currentStep="step__one"
-        backDestination="/"
-        nextDestination="/onboarding/step-two"
-        nextButtonText="Next"
-      >
+      <>
         <SEO title="Onboarding" />
         <Section Small>
           <Container>
@@ -133,7 +136,7 @@ export class StepOne extends Component {
             </ContentBox>
           </Container>
         </Section>
-      </Layout>
+      </>
     )
   }
 }

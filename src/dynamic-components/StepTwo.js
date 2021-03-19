@@ -19,6 +19,15 @@ import {
 } from "../components/StyledElements"
 
 export class StepTwo extends Component {
+  componentDidMount() {
+    this.props.updateHeaderState(
+      "step__two",
+      "/onboarding/step-one",
+      "/onboarding/step-three",
+      "Next"
+    )
+  }
+
   render() {
     const {
       average_revenue_per_customer,
@@ -29,13 +38,7 @@ export class StepTwo extends Component {
       estimated_sales_cycle,
     } = this.props
     return (
-      <Layout
-        App
-        currentStep="step__two"
-        backDestination="/onboarding/step-one"
-        nextDestination="/onboarding/step-three"
-        nextButtonText="Next"
-      >
+      <>
         <SEO title="Onboarding" />
         <Section Small>
           <Container>
@@ -141,7 +144,7 @@ export class StepTwo extends Component {
             </ContentBox>
           </Container>
         </Section>
-      </Layout>
+      </>
     )
   }
 }
