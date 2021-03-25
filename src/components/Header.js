@@ -2,8 +2,9 @@ import React from "react"
 import { Container } from "react-bootstrap"
 import { colors } from "../theme/variables"
 import styled, { css } from "styled-components"
-import { Button, LinkButton } from "./StyledElements"
+import { Button, LinkButton, StyledToolTip } from "./StyledElements"
 import { Link } from "gatsby"
+import ReactTooltip from "react-tooltip"
 
 // Blocks
 const WithProgressBar = `
@@ -69,6 +70,8 @@ const Header = ({
   backDestination,
   nextDestination,
   nextButtonText,
+  nextButtonState,
+  nextButtonToolTip,
   currentStep,
 }) => {
   return (
@@ -97,9 +100,12 @@ const Header = ({
                   Back
                 </LinkButton>
               </Link>
-              <Link to={nextDestination}>
-                <Button>{nextButtonText}</Button>
-              </Link>
+              <StyledToolTip data-tip={nextButtonToolTip}>
+                <Link to={nextDestination} className={nextButtonState}>
+                  <Button className={nextButtonState}>{nextButtonText}</Button>
+                </Link>
+              </StyledToolTip>
+              <ReactTooltip place="left" type="dark" effect="solid" />
             </StyledHeaderWrap>
           </Container>
         </StyledHeader>

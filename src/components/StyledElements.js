@@ -31,7 +31,8 @@ const PatternWrapperFull = `
 export const Section = styled.section`
   position: relative;
   overflow: hidden;
-  padding: ${props => (props.Small ? "2rem 0" : "4rem 0")};
+  padding: ${props => (props.Small ? "2.5rem 0" : "4rem 0")};
+  padding-bottom: ${props => (props.AppSection ? "5rem" : "")};
   min-height: ${props => (props.MinHeight ? "90vh" : "")};
   ${props =>
     props.VerticallyCentered
@@ -185,7 +186,9 @@ export const StyledField = styled.div`
   }
 `
 
-// Inpiut
+export const StyledToolTip = styled.div``
+
+// Input
 
 export const StyledInput = styled.div`
   -webkit-align-items: center;
@@ -237,6 +240,34 @@ export const StyledInput = styled.div`
     width: 100%;
     height: 100%;
     padding: 0 0.6rem;
+  }
+`
+
+export const StyledChoiceWrapper = styled.div`
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  margin-left: -5px;
+  margin-right: -5px;
+`
+
+export const StyledChoiceColumn = styled.div`
+  padding-left: 5px;
+  padding-right: 5px;
+`
+
+export const StyledChoiceItem = styled.div`
+  border: 1px solid #7c98b6;
+  background-color: #f5f8fa;
+  padding: 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #425b76;
+  &.active {
+    background-color: #def7ff;
   }
 `
 

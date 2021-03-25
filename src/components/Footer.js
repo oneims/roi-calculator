@@ -2,7 +2,7 @@ import React from "react"
 import { Container } from "react-bootstrap"
 import { colors } from "../theme/variables"
 import styled from "styled-components"
-import { Button } from "./StyledElements"
+import { Button, StyledToolTip } from "./StyledElements"
 import { Link } from "gatsby"
 
 const StyledFooter = styled.footer``
@@ -22,15 +22,23 @@ const StyledText = styled.p`
   color: ${colors.silver};
 `
 
-const Footer = ({ App, nextDestination, nextButtonText }) => {
+const Footer = ({
+  App,
+  nextDestination,
+  nextButtonText,
+  nextButtonState,
+  nextButtonToolTip,
+}) => {
   return (
     <>
       {App ? (
         <StyledAppFooter>
           <Container className="text-center">
-            <Link to={nextDestination}>
-              <Button>{nextButtonText}</Button>
-            </Link>
+            <StyledToolTip data-tip={nextButtonToolTip}>
+              <Link to={nextDestination} className={nextButtonState}>
+                <Button className={nextButtonState}>{nextButtonText}</Button>
+              </Link>
+            </StyledToolTip>
           </Container>
         </StyledAppFooter>
       ) : (

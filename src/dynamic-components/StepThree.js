@@ -26,33 +26,33 @@ export class StepThree extends Component {
       "",
       "Build My Report"
     )
+    this.props.updateStepThreeButtonState()
   }
 
   render() {
     const {
-      average_revenue_per_customer,
+      average_monthly_website_traffic,
+      average_monthly_leads_from_website,
+      average_monthly_leads_from_all_other_sources,
+      percentage_of_qualified_leads,
+      current_annual_marketing_budget,
+      percentage_of_marketing_budget_spent_on_online_advertisement,
       handleChange,
-      gross_margin_per_sale,
-      average_conversion_rate_on_meetings_to_opportunities,
-      average_close_ratio_from_opportunities_to_deals,
-      estimated_sales_cycle,
     } = this.props
     return (
       <>
         <SEO title="Onboarding" />
-        <Section Small>
+        <Section Small AppSection>
           <Container>
             <ContentBox MW800 className="text-center ml-auto mr-auto">
-              <PageHeading GradientText>Let's Do This!</PageHeading>
-              <Subtitle>
-                Almost There! Please complete the details below
-              </Subtitle>
+              <PageHeading GradientText>Final Step</PageHeading>
+              <Subtitle>Please fill out the details below</Subtitle>
             </ContentBox>
             <ContentBox MW600 className="ml-auto mr-auto mt-4">
               <ProgressBarWrapper>
                 <ProgressBar Filled />
                 <ProgressBar Filled />
-                <ProgressBar Filled />
+                <ProgressBar />
               </ProgressBarWrapper>
             </ContentBox>
             <ContentBox MW800 className="mt-5 ml-auto mr-auto">
@@ -60,30 +60,28 @@ export class StepThree extends Component {
                 <StyledFormWrapper>
                   <StyledFieldWrapper>
                     <StyledField TwoColumn>
-                      <Label htmlFor="average_revenue_per_customer">
-                        Average Revenue Per Customer or Deal
+                      <Label htmlFor="average_monthly_website_traffic">
+                        Average Monthly Website Traffic
                       </Label>
                       <StyledInput>
                         <NumberFormat
                           thousandSeparator={true}
-                          placeholder="$"
-                          prefix={"$"}
-                          name="average_revenue_per_customer"
-                          value={average_revenue_per_customer}
+                          placeholder=""
+                          name="average_monthly_website_traffic"
+                          value={average_monthly_website_traffic}
                           onChange={handleChange}
                         />
                       </StyledInput>
                     </StyledField>
                     <StyledField TwoColumn>
-                      <Label htmlFor="gross_margin_per_sale">
-                        Estimated Gross Margin Per Sale
+                      <Label htmlFor="average_monthly_leads_from_website">
+                        Average Monthly Leads from Website
                       </Label>
                       <StyledInput>
                         <NumberFormat
-                          suffix={"%"}
-                          placeholder="%"
-                          name="gross_margin_per_sale"
-                          value={gross_margin_per_sale}
+                          thousandSeparator={true}
+                          name="average_monthly_leads_from_website"
+                          value={average_monthly_leads_from_website}
                           onChange={handleChange}
                         />
                       </StyledInput>
@@ -92,33 +90,28 @@ export class StepThree extends Component {
 
                   <StyledFieldWrapper>
                     <StyledField TwoColumn>
-                      <Label htmlFor="average_conversion_rate_on_meetings_to_opportunities">
-                        Average Conversion Rate on Meetings to Opportunities
+                      <Label htmlFor="average_monthly_leads_from_all_other_sources">
+                        Average Monthly Leads From All Other Sources
                       </Label>
                       <StyledInput>
                         <NumberFormat
-                          suffix={"%"}
-                          placeholder="%"
-                          name="average_conversion_rate_on_meetings_to_opportunities"
-                          value={
-                            average_conversion_rate_on_meetings_to_opportunities
-                          }
+                          thousandSeparator={true}
+                          name="average_monthly_leads_from_all_other_sources"
+                          value={average_monthly_leads_from_all_other_sources}
                           onChange={handleChange}
                         />
                       </StyledInput>
                     </StyledField>
                     <StyledField TwoColumn>
-                      <Label htmlFor="average_close_ratio_from_opportunities_to_deals">
-                        Average Close Ratio from Opportunities to Deals
+                      <Label htmlFor="percentage_of_qualified_leads">
+                        Percentage of Qualified Leads
                       </Label>
                       <StyledInput>
                         <NumberFormat
                           suffix={"%"}
                           placeholder="%"
-                          name="average_close_ratio_from_opportunities_to_deals"
-                          value={
-                            average_close_ratio_from_opportunities_to_deals
-                          }
+                          name="percentage_of_qualified_leads"
+                          value={percentage_of_qualified_leads}
                           onChange={handleChange}
                         />
                       </StyledInput>
@@ -127,15 +120,36 @@ export class StepThree extends Component {
 
                   <StyledFieldWrapper>
                     <StyledField>
-                      <Label htmlFor="estimated_sales_cycle">
-                        Estimated Sales Cycle
+                      <Label htmlFor="current_annual_marketing_budget">
+                        Current Annual Marketing Budget
                       </Label>
                       <StyledInput>
                         <NumberFormat
-                          suffix={" Months"}
-                          placeholder="In Months"
-                          name="estimated_sales_cycle"
-                          value={estimated_sales_cycle}
+                          thousandSeparator={true}
+                          placeholder="$"
+                          prefix={"$"}
+                          name="current_annual_marketing_budget"
+                          value={current_annual_marketing_budget}
+                          onChange={handleChange}
+                        />
+                      </StyledInput>
+                    </StyledField>
+                  </StyledFieldWrapper>
+
+                  <StyledFieldWrapper>
+                    <StyledField>
+                      <Label htmlFor="percentage_of_marketing_budget_spent_on_online_advertisement">
+                        Percentage of Marketing Budget Spent on Online
+                        Advertisement
+                      </Label>
+                      <StyledInput>
+                        <NumberFormat
+                          name="percentage_of_marketing_budget_spent_on_online_advertisement"
+                          suffix={"%"}
+                          placeholder="%"
+                          value={
+                            percentage_of_marketing_budget_spent_on_online_advertisement
+                          }
                           onChange={handleChange}
                         />
                       </StyledInput>

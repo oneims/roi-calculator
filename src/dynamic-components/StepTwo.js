@@ -16,6 +16,9 @@ import {
   Label,
   StyledField,
   StyledInput,
+  StyledChoiceWrapper,
+  StyledChoiceColumn,
+  StyledChoiceItem,
 } from "../components/StyledElements"
 
 export class StepTwo extends Component {
@@ -26,21 +29,24 @@ export class StepTwo extends Component {
       "/onboarding/step-three",
       "Next"
     )
+    this.props.updateStepTwoButtonState()
   }
 
   render() {
     const {
       average_revenue_per_customer,
-      handleChange,
       gross_margin_per_sale,
       average_conversion_rate_on_meetings_to_opportunities,
       average_close_ratio_from_opportunities_to_deals,
       estimated_sales_cycle,
+      estimated_sales_cycle_selector,
+      handleChange,
+      handleSelectorChoice,
     } = this.props
     return (
       <>
         <SEO title="Onboarding" />
-        <Section Small>
+        <Section Small AppSection>
           <Container>
             <ContentBox MW800 className="text-center ml-auto mr-auto">
               <PageHeading GradientText>Additional Information</PageHeading>
@@ -130,12 +136,50 @@ export class StepTwo extends Component {
                       </Label>
                       <StyledInput>
                         <NumberFormat
-                          suffix={" Months"}
-                          placeholder="In Months"
+                          suffix={
+                            estimated_sales_cycle_selector === "months"
+                              ? " Months"
+                              : " Years"
+                          }
+                          placeholder={
+                            estimated_sales_cycle_selector === "months"
+                              ? "In Months"
+                              : "In Years"
+                          }
                           name="estimated_sales_cycle"
                           value={estimated_sales_cycle}
                           onChange={handleChange}
                         />
+                        <StyledChoiceWrapper>
+                          <StyledChoiceColumn>
+                            <StyledChoiceItem
+                              data-name="estimated_sales_cycle_selector"
+                              data-value="months"
+                              onClick={handleSelectorChoice}
+                              className={
+                                estimated_sales_cycle_selector === "months"
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              Months
+                            </StyledChoiceItem>
+                          </StyledChoiceColumn>
+                          <StyledChoiceColumn>
+                            <StyledChoiceItem
+                              data-name="estimated_sales_cycle_selector"
+                              data-value="years"
+                              onClick={handleSelectorChoice}
+                              className={
+                                estimated_sales_cycle_selector === "years"
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              Years
+                            </StyledChoiceItem>
+                          </StyledChoiceColumn>
+                        </StyledChoiceWrapper>
                       </StyledInput>
                     </StyledField>
                   </StyledFieldWrapper>

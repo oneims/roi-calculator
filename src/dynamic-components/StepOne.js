@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import Layout from "../components/Layout"
 import SEO from "../components/Seo"
 import { Container } from "react-bootstrap"
 import Select from "react-select"
@@ -18,6 +17,9 @@ import {
   StyledField,
   ColorStyles,
   StyledInput,
+  StyledChoiceWrapper,
+  StyledChoiceColumn,
+  StyledChoiceItem,
 } from "../components/StyledElements"
 
 const options = [
@@ -41,21 +43,25 @@ export class StepOne extends Component {
       "/onboarding/step-two",
       "Next"
     )
+    this.props.updateStepOneButtonState()
   }
 
   render() {
     const {
       industry,
       current_annual_revenue,
+      current_annual_revenue_selector,
       yoy_growth_rate,
       revenue_growth_goal,
+      revenue_growth_goal_selector,
       handleChange,
       handleSelectChange,
+      handleSelectorChoice,
     } = this.props
     return (
       <>
         <SEO title="Onboarding" />
-        <Section Small>
+        <Section Small AppSection>
           <Container>
             <ContentBox MW800 className="text-center ml-auto mr-auto">
               <PageHeading GradientText>Basics</PageHeading>
@@ -92,10 +98,45 @@ export class StepOne extends Component {
                           thousandSeparator={true}
                           placeholder="$"
                           prefix={"$"}
+                          suffix={
+                            current_annual_revenue_selector === "million"
+                              ? " Million"
+                              : " Billion"
+                          }
                           name="current_annual_revenue"
                           value={current_annual_revenue}
                           onChange={handleChange}
                         />
+                        <StyledChoiceWrapper>
+                          <StyledChoiceColumn>
+                            <StyledChoiceItem
+                              data-name="current_annual_revenue_selector"
+                              data-value="million"
+                              onClick={handleSelectorChoice}
+                              className={
+                                current_annual_revenue_selector === "million"
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              Mill
+                            </StyledChoiceItem>
+                          </StyledChoiceColumn>
+                          <StyledChoiceColumn>
+                            <StyledChoiceItem
+                              data-name="current_annual_revenue_selector"
+                              data-value="billion"
+                              onClick={handleSelectorChoice}
+                              className={
+                                current_annual_revenue_selector === "billion"
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              Bill
+                            </StyledChoiceItem>
+                          </StyledChoiceColumn>
+                        </StyledChoiceWrapper>
                       </StyledInput>
                     </StyledField>
                   </StyledFieldWrapper>
@@ -124,10 +165,45 @@ export class StepOne extends Component {
                           thousandSeparator={true}
                           placeholder="$"
                           prefix={"$"}
+                          suffix={
+                            revenue_growth_goal_selector === "million"
+                              ? " Million"
+                              : " Billion"
+                          }
                           name="revenue_growth_goal"
                           value={revenue_growth_goal}
                           onChange={handleChange}
                         />
+                        <StyledChoiceWrapper>
+                          <StyledChoiceColumn>
+                            <StyledChoiceItem
+                              data-name="revenue_growth_goal_selector"
+                              data-value="million"
+                              onClick={handleSelectorChoice}
+                              className={
+                                revenue_growth_goal_selector === "million"
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              Mill
+                            </StyledChoiceItem>
+                          </StyledChoiceColumn>
+                          <StyledChoiceColumn>
+                            <StyledChoiceItem
+                              data-name="revenue_growth_goal_selector"
+                              data-value="billion"
+                              onClick={handleSelectorChoice}
+                              className={
+                                revenue_growth_goal_selector === "billion"
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              Bill
+                            </StyledChoiceItem>
+                          </StyledChoiceColumn>
+                        </StyledChoiceWrapper>
                       </StyledInput>
                     </StyledField>
                   </StyledFieldWrapper>

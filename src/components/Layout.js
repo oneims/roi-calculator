@@ -18,6 +18,8 @@ class Layout extends Component {
       backDestination,
       nextDestination,
       nextButtonText,
+      nextButtonState,
+      nextButtonToolTip,
       currentStep,
     } = this.props
     return (
@@ -30,6 +32,8 @@ class Layout extends Component {
             backDestination={backDestination}
             nextDestination={nextDestination}
             nextButtonText={nextButtonText}
+            nextButtonState={nextButtonState}
+            nextButtonToolTip={nextButtonToolTip}
           />
         ) : (
           <Header />
@@ -40,6 +44,8 @@ class Layout extends Component {
             App
             nextButtonText={nextButtonText}
             nextDestination={nextDestination}
+            nextButtonState={nextButtonState}
+            nextButtonToolTip={nextButtonToolTip}
           />
         ) : (
           <Footer />

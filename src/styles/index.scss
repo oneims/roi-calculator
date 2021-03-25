@@ -78,3 +78,17 @@ input::-webkit-inner-spin-button {
     transition: 0.3s ease;
   }
 }
+
+body {
+  .disabled {
+    filter: grayscale(100);
+    opacity: 1;
+    pointer-events: none;
+    box-shadow: none;
+    transition: 0.2s ease;
+  }
+}
+
+.__react_component_tooltip {
+  font-weight: 700;
+}
