@@ -73,6 +73,7 @@ const Header = ({
   nextButtonState,
   nextButtonToolTip,
   currentStep,
+  handleSubmit,
 }) => {
   return (
     <>
@@ -101,9 +102,17 @@ const Header = ({
                 </LinkButton>
               </Link>
               <StyledToolTip data-tip={nextButtonToolTip}>
-                <Link to={nextDestination} className={nextButtonState}>
-                  <Button className={nextButtonState}>{nextButtonText}</Button>
-                </Link>
+                {currentStep === "step__three" ? (
+                  <Button onClick={handleSubmit} className={nextButtonState}>
+                    {nextButtonText}
+                  </Button>
+                ) : (
+                  <Link to={nextDestination} className={nextButtonState}>
+                    <Button className={nextButtonState}>
+                      {nextButtonText}
+                    </Button>
+                  </Link>
+                )}
               </StyledToolTip>
               <ReactTooltip place="left" type="dark" effect="solid" />
             </StyledHeaderWrap>

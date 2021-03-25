@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Layout from "../components/Layout"
+import { navigate } from "gatsby"
 import SEO from "../components/Seo"
 import { Container } from "react-bootstrap"
 import NumberFormat from "react-number-format"
@@ -27,6 +27,11 @@ export class StepThree extends Component {
       "Build My Report"
     )
     this.props.updateStepThreeButtonState()
+    if (!this.props.clearedStepTwo) {
+      if (typeof window !== `undefined`) {
+        navigate(`/onboarding/step-two`)
+      }
+    }
   }
 
   render() {

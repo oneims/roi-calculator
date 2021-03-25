@@ -21,6 +21,7 @@ class Layout extends Component {
       nextButtonState,
       nextButtonToolTip,
       currentStep,
+      handleSubmit,
     } = this.props
     return (
       <>
@@ -34,6 +35,7 @@ class Layout extends Component {
             nextButtonText={nextButtonText}
             nextButtonState={nextButtonState}
             nextButtonToolTip={nextButtonToolTip}
+            handleSubmit={handleSubmit}
           />
         ) : (
           <Header />
