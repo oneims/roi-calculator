@@ -158,6 +158,10 @@ export class StepTwo extends Component {
                         <StyledChoiceWrapper>
                           <StyledChoiceColumn>
                             <StyledChoiceItem
+                              data-parent-name="estimated_sales_cycle"
+                              data-parent-value={
+                                estimated_sales_cycle.split(" ")[0] + " Months"
+                              }
                               data-name="estimated_sales_cycle_selector"
                               data-value="months"
                               onClick={handleSelectorChoice}
@@ -172,6 +176,10 @@ export class StepTwo extends Component {
                           </StyledChoiceColumn>
                           <StyledChoiceColumn>
                             <StyledChoiceItem
+                              data-parent-name="estimated_sales_cycle"
+                              data-parent-value={
+                                estimated_sales_cycle.split(" ")[0] + " Years"
+                              }
                               data-name="estimated_sales_cycle_selector"
                               data-value="years"
                               onClick={handleSelectorChoice}

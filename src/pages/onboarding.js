@@ -272,11 +272,18 @@ export class Onboarding extends Component {
       [event.target.getAttribute("data-name")]: event.target.getAttribute(
         "data-value"
       ),
+      [event.target.getAttribute(
+        "data-parent-name"
+      )]: event.target.getAttribute("data-parent-value"),
     })
     if (typeof window !== "undefined") {
       localStorage.setItem(
         event.target.getAttribute("data-name"),
         JSON.stringify(event.target.getAttribute("data-value"))
+      )
+      localStorage.setItem(
+        event.target.getAttribute("data-parent-name"),
+        JSON.stringify(event.target.getAttribute("data-parent-value"))
       )
     }
     this.updateStepOneButtonState()

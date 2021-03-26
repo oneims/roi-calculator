@@ -110,6 +110,11 @@ export class StepOne extends Component {
                         <StyledChoiceWrapper>
                           <StyledChoiceColumn>
                             <StyledChoiceItem
+                              data-parent-name="current_annual_revenue"
+                              data-parent-value={
+                                current_annual_revenue.split(" ")[0] +
+                                " Million"
+                              }
                               data-name="current_annual_revenue_selector"
                               data-value="million"
                               onClick={handleSelectorChoice}
@@ -124,6 +129,11 @@ export class StepOne extends Component {
                           </StyledChoiceColumn>
                           <StyledChoiceColumn>
                             <StyledChoiceItem
+                              data-parent-name="current_annual_revenue"
+                              data-parent-value={
+                                current_annual_revenue.split(" ")[0] +
+                                " Billion"
+                              }
                               data-name="current_annual_revenue_selector"
                               data-value="billion"
                               onClick={handleSelectorChoice}
@@ -177,6 +187,10 @@ export class StepOne extends Component {
                         <StyledChoiceWrapper>
                           <StyledChoiceColumn>
                             <StyledChoiceItem
+                              data-parent-name="revenue_growth_goal"
+                              data-parent-value={
+                                revenue_growth_goal.split(" ")[0] + " Million"
+                              }
                               data-name="revenue_growth_goal_selector"
                               data-value="million"
                               onClick={handleSelectorChoice}
@@ -191,6 +205,10 @@ export class StepOne extends Component {
                           </StyledChoiceColumn>
                           <StyledChoiceColumn>
                             <StyledChoiceItem
+                              data-parent-name="revenue_growth_goal"
+                              data-parent-value={
+                                revenue_growth_goal.split(" ")[0] + " Billion"
+                              }
                               data-name="revenue_growth_goal_selector"
                               data-value="billion"
                               onClick={handleSelectorChoice}
