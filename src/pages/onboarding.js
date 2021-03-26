@@ -333,7 +333,7 @@ export class Onboarding extends Component {
             clearedStepTwo: false,
           })
           if (typeof window !== `undefined`) {
-            // localStorage.clear()
+            localStorage.clear()
             navigate(`/report/${record_uid}`)
           }
         }, timer)

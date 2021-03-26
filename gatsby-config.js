@@ -13,7 +13,7 @@ module.exports = {
     `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/onboarding/*`] },
+      options: { prefixes: [`/onboarding/*`, `/report/*`] },
     },
     {
       resolve: `gatsby-plugin-netlify`,
