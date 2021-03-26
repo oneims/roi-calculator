@@ -48,6 +48,8 @@ class Layout extends Component {
             nextDestination={nextDestination}
             nextButtonState={nextButtonState}
             nextButtonToolTip={nextButtonToolTip}
+            handleSubmit={handleSubmit}
+            currentStep={currentStep}
           />
         ) : (
           <Footer />

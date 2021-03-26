@@ -100,8 +100,10 @@ export const Button = styled.button`
   margin: 0;
   padding: 0.7rem 2.2rem;
   border-radius: 4px;
-  background-color: ${colors.primary};
-  box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+  background-color: ${props =>
+    props.Secondary ? colors.secondary : colors.primary};
+  box-shadow: ${props =>
+    props.Secondary ? "" : "0 4px 14px 0 rgb(0 118 255 / 39%)"};
   color: #fff;
   font-weight: 800;
   -webkit-transition: 0.2s ease;
@@ -113,7 +115,8 @@ export const Button = styled.button`
     margin-right: 0.5rem;
   }
   &:hover {
-    background-color: ${colors.primaryHover};
+    background-color: ${props =>
+      props.Secondary ? colors.secondaryHover : colors.primaryHover};
     transition: 0.2s ease;
   }
 `
@@ -151,6 +154,33 @@ export const ProgressBar = styled.div`
   height: 8px;
   border-radius: 100px;
   background-color: ${props => (props.Filled ? colors.primary : "#ddd")};
+`
+
+export const StyledLoader = styled.div`
+  animation: rotation 0.4s infinite linear;
+  border: 1px solid ${colors.primary};
+  border-radius: 50%;
+  border-top-color: #fff;
+  height: 3em;
+  width: 3em;
+  display: block;
+`
+
+export const StyledLoaderWrapper = styled.div`
+  position: ${props => (props.Fixed ? "fixed" : "absolute")};
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background-color: ${props => (props.White ? "rgba(255, 255, 255, 0.8)" : "")};
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  transition: 0.2s ease;
 `
 
 // Form

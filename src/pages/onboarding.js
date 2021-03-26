@@ -6,6 +6,13 @@ import { navigate } from "gatsby"
 import StepOne from "../dynamic-components/StepOne"
 import StepTwo from "../dynamic-components/StepTwo"
 import StepThree from "../dynamic-components/StepThree"
+// Components
+import { Modal } from "react-bootstrap"
+import {
+  StyledLoaderWrapper,
+  StyledLoader,
+  Button,
+} from "../components/StyledElements"
 // Axios
 import axios from "axios"
 import { baseURL } from "../base/axios.js"
@@ -138,7 +145,7 @@ export class Onboarding extends Component {
         ? JSON.parse(localStorage.clearedStepTwo)
         : false,
     loading: false,
-    error: null,
+    error: false,
   }
 
   updateStepOneButtonState = () => {
@@ -286,7 +293,9 @@ export class Onboarding extends Component {
     const record_uid = `${this.state.current_annual_marketing_budget.replace(
       /[^0-9.-]+/g,
       ""
-    )}${Math.floor(Math.random() * (93219319319 - 1000) + 1000)}`
+    )}${Math.floor(Math.random() * (93219319 - 1000) + 1000)}`
+
+    const timer = 1000
 
     const reportData = {
       industry: this.state.industry.value,
@@ -317,25 +326,35 @@ export class Onboarding extends Component {
     axios
       .post(`${baseURL}/reports`, reportData)
       .then(res => {
-        this.setState({
-          loading: false,
-          clearedStepOne: false,
-          clearedStepTwo: false,
-        })
-        if (typeof window !== `undefined`) {
-          localStorage.clear()
-          navigate(`/report/${record_uid}`)
-        }
+        setTimeout(() => {
+          this.setState({
+            loading: false,
+            clearedStepOne: false,
+            clearedStepTwo: false,
+          })
+          if (typeof window !== `undefined`) {
+            // localStorage.clear()
+            navigate(`/report/${record_uid}`)
+          }
+        }, timer)
       })
       .catch(err => {
-        if (err.response.data) {
-          console.log(err.response.data, record_uid)
+        setTimeout(() => {
+          if (err.response) {
+            console.log(err.response.data)
+          }
           this.setState({
-            error: err.response.data,
+            error: true,
             loading: false,
           })
-        }
+        }, timer)
       })
+  }
+
+  handleDismissError = () => {
+    this.setState({
+      error: false,
+    })
   }
 
   updateHeaderState = (
@@ -390,6 +409,32 @@ export class Onboarding extends Component {
             path="/step-three"
           />
         </Router>
+        {this.state.loading ? (
+          <StyledLoaderWrapper White Fixed>
+            <StyledLoader />
+          </StyledLoaderWrapper>
+        ) : (
+          ""
+        )}
+        <Modal
+          show={this.state.error}
+          onHide={this.handleDismissError}
+          className="modal-error"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title className="modal-error__title">
+              An Error Occurred
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="modal-error__body">
+            Hmm, something went wrong! Please try again later.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button Secondary onClick={this.handleDismissError}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Layout>
     )
   }

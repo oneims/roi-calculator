@@ -28,6 +28,8 @@ const Footer = ({
   nextButtonText,
   nextButtonState,
   nextButtonToolTip,
+  currentStep,
+  handleSubmit,
 }) => {
   return (
     <>
@@ -35,9 +37,15 @@ const Footer = ({
         <StyledAppFooter>
           <Container className="text-center">
             <StyledToolTip data-tip={nextButtonToolTip}>
-              <Link to={nextDestination} className={nextButtonState}>
-                <Button className={nextButtonState}>{nextButtonText}</Button>
-              </Link>
+              {currentStep === "step__three" ? (
+                <Button onClick={handleSubmit} className={nextButtonState}>
+                  {nextButtonText}
+                </Button>
+              ) : (
+                <Link to={nextDestination} className={nextButtonState}>
+                  <Button className={nextButtonState}>{nextButtonText}</Button>
+                </Link>
+              )}
             </StyledToolTip>
           </Container>
         </StyledAppFooter>

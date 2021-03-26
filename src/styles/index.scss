@@ -92,3 +92,19 @@ body {
 .__react_component_tooltip {
   font-weight: 700;
 }
+@keyframes rotation {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.modal-error {
+  &__title {
+    font-weight: 700;
+    color: #af2626c9;
+  }
+  &__body {
+    font-weight: 500;
+  }
+}
