@@ -3,6 +3,7 @@ import SEO from "../components/Seo"
 import { Container } from "react-bootstrap"
 import Select from "react-select"
 import NumberFormat from "react-number-format"
+import DatePicker from "react-datepicker"
 import {
   Section,
   ContentBox,
@@ -54,9 +55,11 @@ export class StepOne extends Component {
       yoy_growth_rate,
       revenue_growth_goal,
       revenue_growth_goal_selector,
+      target_date_to_reach_revenue,
       handleChange,
       handleSelectChange,
       handleSelectorChoice,
+      handleDateChange,
     } = this.props
     return (
       <>
@@ -223,6 +226,23 @@ export class StepOne extends Component {
                           </StyledChoiceColumn>
                         </StyledChoiceWrapper>
                       </StyledInput>
+                    </StyledField>
+                  </StyledFieldWrapper>
+                  <StyledFieldWrapper>
+                    <StyledField>
+                      <Label htmlFor="target_date_to_reach_revenue">
+                        Target Date to Reach Revenue
+                      </Label>
+                      <DatePicker
+                        selected={new Date(target_date_to_reach_revenue)}
+                        name="target_date_to_reach_revenue"
+                        onChange={date =>
+                          handleDateChange(date, "target_date_to_reach_revenue")
+                        }
+                        minDate={new Date()}
+                        dateFormat="MM/yyyy"
+                        showMonthYearPicker
+                      />
                     </StyledField>
                   </StyledFieldWrapper>
                 </StyledFormWrapper>

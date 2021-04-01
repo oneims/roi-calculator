@@ -49,6 +49,11 @@ export class Onboarding extends Component {
       window.localStorage.getItem("revenue_growth_goal_selector")
         ? JSON.parse(localStorage.revenue_growth_goal_selector)
         : "million",
+    target_date_to_reach_revenue:
+      typeof window !== "undefined" &&
+      window.localStorage.getItem("target_date_to_reach_revenue")
+        ? JSON.parse(localStorage.target_date_to_reach_revenue)
+        : new Date(),
     // Step Two
     average_revenue_per_customer:
       typeof window !== "undefined" &&
@@ -155,7 +160,8 @@ export class Onboarding extends Component {
           this.state.industry &&
           this.state.current_annual_revenue &&
           this.state.yoy_growth_rate.length &&
-          this.state.revenue_growth_goal
+          this.state.revenue_growth_goal &&
+          this.state.target_date_to_reach_revenue
         ) {
           this.setState({
             nextButtonState: "enabled",
@@ -240,6 +246,12 @@ export class Onboarding extends Component {
     }, 100)
   }
 
+  updateNextSteps = () => {
+    this.updateStepOneButtonState()
+    this.updateStepTwoButtonState()
+    this.updateStepThreeButtonState()
+  }
+
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -250,9 +262,7 @@ export class Onboarding extends Component {
         JSON.stringify(event.target.value)
       )
     }
-    this.updateStepOneButtonState()
-    this.updateStepTwoButtonState()
-    this.updateStepThreeButtonState()
+    this.updateNextSteps()
   }
 
   handleSelectChange = (value, target) => {
@@ -262,9 +272,7 @@ export class Onboarding extends Component {
     if (typeof window !== "undefined") {
       localStorage.setItem(target.name, JSON.stringify(value))
     }
-    this.updateStepOneButtonState()
-    this.updateStepTwoButtonState()
-    this.updateStepThreeButtonState()
+    this.updateNextSteps()
   }
 
   handleSelectorChoice = event => {
@@ -286,9 +294,17 @@ export class Onboarding extends Component {
         JSON.stringify(event.target.getAttribute("data-parent-value"))
       )
     }
-    this.updateStepOneButtonState()
-    this.updateStepTwoButtonState()
-    this.updateStepThreeButtonState()
+    this.updateNextSteps()
+  }
+
+  handleDateChange = (date, name) => {
+    this.setState({
+      [name]: date,
+    })
+    if (typeof window !== "undefined") {
+      localStorage.setItem(name, JSON.stringify(date))
+    }
+    this.updateNextSteps()
   }
 
   handleSubmit = event => {
@@ -398,6 +414,7 @@ export class Onboarding extends Component {
             updateHeaderState={this.updateHeaderState}
             updateStepOneButtonState={this.updateStepOneButtonState}
             handleSelectorChoice={this.handleSelectorChoice}
+            handleDateChange={this.handleDateChange}
             path="/step-one"
           />
           <StepTwo
