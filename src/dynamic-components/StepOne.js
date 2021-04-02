@@ -236,6 +236,7 @@ export class StepOne extends Component {
                       <DatePicker
                         selected={new Date(target_date_to_reach_revenue)}
                         name="target_date_to_reach_revenue"
+                        onFocus={e => e.target.blur()}
                         onChange={date =>
                           handleDateChange(date, "target_date_to_reach_revenue")
                         }
