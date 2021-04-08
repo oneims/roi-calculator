@@ -67,7 +67,9 @@ export class Editor extends Component {
               //   Step One
               industry: {
                 value: data.industry.toLowerCase().split(" ").join("_"),
-                label: capitalizeFirstLetter(data.industry),
+                label: capitalizeFirstLetter(
+                  data.industry.split("_").join(" ")
+                ),
               },
               current_annual_revenue: data.current_annual_revenue,
               current_annual_revenue_selector: data.current_annual_revenue
