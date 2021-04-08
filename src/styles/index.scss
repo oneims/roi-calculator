@@ -258,3 +258,18 @@ body {
 .react-datepicker__navigation--next {
   top: 20px;
 }
+
+.no-styles {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.active-link {
+  pointer-events: none;
+  .mSIJ {
+    background-color: rgba(225, 225, 252, 0.74);
+    transition: 0.2s ease;
+  }
+}

@@ -2,7 +2,7 @@ import styled, { css } from "styled-components"
 import { colors } from "../theme/variables"
 
 // Blocks
-const VerticallyCenetered = `
+const VerticallyCentered = `
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,6 +27,66 @@ const PatternWrapperFull = `
     height: 100%;
 `
 
+// Header
+export const StyledLogoBox = styled.div``
+
+export const StyledLogo = styled.div`
+  width: ${props => (props.Small ? "35px" : "45px")};
+  height: ${props => (props.Small ? "35px" : "45px")};
+  background: ${colors.primary};
+  position: relative;
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    color: ${colors.white};
+    font-size: ${props => (props.Small ? "1rem" : "1.6rem")};
+    line-height: 1rem;
+    padding-top: 0.2rem;
+  }
+`
+
+// Drawer
+export const StyledSidebarMenuCard = styled.div`
+  display: flex;
+  align-items: center;
+  color: #606e74;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #f7f8fc;
+  border: 1px solid #eceff2;
+  line-height: 1;
+  cursor: pointer;
+  transition: 0.2s ease;
+  margin: 1rem;
+  &:hover {
+    background-color: #ecf0ff;
+    transition: 0.2s ease;
+  }
+`
+
+export const StyledSidebarMenuIcon = styled.div`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 600;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  background-color: #edf1fd;
+  color: ${colors.primary};
+`
+
+export const StyledSidebarMenuTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+`
+
 // Containers
 export const Section = styled.section`
   position: relative;
@@ -37,7 +97,7 @@ export const Section = styled.section`
   ${props =>
     props.VerticallyCentered
       ? css`
-          ${VerticallyCenetered}
+          ${VerticallyCentered}
         `
       : ""}
 `
@@ -98,14 +158,14 @@ export const ChildHeading = styled.h3``
 
 export const Button = styled.button`
   margin: 0;
-  padding: 0.7rem 2.2rem;
+  padding: ${props => (props.Dashboard ? `0.5rem 2.2rem` : `0.7rem 2.2rem`)};
   border-radius: 4px;
   background-color: ${props =>
     props.Secondary ? colors.secondary : colors.primary};
   box-shadow: ${props =>
     props.Secondary ? "" : "0 4px 14px 0 rgb(0 118 255 / 39%)"};
   color: #fff;
-  font-weight: 800;
+  font-weight: ${props => (props.Dashboard ? `500` : `800`)};
   -webkit-transition: 0.2s ease;
   transition: 0.2s ease;
   border: none;
@@ -138,6 +198,17 @@ export const LinkButton = styled.button`
     color: ${colors.primary};
     text-decoration: none;
   }
+`
+
+export const ContentCard = styled.div`
+  background-color: ${colors.white};
+  padding: 1rem;
+  border: 1px solid #eee;
+  box-shadow: 1px 0 5px rgb(0 0 0 / 1%);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `
 
 // Progress Bar

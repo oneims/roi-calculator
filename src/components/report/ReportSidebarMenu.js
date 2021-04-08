@@ -1,6 +1,12 @@
 import React from "react"
-import { Container } from "react-bootstrap"
 import { colors } from "../../theme/variables"
+import {
+  StyledLogoBox,
+  StyledLogo,
+  StyledSidebarMenuCard,
+  StyledSidebarMenuIcon,
+  StyledSidebarMenuTitle,
+} from "../StyledElements"
 import styled from "styled-components"
 import { Link } from "gatsby"
 
@@ -16,6 +22,7 @@ const StyledReportSidebarMenu = styled.aside`
   transition: 0.3s ease-in-out;
   font-weight: 500;
   font-size: 0.9rem;
+  z-index: 9999;
 `
 
 const StyledReportSidebarMenuHeader = styled.div`
@@ -28,108 +35,52 @@ const StyledReportSidebarMenuFooter = styled.div`
   padding: 0.25rem 0;
 `
 
-const StyledReportSidebarMenuCard = styled.div`
-  display: flex;
-  align-items: center;
-  color: #606e74;
-  padding: 8px;
-  border-radius: 8px;
-  background-color: #f7f8fc;
-  border: 1px solid #eceff2;
-  line-height: 1;
-  cursor: pointer;
-  transition: 0.2s ease;
-  margin: 1rem;
-  &:hover {
-    background-color: #ecf0ff;
-    transition: 0.2s ease;
-  }
-`
-
-const StyledReportSidebarMenuIcon = styled.div`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 22px;
-  font-weight: 600;
-  width: 34px;
-  height: 34px;
-  border-radius: 4px;
-  background-color: #edf1fd;
-  color: ${colors.primary};
-`
-
-const StyledReportSidebarMenuTitle = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 12px;
-`
-
 const StyledReportSidebarMenuWrap = styled.div`
   height: 100%;
 `
 
-const StyledLogoBox = styled.div``
-
-const StyledLogo = styled.div`
-  width: 35px;
-  height: 35px;
-  background: ${colors.primary};
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    font-weight: 700;
-    color: ${colors.white};
-    font-size: 1rem;
-    line-height: 1rem;
-    padding-top: 0.2rem;
-  }
-`
-
-const ReportSidebarMenu = () => {
+const ReportSidebarMenu = ({ reportID }) => {
   return (
     <>
       <StyledReportSidebarMenu>
         <StyledReportSidebarMenuHeader>
           <StyledLogoBox>
             <Link to="/">
-              <StyledLogo>
+              <StyledLogo Small className="ml-auto mr-auto">
                 <span>++</span>
               </StyledLogo>
             </Link>
           </StyledLogoBox>
         </StyledReportSidebarMenuHeader>
         <StyledReportSidebarMenuWrap>
-          <Link>
-            <StyledReportSidebarMenuCard>
-              <StyledReportSidebarMenuIcon>D</StyledReportSidebarMenuIcon>
-              <StyledReportSidebarMenuTitle>
-                Dashboard
-              </StyledReportSidebarMenuTitle>
-            </StyledReportSidebarMenuCard>
+          <Link
+            className="no-styles"
+            activeClassName="active-link"
+            to={`/report/${reportID}`}
+          >
+            <StyledSidebarMenuCard>
+              <StyledSidebarMenuIcon>D</StyledSidebarMenuIcon>
+              <StyledSidebarMenuTitle>Dashboard</StyledSidebarMenuTitle>
+            </StyledSidebarMenuCard>
           </Link>
-          <Link>
-            <StyledReportSidebarMenuCard>
-              <StyledReportSidebarMenuIcon>E</StyledReportSidebarMenuIcon>
-              <StyledReportSidebarMenuTitle>
-                Editor
-              </StyledReportSidebarMenuTitle>
-            </StyledReportSidebarMenuCard>
+          <Link
+            className="no-styles"
+            activeClassName="active-link"
+            to={`/editor/${reportID}`}
+          >
+            <StyledSidebarMenuCard>
+              <StyledSidebarMenuIcon>E</StyledSidebarMenuIcon>
+              <StyledSidebarMenuTitle>Editor</StyledSidebarMenuTitle>
+            </StyledSidebarMenuCard>
           </Link>
         </StyledReportSidebarMenuWrap>
         <StyledReportSidebarMenuFooter>
-          <StyledReportSidebarMenuCard>
-            <StyledReportSidebarMenuIcon>@</StyledReportSidebarMenuIcon>
-            <StyledReportSidebarMenuTitle>
-              Email This Report To Me
-            </StyledReportSidebarMenuTitle>
-          </StyledReportSidebarMenuCard>
+          <StyledSidebarMenuCard>
+            <StyledSidebarMenuIcon>@</StyledSidebarMenuIcon>
+            <StyledSidebarMenuTitle>
+              Email Me This Report
+            </StyledSidebarMenuTitle>
+          </StyledSidebarMenuCard>
         </StyledReportSidebarMenuFooter>
       </StyledReportSidebarMenu>
     </>

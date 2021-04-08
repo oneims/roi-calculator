@@ -1,8 +1,12 @@
 import React from "react"
 import { Container } from "react-bootstrap"
 import { colors } from "../../theme/variables"
+import {
+  StyledSidebarMenuCard,
+  StyledSidebarMenuIcon,
+  StyledSidebarMenuTitle,
+} from "../StyledElements"
 import styled from "styled-components"
-import { Link } from "gatsby"
 
 // Blocks
 
@@ -12,34 +16,17 @@ const StyledReportHeader = styled.header`
   width: 100%;
   top: 0;
   box-shadow: 0 1px 0 rgb(0 0 0 / 5%);
+  position: absolute;
+  right: 0;
 `
 
 const StyledReportHeaderWrap = styled.div`
-  padding: 1rem 0;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
-const StyledLogoBox = styled.div``
-
-const StyledLogo = styled.div`
-  width: 35px;
-  height: 35px;
-  background: ${colors.primary};
-  position: relative;
-  span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    font-weight: 700;
-    color: ${colors.white};
-    font-size: 1rem;
-    line-height: 1rem;
-    padding-top: 0.2rem;
-  }
+  justify-content: flex-end;
+  height: 68px;
+  padding: 0.5rem 0;
+  font-weight: 500;
+  font-size: 0.83216312801rem;
 `
 
 const ReportHeader = () => {
@@ -48,13 +35,12 @@ const ReportHeader = () => {
       <StyledReportHeader>
         <Container fluid>
           <StyledReportHeaderWrap>
-            <StyledLogoBox>
-              <Link to="/">
-                <StyledLogo>
-                  <span>++</span>
-                </StyledLogo>
-              </Link>
-            </StyledLogoBox>
+            <StyledSidebarMenuCard className="mt-0 mb-0">
+              <StyledSidebarMenuIcon>@</StyledSidebarMenuIcon>
+              <StyledSidebarMenuTitle>
+                Email Me This Report
+              </StyledSidebarMenuTitle>
+            </StyledSidebarMenuCard>
           </StyledReportHeaderWrap>
         </Container>
       </StyledReportHeader>

@@ -8,7 +8,7 @@ import ReportSidebarMenu from "./ReportSidebarMenu"
 import { colors } from "../../theme/variables"
 import ReportFooter from "./ReportFooter"
 
-const StyledMain = styled.main``
+const StyledParentWrap = styled.div``
 
 const DashboardWrapper = styled.div`
   display: flex;
@@ -19,24 +19,27 @@ const Viewport = styled.div`
   height: 100vh;
   overflow-y: scroll;
   background-color: ${colors.dashboardBackground};
+  position: relative;
 `
 
-const Canvas = styled.div``
+const Canvas = styled.main`
+  padding-top: 68px;
+`
 
 class ReportLayout extends Component {
   render() {
-    const { children } = this.props
+    const { children, reportID } = this.props
     return (
       <>
-        <StyledMain>
+        <StyledParentWrap>
           <DashboardWrapper>
-            <ReportSidebarMenu />
+            <ReportSidebarMenu reportID={reportID} />
             <Viewport>
               <ReportHeader />
               <Canvas>{children}</Canvas>
             </Viewport>
           </DashboardWrapper>
-        </StyledMain>
+        </StyledParentWrap>
       </>
     )
   }

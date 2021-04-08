@@ -2,7 +2,13 @@ import React from "react"
 import { Container } from "react-bootstrap"
 import { colors } from "../theme/variables"
 import styled, { css } from "styled-components"
-import { Button, LinkButton, StyledToolTip } from "./StyledElements"
+import {
+  Button,
+  LinkButton,
+  StyledToolTip,
+  StyledLogoBox,
+  StyledLogo,
+} from "./StyledElements"
 import { Link } from "gatsby"
 import ReactTooltip from "react-tooltip"
 
@@ -42,27 +48,6 @@ const StyledHeaderWrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
-
-const StyledLogoBox = styled.div``
-
-const StyledLogo = styled.div`
-  width: 45px;
-  height: 45px;
-  background: ${colors.primary};
-  position: relative;
-  span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    font-weight: 700;
-    color: ${colors.white};
-    font-size: 1.6rem;
-    line-height: 1rem;
-    padding-top: 0.2rem;
-  }
 `
 
 const Header = ({

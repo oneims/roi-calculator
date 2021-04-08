@@ -31,7 +31,6 @@ export class Report extends Component {
     axios
       .get(`${baseURL}/reports?record_uid=${id}`)
       .then(res => {
-        console.log(res)
         if (res.data.length > 0) {
           setTimeout(() => {
             this.setState({
@@ -58,7 +57,7 @@ export class Report extends Component {
 
   render() {
     return (
-      <ReportLayout>
+      <ReportLayout reportID={this.state.id}>
         <Router basepath="/report">
           <ReportDashboard
             {...this.state}

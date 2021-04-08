@@ -18,7 +18,7 @@ export class ReportDashboard extends Component {
     const { loading, data, error } = this.props
     return (
       <>
-        <SEO title="Onboarding" />
+        <SEO title="Report" />
         <Section Small>
           <Container>
             <ContentBox MW800 className="text-center ml-auto mr-auto">
