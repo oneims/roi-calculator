@@ -11,6 +11,7 @@ import { Modal } from "react-bootstrap"
 import {
   StyledLoaderWrapper,
   StyledLoader,
+  ContentBox,
   Button,
 } from "../components/StyledElements"
 // Axios
@@ -366,10 +367,19 @@ export class Onboarding extends Component {
           if (err.response) {
             console.log(err.response.data)
           }
-          this.setState({
-            error: true,
-            loading: false,
-          })
+          this.setState(
+            {
+              error: true,
+              loading: false,
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({
+                  error: false,
+                })
+              }, 2000)
+            }
+          )
         }, timer)
       })
   }
@@ -441,23 +451,32 @@ export class Onboarding extends Component {
           ""
         )}
         <Modal
+          backdropClassName="extreme-light"
           show={this.state.error}
           onHide={this.handleDismissError}
-          className="modal-error"
+          className="modal-notification"
         >
-          <Modal.Header closeButton>
-            <Modal.Title className="modal-error__title">
-              An Error Occurred
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="modal-error__body">
-            Hmm, something went wrong! Please try again later.
+          <Modal.Body className="modal-notification__body modal-notification__body-error">
+            <div className="close-button" onClick={this.handleDismissError}>
+              <figure>
+                <svg
+                  viewBox="0 0 14 14"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="UICloseButton__CloseIcon-sc-1s0n2rw-1 bYdwaJ"
+                >
+                  <path
+                    d="M14.5,1.5l-13,13m0-13,13,13"
+                    transform="translate(-1 -1)"
+                    className="UICloseButton__CloseIconInner-sc-1s0n2rw-2 kmMQRc"
+                  ></path>
+                </svg>
+              </figure>
+            </div>
+            <ContentBox>
+              <strong>Error.</strong> Hmm, something went wrong! Please try
+              again later.
+            </ContentBox>
           </Modal.Body>
-          <Modal.Footer>
-            <Button Secondary onClick={this.handleDismissError}>
-              Close
-            </Button>
-          </Modal.Footer>
         </Modal>
       </Layout>
     )

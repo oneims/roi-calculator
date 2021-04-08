@@ -7,4 +7,6 @@ export const colors = {
   white: "#fff",
   silver: "#ccc",
   gradientText: "linear-gradient( -70deg,#0055ff,#8dc1fd)",
+  dark: "#212b36",
+  dashboardBackground: "#f5f6f9",
 }
