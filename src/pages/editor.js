@@ -67,7 +67,9 @@ export class Editor extends Component {
               //   Step One
               industry: {
                 value: data.industry.toLowerCase().split(" ").join("_"),
-                label: capitalizeFirstLetter(data.industry),
+                label: capitalizeFirstLetter(
+                  data.industry.split("_").join(" ")
+                ),
               },
               current_annual_revenue: data.current_annual_revenue,
               current_annual_revenue_selector: data.current_annual_revenue
@@ -106,7 +108,6 @@ export class Editor extends Component {
               loading: false,
             })
             originalFetchedData = { ...this.state }
-            console.log(originalFetchedData)
           }, timer)
         } else {
           throw new Error(`No report found with id ${id}`)
@@ -173,24 +174,26 @@ export class Editor extends Component {
 
   render() {
     return (
-      <ReportLayout reportID={this.state.id}>
-        <Router basepath="/editor">
-          <ReportEditor
-            {...this.state}
-            handleUpdateIDState={this.handleUpdateIDState}
-            handleGetDataByID={this.handleGetDataByID}
-            handleChange={this.handleChange}
-            handleSelectChange={this.handleSelectChange}
-            handleSelectorChoice={this.handleSelectorChoice}
-            handleDateChange={this.handleDateChange}
-            path="/:id"
-          />
-        </Router>
+      <>
+        <ReportLayout reportID={this.state.id}>
+          <Router basepath="/editor">
+            <ReportEditor
+              {...this.state}
+              handleUpdateIDState={this.handleUpdateIDState}
+              handleGetDataByID={this.handleGetDataByID}
+              handleChange={this.handleChange}
+              handleSelectChange={this.handleSelectChange}
+              handleSelectorChoice={this.handleSelectorChoice}
+              handleDateChange={this.handleDateChange}
+              path="/:id"
+            />
+          </Router>
+        </ReportLayout>
         <Saver
           className={this.state.changesPending ? "active" : ``}
           handleCancel={this.cancelChanges}
-        />
-      </ReportLayout>
+        ></Saver>
+      </>
     )
   }
 }

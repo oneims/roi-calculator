@@ -37,6 +37,7 @@ const options = [
 
 export class ReportEditor extends Component {
   componentDidMount() {
+    console.log(`component mounted`)
     this.props.handleUpdateIDState(this.props.id)
     this.props.handleGetDataByID(this.props.id)
   }
