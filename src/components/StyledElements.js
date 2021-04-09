@@ -260,8 +260,10 @@ export const FormWrapper = styled.div``
 
 export const StyledFormWrapper = styled.div`
   min-height: 80vh;
+  min-height: ${props => (props.NoMinHeight ? "unset" : "")};
   @media (min-width: 768px) {
     min-height: 50vh;
+    min-height: ${props => (props.NoMinHeight ? "unset" : "")};
   }
 `
 export const StyledFieldWrapper = styled.div`

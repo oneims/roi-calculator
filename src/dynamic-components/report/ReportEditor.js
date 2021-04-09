@@ -95,7 +95,7 @@ export class ReportEditor extends Component {
                       <ContentCard>
                         <SubHeading>Basics</SubHeading>
                         <FormWrapper>
-                          <StyledFormWrapper>
+                          <StyledFormWrapper NoMinHeight>
                             <StyledFieldWrapper>
                               <StyledField>
                                 <Label htmlFor="industry">
@@ -288,7 +288,7 @@ export class ReportEditor extends Component {
                       <ContentCard>
                         <SubHeading>Additional</SubHeading>
                         <FormWrapper>
-                          <StyledFormWrapper>
+                          <StyledFormWrapper NoMinHeight>
                             <StyledFieldWrapper>
                               <StyledField>
                                 <Label htmlFor="average_revenue_per_customer">
@@ -437,7 +437,7 @@ export class ReportEditor extends Component {
                       <ContentCard>
                         <SubHeading>Final</SubHeading>
                         <FormWrapper>
-                          <StyledFormWrapper>
+                          <StyledFormWrapper NoMinHeight>
                             <StyledFieldWrapper>
                               <StyledField TwoColumn>
                                 <Label htmlFor="average_monthly_website_traffic">
