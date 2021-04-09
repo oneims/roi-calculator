@@ -1,1 +1,1 @@
-export const baseURL = `http://localhost:1337`
+export const baseURL = `https://radiant-dawn-48942.herokuapp.com`

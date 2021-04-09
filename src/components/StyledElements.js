@@ -245,7 +245,7 @@ export const StyledLoaderWrapper = styled.div`
   bottom: 0;
   width: 100%;
   height: 100%;
-  z-index: 999;
+  z-index: ${props => (props.OverridePage ? "999999999999" : "999")};
   background-color: ${props => (props.White ? "rgba(255, 255, 255, 0.8)" : "")};
   display: flex;
   align-items: center;

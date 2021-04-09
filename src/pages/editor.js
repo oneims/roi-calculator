@@ -5,6 +5,12 @@ import ReportLayout from "../components/report/ReportLayout"
 import ReportEditor from "../dynamic-components/report/ReportEditor"
 // Components
 import Saver from "../components/Saver"
+import { Modal } from "react-bootstrap"
+import {
+  StyledLoaderWrapper,
+  StyledLoader,
+  ContentBox,
+} from "../components/StyledElements"
 // Axios
 import axios from "axios"
 import { baseURL } from "../base/axios.js"
@@ -39,9 +45,13 @@ export class Editor extends Component {
     percentage_of_marketing_budget_spent_on_online_advertisement: null,
     // Generic State
     id: null,
+    strapiID: null,
     loading: true,
+    wrapperLoading: false,
     changesPending: false,
     error: false,
+    success: false,
+    notificationVisibility: false,
   }
 
   handleUpdateIDState = id => {
@@ -55,7 +65,7 @@ export class Editor extends Component {
       loading: true,
     })
 
-    const timer = 800
+    const timer = 500
 
     axios
       .get(`${baseURL}/reports?record_uid=${id}`)
@@ -106,6 +116,7 @@ export class Editor extends Component {
                 data.percentage_of_marketing_budget_spent_on_online_advertisement,
               // Generic State
               loading: false,
+              strapiID: data.id,
             })
             originalFetchedData = { ...this.state }
           }, timer)
@@ -137,6 +148,87 @@ export class Editor extends Component {
     this.setState(originalFetchedData)
     this.pendingChangesStateChanger(false)
   }
+
+  handleSubmit = event => {
+    event.preventDefault()
+    this.setState({
+      wrapperLoading: true,
+    })
+    const timer = 500
+    const reportData = {
+      industry: this.state.industry.value,
+      current_annual_revenue: this.state.current_annual_revenue,
+      yoy_growth_rate: this.state.yoy_growth_rate,
+      revenue_growth_goal: this.state.revenue_growth_goal,
+      average_revenue_per_customer: this.state.average_revenue_per_customer,
+      gross_margin_per_sale: this.state.gross_margin_per_sale,
+      average_conversion_rate_on_meetings_to_opportunities: this.state
+        .average_conversion_rate_on_meetings_to_opportunities,
+      average_close_ratio_from_opportunities_to_deals: this.state
+        .average_close_ratio_from_opportunities_to_deals,
+      estimated_sales_cycle: this.state.estimated_sales_cycle,
+      average_monthly_website_traffic: this.state
+        .average_monthly_website_traffic,
+      average_monthly_leads_from_website: this.state
+        .average_monthly_leads_from_website,
+      average_monthly_leads_from_all_other_sources: this.state
+        .average_monthly_leads_from_all_other_sources,
+      percentage_of_qualified_leads: this.state.percentage_of_qualified_leads,
+      current_annual_marketing_budget: this.state
+        .current_annual_marketing_budget,
+      percentage_of_marketing_budget_spent_on_online_advertisement: this.state
+        .percentage_of_marketing_budget_spent_on_online_advertisement,
+      target_date_to_reach_revenue: this.state.target_date_to_reach_revenue,
+      record_uid: this.state.id,
+    }
+    axios
+      .put(`${baseURL}/reports/${this.state.strapiID}`, reportData)
+      .then(res => {
+        this.pendingChangesStateChanger(false)
+        setTimeout(() => {
+          this.setState(
+            {
+              wrapperLoading: false,
+              success: true,
+              notificationVisibility: true,
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({
+                  success: false,
+                  notificationVisibility: false,
+                })
+                originalFetchedData = { ...this.state }
+              }, 2000)
+            }
+          )
+        }, timer)
+      })
+      .catch(err => {
+        this.pendingChangesStateChanger(false)
+        setTimeout(() => {
+          if (err.response) {
+            console.log(err.response.data)
+          }
+          this.setState(
+            {
+              error: true,
+              wrapperLoading: false,
+              notificationVisibility: true,
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({
+                  error: false,
+                  notificationVisibility: false,
+                })
+              }, 2000)
+            }
+          )
+        }, timer)
+      })
+  }
+
   //   End Editor Specific
 
   handleChange = event => {
@@ -172,6 +264,12 @@ export class Editor extends Component {
     this.pendingChangesStateChanger(true)
   }
 
+  handleDismissNotification = () => {
+    this.setState({
+      notificationVisibility: false,
+    })
+  }
+
   render() {
     return (
       <>
@@ -192,7 +290,53 @@ export class Editor extends Component {
         <Saver
           className={this.state.changesPending ? "active" : ``}
           handleCancel={this.cancelChanges}
-        ></Saver>
+          handleSubmit={this.handleSubmit}
+        />
+        {this.state.wrapperLoading ? (
+          <StyledLoaderWrapper White Fixed OverridePage>
+            <StyledLoader />
+          </StyledLoaderWrapper>
+        ) : (
+          ""
+        )}
+        <Modal
+          backdropClassName="transparent"
+          show={this.state.notificationVisibility}
+          onHide={this.handleDismissNotification}
+          className="modal-notification"
+        >
+          <Modal.Body
+            className={`modal-notification__body modal-notification__body-${
+              this.state.error ? `error` : `success`
+            }`}
+          >
+            <div
+              className="close-button"
+              onClick={this.handleDismissNotification}
+            >
+              <figure>
+                <svg
+                  viewBox="0 0 14 14"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="UICloseButton__CloseIcon-sc-1s0n2rw-1 bYdwaJ"
+                >
+                  <path
+                    d="M14.5,1.5l-13,13m0-13,13,13"
+                    transform="translate(-1 -1)"
+                    className="UICloseButton__CloseIconInner-sc-1s0n2rw-2 kmMQRc"
+                  ></path>
+                </svg>
+              </figure>
+            </div>
+            <ContentBox>
+              <strong>{this.state.error ? `Error.` : `Success.`}</strong>
+              {this.state.error
+                ? `Hmm, something went wrong! Please try
+              again later.`
+                : `Your changes have been saved successfuly.`}
+            </ContentBox>
+          </Modal.Body>
+        </Modal>
       </>
     )
   }

@@ -34,7 +34,7 @@ const Saver = props => {
     <>
       <StyledSaver className={props.className}>
         <StyledSaverWrapper>
-          <Button Dashboard className="mr-3">
+          <Button Dashboard className="mr-3" onClick={props.handleSubmit}>
             Save
           </Button>
           <Button

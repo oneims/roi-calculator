@@ -12,7 +12,6 @@ import {
   StyledLoaderWrapper,
   StyledLoader,
   ContentBox,
-  Button,
 } from "../components/StyledElements"
 // Axios
 import axios from "axios"
