@@ -273,3 +273,32 @@ body {
     transition: 0.2s ease;
   }
 }
+
+// Table
+.table {
+  tbody {
+    font-weight: 400;
+  }
+}
+
+.table thead th {
+  border: none;
+}
+
+.table > thead {
+  background-color: #f9fafb;
+}
+
+.text-info {
+  color: #847613;
+}
+
+.table-responsive {
+  background-color: #fff;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  box-shadow: 1px 0 5px RGB(0 0 0/1%);
+  .table {
+    min-width: 1800px;
+  }
+}
