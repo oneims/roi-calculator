@@ -167,7 +167,7 @@ export class Report extends Component {
               cost_per_customer_acquisition_CALCULATION,
               net_new_revenue_CALCULATION,
             })
-            // console.log(this.state)
+            console.log(this.state)
           }, timer)
         } else {
           throw new Error(`No report found with id ${id}`)

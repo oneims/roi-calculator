@@ -64,3 +64,10 @@ export const getNetNewRevenue = (newCustomers, revenuePerCustomer) => {
   const output = convertToInt(newCustomers) * convertToInt(revenuePerCustomer)
   return roundToTwoDecimals(output)
 }
+
+// TODO:::
+
+// Get Cost Per Lead
+// budget = current_annual_marketing_budget
+// total leads = average_monthly_leads_from_website + average_monthly_leads_from_all_other_sources
+// cpl = (budget / total leads) / 12
