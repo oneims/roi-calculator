@@ -1,11 +1,8 @@
 import React, { Component } from "react"
 import SEO from "../../components/Seo"
-import { Container, Row, Col, Table } from "react-bootstrap"
+import { Container, Table } from "react-bootstrap"
 import {
   Section,
-  ContentCard,
-  SubHeading,
-  ChildHeading,
   StyledLoaderWrapper,
   StyledLoader,
 } from "../../components/StyledElements"
@@ -17,8 +14,10 @@ export class ReportDashboard extends Component {
   }
   render() {
     const {
+      // Misc
       loading,
       error,
+      // Values needed to build report
       conversion_rate,
       average_qualified_leads_per_month,
       average_new_customers_per_month,
@@ -26,6 +25,9 @@ export class ReportDashboard extends Component {
       average_cost_per_lead,
       cost_per_customer_acquisition,
       net_new_revenue,
+      cost_per_lead,
+      customers_needed_for_revenue_target,
+      // Calculations
       conversion_rate_CALCULATION,
       average_qualified_leads_per_month_CALCULATION,
       average_new_customers_per_month_CALCULATION,
@@ -33,6 +35,8 @@ export class ReportDashboard extends Component {
       average_cost_per_lead_CALCULATION,
       cost_per_customer_acquisition_CALCULATION,
       net_new_revenue_CALCULATION,
+      cost_per_lead_CALCULATION,
+      customers_needed_for_revenue_target_CALCULATION,
     } = this.props
 
     return (
@@ -135,34 +139,28 @@ export class ReportDashboard extends Component {
                           }}
                         />
                       </tr>
+                      <tr>
+                        <td>Cost Per Lead</td>
+                        <td>${cost_per_lead}</td>
+                        <td
+                          className="text-info"
+                          dangerouslySetInnerHTML={{
+                            __html: cost_per_lead_CALCULATION,
+                          }}
+                        />
+                      </tr>
+                      <tr>
+                        <td>Customers Needed to Reach Target</td>
+                        <td>{customers_needed_for_revenue_target}</td>
+                        <td
+                          className="text-info"
+                          dangerouslySetInnerHTML={{
+                            __html: customers_needed_for_revenue_target_CALCULATION,
+                          }}
+                        />
+                      </tr>
                     </tbody>
                   </Table>
-
-                  {/* <Row>
-                    <Col lg="4" className="mb-4">
-                      <ContentCard>
-                        <ChildHeading>
-                          Conversion Rate: {conversion_rate}
-                        </ChildHeading>
-                      </ContentCard>
-                    </Col>
-                    <Col lg="4" className="mb-4">
-                      <ContentCard>
-                        <ChildHeading>
-                          Average Qualified Leads Per Month:{" "}
-                          {average_qualified_leads_per_month}
-                        </ChildHeading>
-                      </ContentCard>
-                    </Col>
-                    <Col lg="4" className="mb-4">
-                      <ContentCard>
-                        <ChildHeading>
-                          Average New Customers Per Month:{" "}
-                          {average_new_customers_per_month}
-                        </ChildHeading>
-                      </ContentCard>
-                    </Col>
-                  </Row> */}
                 </Container>
               )}
             </>

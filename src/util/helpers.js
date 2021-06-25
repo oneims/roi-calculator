@@ -9,6 +9,28 @@ export const convertToInt = str => {
   return Number(neatStr)
 }
 
+const convertMBtoInt = str => {
+  const arr = str.split(" ")
+  const abbreviation = arr.pop()
+  let zeroesInMillion = "000000"
+  let zeroesInBillion = "000000000"
+  let zeroesUsed = arr[0].includes(".") ? arr[0].split(".")[1].length : ``
+  let zeroesToAdd = ""
+  if (abbreviation === "Million") {
+    for (let i = 0; i < zeroesInMillion.length - zeroesUsed; i++) {
+      zeroesToAdd += "0"
+    }
+  } else {
+    for (let i = 0; i < zeroesInBillion.length - zeroesUsed; i++) {
+      zeroesToAdd += "0"
+    }
+  }
+  arr.push(zeroesToAdd)
+  str = arr.join("")
+  str = str.replace(".", "")
+  return convertToInt(str)
+}
+
 export const roundToTwoDecimals = n => {
   return Number(Math.round(n * 100) / 100)
 }
@@ -65,9 +87,28 @@ export const getNetNewRevenue = (newCustomers, revenuePerCustomer) => {
   return roundToTwoDecimals(output)
 }
 
-// TODO:::
-
 // Get Cost Per Lead
-// budget = current_annual_marketing_budget
-// total leads = average_monthly_leads_from_website + average_monthly_leads_from_all_other_sources
-// cpl = (budget / total leads) / 12
+export const getCostPerLead = (
+  monthlyLeadsWebsite,
+  monthlyLeadsOther,
+  annualBudget
+) => {
+  const totalLeads =
+    convertToInt(monthlyLeadsWebsite) + convertToInt(monthlyLeadsOther)
+  const totalLeadsPerYear = totalLeads * 12
+  const cpl = convertToInt(annualBudget) / totalLeadsPerYear
+  return roundToTwoDecimals(cpl)
+}
+
+// Get New Customers Needed to Reach Revenue Target
+export const getCustomersNeededForRevenueTarget = (
+  revenuePerCustomer,
+  revenueGoalAnnual,
+  currentRevenueAnnual
+) => {
+  const differenceBetweenRevenues =
+    convertMBtoInt(revenueGoalAnnual) - convertMBtoInt(currentRevenueAnnual)
+  const customersNeeded =
+    differenceBetweenRevenues / convertToInt(revenuePerCustomer)
+  return roundToTwoDecimals(customersNeeded)
+}

@@ -15,6 +15,8 @@ import {
   getAverageCostPerLead,
   getCostPerCustomerAcquisition,
   getNetNewRevenue,
+  getCostPerLead,
+  getCustomersNeededForRevenueTarget,
 } from "../util/helpers"
 
 export class Report extends Component {
@@ -23,7 +25,7 @@ export class Report extends Component {
     data: null,
     loading: false,
     error: false,
-    // Monthly ROI Calculations
+    // Values needed to build report
     conversion_rate: null,
     average_qualified_leads_per_month: null,
     average_new_customers_per_month: null,
@@ -31,6 +33,8 @@ export class Report extends Component {
     average_monthly_online_marketing_investment: null,
     cost_per_customer_acquisition: null,
     net_new_revenue: null,
+    cost_per_lead: null,
+    customers_needed_for_revenue_target: null,
     // Calculations
     conversion_rate_CALCULATION: null,
     average_qualified_leads_per_month_CALCULATION: null,
@@ -39,6 +43,8 @@ export class Report extends Component {
     average_monthly_online_marketing_investment_CALCULATION: null,
     cost_per_customer_acquisition_CALCULATION: null,
     net_new_revenue_CALCULATION: null,
+    cost_per_lead_CALCULATION: null,
+    customers_needed_for_revenue_target_CALCULATION: null,
   }
 
   handleUpdateIDState = id => {
@@ -69,6 +75,9 @@ export class Report extends Component {
               percentage_of_marketing_budget_spent_on_online_advertisement,
               current_annual_marketing_budget,
               average_revenue_per_customer,
+              average_monthly_leads_from_all_other_sources,
+              revenue_growth_goal,
+              current_annual_revenue,
             } = data
 
             // Conversion Rate
@@ -148,17 +157,49 @@ export class Report extends Component {
             Revenue Per Customer <strong>(${average_revenue_per_customer})</strong>
             `
 
+            // Cost Per Lead
+            const cost_per_lead = getCostPerLead(
+              average_monthly_leads_from_website,
+              average_monthly_leads_from_all_other_sources,
+              current_annual_marketing_budget
+            )
+
+            const cost_per_lead_CALCULATION = `
+            Website Monthly Leads <strong>(${average_monthly_leads_from_website})</strong>
+            +
+            Other Monthly Leads <strong>(${average_monthly_leads_from_all_other_sources})</strong>
+            * <strong>12</strong>
+            / Annual Marketing Budget <strong>(${current_annual_marketing_budget})</strong>
+            `
+
+            // Customers Needed for Revenue Target
+            const customers_needed_for_revenue_target = getCustomersNeededForRevenueTarget(
+              average_revenue_per_customer,
+              revenue_growth_goal,
+              current_annual_revenue
+            )
+
+            const customers_needed_for_revenue_target_CALCULATION = `
+              Revenue Growth Goal <strong>(${revenue_growth_goal})</strong>
+              - Current Annual Revenue <strong>(${current_annual_revenue})</strong>
+              / Revenue Per Customer <strong>(${average_revenue_per_customer})</strong>
+            `
+
             // Updating State
             this.setState({
               data: res.data,
               loading: false,
               conversion_rate,
+              // Values needed to build report
               average_qualified_leads_per_month,
               average_new_customers_per_month,
               average_monthly_online_marketing_investment,
               average_cost_per_lead,
               cost_per_customer_acquisition,
               net_new_revenue,
+              cost_per_lead,
+              customers_needed_for_revenue_target,
+              // Calculations
               conversion_rate_CALCULATION,
               average_qualified_leads_per_month_CALCULATION,
               average_new_customers_per_month_CALCULATION,
@@ -166,6 +207,8 @@ export class Report extends Component {
               average_cost_per_lead_CALCULATION,
               cost_per_customer_acquisition_CALCULATION,
               net_new_revenue_CALCULATION,
+              cost_per_lead_CALCULATION,
+              customers_needed_for_revenue_target_CALCULATION,
             })
             console.log(this.state)
           }, timer)
