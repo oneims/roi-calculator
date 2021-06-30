@@ -27,6 +27,7 @@ export class ReportDashboard extends Component {
       net_new_revenue,
       cost_per_lead,
       customers_needed_for_revenue_target,
+      cost_per_new_customer,
       // Calculations
       conversion_rate_CALCULATION,
       average_qualified_leads_per_month_CALCULATION,
@@ -37,6 +38,12 @@ export class ReportDashboard extends Component {
       net_new_revenue_CALCULATION,
       cost_per_lead_CALCULATION,
       customers_needed_for_revenue_target_CALCULATION,
+      cost_per_new_customer_CALCULATION,
+      // Projections
+      conversion_rate_PROJECTION,
+      average_qualified_leads_per_month_PROJECTION,
+      average_new_customers_per_month_PROJECTION,
+      average_cost_per_lead_PROJECTION,
     } = this.props
 
     return (
@@ -59,109 +66,229 @@ export class ReportDashboard extends Component {
                   </div>
                 </Container>
               ) : (
-                <Container fluid>
-                  <Table responsive>
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Value</th>
-                        <th>How was this calculated?</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Conversion Rate</td>
-                        <td>{conversion_rate}%</td>
-                        <td
-                          className="text-info"
-                          dangerouslySetInnerHTML={{
-                            __html: conversion_rate_CALCULATION,
-                          }}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Average Qualified Leads Per Month</td>
-                        <td>{average_qualified_leads_per_month}</td>
-                        <td
-                          className="text-info"
-                          dangerouslySetInnerHTML={{
-                            __html: average_qualified_leads_per_month_CALCULATION,
-                          }}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Average New Customers Per Month</td>
-                        <td>{average_new_customers_per_month}</td>
-                        <td
-                          className="text-info"
-                          dangerouslySetInnerHTML={{
-                            __html: average_new_customers_per_month_CALCULATION,
-                          }}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Average Monthly Online Marketing Investment</td>
-                        <td>${average_monthly_online_marketing_investment}</td>
-                        <td
-                          className="text-info"
-                          dangerouslySetInnerHTML={{
-                            __html: average_monthly_online_marketing_investment_CALCULATION,
-                          }}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Average Cost Per Lead</td>
-                        <td>${average_cost_per_lead}</td>
-                        <td
-                          className="text-info"
-                          dangerouslySetInnerHTML={{
-                            __html: average_cost_per_lead_CALCULATION,
-                          }}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Cost Per Customer Acquisiton</td>
-                        <td>${cost_per_customer_acquisition}</td>
-                        <td
-                          className="text-info"
-                          dangerouslySetInnerHTML={{
-                            __html: cost_per_customer_acquisition_CALCULATION,
-                          }}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Net New Revenue</td>
-                        <td>${net_new_revenue}</td>
-                        <td
-                          className="text-info"
-                          dangerouslySetInnerHTML={{
-                            __html: net_new_revenue_CALCULATION,
-                          }}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Cost Per Lead</td>
-                        <td>${cost_per_lead}</td>
-                        <td
-                          className="text-info"
-                          dangerouslySetInnerHTML={{
-                            __html: cost_per_lead_CALCULATION,
-                          }}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Customers Needed to Reach Target</td>
-                        <td>{customers_needed_for_revenue_target}</td>
-                        <td
-                          className="text-info"
-                          dangerouslySetInnerHTML={{
-                            __html: customers_needed_for_revenue_target_CALCULATION,
-                          }}
-                        />
-                      </tr>
-                    </tbody>
-                  </Table>
-                </Container>
+                <>
+                  <Container fluid>
+                    <Table responsive>
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Value</th>
+                          <th>How was this calculated?</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Conversion Rate</td>
+                          <td>{conversion_rate}%</td>
+                          <td
+                            className="text-info"
+                            dangerouslySetInnerHTML={{
+                              __html: conversion_rate_CALCULATION,
+                            }}
+                          />
+                        </tr>
+                        <tr>
+                          <td>Average Qualified Leads Per Month</td>
+                          <td>{average_qualified_leads_per_month}</td>
+                          <td
+                            className="text-info"
+                            dangerouslySetInnerHTML={{
+                              __html: average_qualified_leads_per_month_CALCULATION,
+                            }}
+                          />
+                        </tr>
+                        <tr>
+                          <td>Average New Customers Per Month</td>
+                          <td>{Math.floor(average_new_customers_per_month)}</td>
+                          <td
+                            className="text-info"
+                            dangerouslySetInnerHTML={{
+                              __html: average_new_customers_per_month_CALCULATION,
+                            }}
+                          />
+                        </tr>
+                        <tr>
+                          <td>Average Monthly Online Marketing Investment</td>
+                          <td>
+                            ${average_monthly_online_marketing_investment}
+                          </td>
+                          <td
+                            className="text-info"
+                            dangerouslySetInnerHTML={{
+                              __html: average_monthly_online_marketing_investment_CALCULATION,
+                            }}
+                          />
+                        </tr>
+                        <tr>
+                          <td>Average Cost Per Lead</td>
+                          <td>${average_cost_per_lead}</td>
+                          <td
+                            className="text-info"
+                            dangerouslySetInnerHTML={{
+                              __html: average_cost_per_lead_CALCULATION,
+                            }}
+                          />
+                        </tr>
+                        <tr>
+                          <td>Cost Per Customer Acquisiton</td>
+                          <td>${cost_per_customer_acquisition}</td>
+                          <td
+                            className="text-info"
+                            dangerouslySetInnerHTML={{
+                              __html: cost_per_customer_acquisition_CALCULATION,
+                            }}
+                          />
+                        </tr>
+                        <tr>
+                          <td>Net New Revenue</td>
+                          <td>${net_new_revenue}</td>
+                          <td
+                            className="text-info"
+                            dangerouslySetInnerHTML={{
+                              __html: net_new_revenue_CALCULATION,
+                            }}
+                          />
+                        </tr>
+                        <tr>
+                          <td>Cost Per Lead</td>
+                          <td>${cost_per_lead}</td>
+                          <td
+                            className="text-info"
+                            dangerouslySetInnerHTML={{
+                              __html: cost_per_lead_CALCULATION,
+                            }}
+                          />
+                        </tr>
+                        <tr>
+                          <td>Customers Needed to Reach Target</td>
+                          <td>{customers_needed_for_revenue_target}</td>
+                          <td
+                            className="text-info"
+                            dangerouslySetInnerHTML={{
+                              __html: customers_needed_for_revenue_target_CALCULATION,
+                            }}
+                          />
+                        </tr>
+                        <tr>
+                          <td>Cost Per New Customer</td>
+                          <td>{cost_per_new_customer}</td>
+                          <td
+                            className="text-info"
+                            dangerouslySetInnerHTML={{
+                              __html: cost_per_new_customer_CALCULATION,
+                            }}
+                          />
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </Container>
+                  <Container fluid className="mt-5 text-center mb-3">
+                    <h2>Projections</h2>
+                  </Container>
+                  <Container fluid className="mt-4">
+                    <Table responsive className="no-min-width">
+                      <thead>
+                        <tr>
+                          <th>Conversion Rate</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {conversion_rate_PROJECTION &&
+                          conversion_rate_PROJECTION.map((elem, index) => (
+                            <tr key={index}>
+                              <td
+                                dangerouslySetInnerHTML={{
+                                  __html: elem.description,
+                                }}
+                              />
+                              <td className="text-success">{elem.value}%</td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </Table>
+                  </Container>
+
+                  <Container fluid className="mt-4">
+                    <Table responsive className="no-min-width">
+                      <thead>
+                        <tr>
+                          <th>Average Qualified Leads Per Month</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {average_qualified_leads_per_month_PROJECTION &&
+                          average_qualified_leads_per_month_PROJECTION.map(
+                            (elem, index) => (
+                              <tr key={index}>
+                                <td
+                                  dangerouslySetInnerHTML={{
+                                    __html: elem.description,
+                                  }}
+                                />
+                                <td className="text-success">{elem.value}</td>
+                              </tr>
+                            )
+                          )}
+                      </tbody>
+                    </Table>
+                  </Container>
+
+                  <Container fluid className="mt-4">
+                    <Table responsive className="no-min-width">
+                      <thead>
+                        <tr>
+                          <th>Average New Customers Per Month</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {average_new_customers_per_month_PROJECTION &&
+                          average_new_customers_per_month_PROJECTION.map(
+                            (elem, index) => (
+                              <tr key={index}>
+                                <td
+                                  dangerouslySetInnerHTML={{
+                                    __html: elem.description,
+                                  }}
+                                />
+                                <td className="text-success">
+                                  {Math.floor(elem.value)}
+                                </td>
+                              </tr>
+                            )
+                          )}
+                      </tbody>
+                    </Table>
+                  </Container>
+
+                  <Container fluid className="mt-4">
+                    <Table responsive className="no-min-width">
+                      <thead>
+                        <tr>
+                          <th>Average Cost Per Lead</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {average_cost_per_lead_PROJECTION &&
+                          average_cost_per_lead_PROJECTION.map(
+                            (elem, index) => (
+                              <tr key={index}>
+                                <td
+                                  dangerouslySetInnerHTML={{
+                                    __html: elem.description,
+                                  }}
+                                />
+                                <td className="text-success">{elem.value}</td>
+                              </tr>
+                            )
+                          )}
+                      </tbody>
+                    </Table>
+                  </Container>
+                </>
               )}
             </>
           )}

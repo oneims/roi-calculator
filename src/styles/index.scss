@@ -299,6 +299,8 @@ body {
   border-radius: 10px;
   box-shadow: 1px 0 5px RGB(0 0 0/1%);
   .table {
-    min-width: 1800px;
+    &:not(.no-min-width) {
+      min-width: 1800px;
+    }
   }
 }

@@ -7,6 +7,7 @@ import ReportDashboard from "src/components/dynamic-pages/report/ReportDashboard
 import axios from "axios"
 // Helpers
 import {
+  // Calculation Helpers
   getConversionRate,
   getAverageQualifiedLeadsMonth,
   getAverageNewCustomersMonth,
@@ -16,6 +17,9 @@ import {
   getNetNewRevenue,
   getCostPerLead,
   getCustomersNeededForRevenueTarget,
+  getCostPerNewCustomer,
+  // Projection Helpers
+  getProjectionTwoParams,
 } from "src/util/helpers"
 
 export class Report extends Component {
@@ -34,6 +38,7 @@ export class Report extends Component {
     net_new_revenue: null,
     cost_per_lead: null,
     customers_needed_for_revenue_target: null,
+    cost_per_new_customer: null,
     // Calculations
     conversion_rate_CALCULATION: null,
     average_qualified_leads_per_month_CALCULATION: null,
@@ -44,6 +49,12 @@ export class Report extends Component {
     net_new_revenue_CALCULATION: null,
     cost_per_lead_CALCULATION: null,
     customers_needed_for_revenue_target_CALCULATION: null,
+    cost_per_new_customer_CALCULATION: null,
+    // Projections
+    conversion_rate_PROJECTION: null,
+    average_qualified_leads_per_month_PROJECTION: null,
+    average_new_customers_per_month_PROJECTION: null,
+    average_cost_per_lead_PROJECTION: null,
   }
 
   handleUpdateIDState = id => {
@@ -85,12 +96,28 @@ export class Report extends Component {
               average_monthly_website_traffic
             )
 
+            const conversion_rate_PROJECTION = getProjectionTwoParams(
+              average_monthly_leads_from_website,
+              average_monthly_website_traffic,
+              20,
+              "Monthly Website Leads",
+              getConversionRate
+            )
+
             const conversion_rate_CALCULATION = `Monthly Leads <strong>(${average_monthly_leads_from_website})</strong> / Monthly Website Traffic <strong>(${average_monthly_website_traffic})</strong> * <strong>100</strong>`
 
             // Average Qualified Leads Per Month
             const average_qualified_leads_per_month = getAverageQualifiedLeadsMonth(
               average_monthly_leads_from_website,
               percentage_of_qualified_leads
+            )
+
+            const average_qualified_leads_per_month_PROJECTION = getProjectionTwoParams(
+              average_monthly_leads_from_website,
+              percentage_of_qualified_leads,
+              20,
+              "Monthly Website Leads",
+              getAverageQualifiedLeadsMonth
             )
 
             const average_qualified_leads_per_month_CALCULATION = `
@@ -103,6 +130,14 @@ export class Report extends Component {
             const average_new_customers_per_month = getAverageNewCustomersMonth(
               average_qualified_leads_per_month,
               average_close_ratio_from_opportunities_to_deals
+            )
+
+            const average_new_customers_per_month_PROJECTION = getProjectionTwoParams(
+              average_qualified_leads_per_month,
+              average_close_ratio_from_opportunities_to_deals,
+              20,
+              "Qualified Leads",
+              getAverageNewCustomersMonth
             )
 
             const average_new_customers_per_month_CALCULATION = `
@@ -127,6 +162,15 @@ export class Report extends Component {
             const average_cost_per_lead = getAverageCostPerLead(
               average_monthly_online_marketing_investment,
               average_monthly_leads_from_website
+            )
+
+            const average_cost_per_lead_PROJECTION = getProjectionTwoParams(
+              average_monthly_leads_from_website,
+              average_monthly_online_marketing_investment,
+              20,
+              "Monthly Leads Increased",
+              getAverageCostPerLead,
+              true
             )
 
             const average_cost_per_lead_CALCULATION = `
@@ -184,12 +228,32 @@ export class Report extends Component {
               / Revenue Per Customer <strong>(${average_revenue_per_customer})</strong>
             `
 
+            // Cost Per New Customer
+            const cost_per_new_customer = getCostPerNewCustomer(
+              average_monthly_leads_from_website,
+              average_monthly_leads_from_all_other_sources,
+              percentage_of_qualified_leads,
+              average_close_ratio_from_opportunities_to_deals,
+              current_annual_marketing_budget
+            )
+
+            const cost_per_new_customer_CALCULATION = `
+            Annual Marketing Budget <strong>(${current_annual_marketing_budget})</strong>
+            /
+            Website Monthly Leads <strong>(${average_monthly_leads_from_website})</strong>
+            +
+            Other Monthly Leads <strong>(${average_monthly_leads_from_all_other_sources})</strong>
+            * <strong>12</strong> 
+            * Qualified Leads <strong>(${percentage_of_qualified_leads})</strong>
+            * Close Ratio <strong>(${average_close_ratio_from_opportunities_to_deals})</strong>
+            `
+
             // Updating State
             this.setState({
               data: res.data,
               loading: false,
-              conversion_rate,
               // Values needed to build report
+              conversion_rate,
               average_qualified_leads_per_month,
               average_new_customers_per_month,
               average_monthly_online_marketing_investment,
@@ -198,6 +262,7 @@ export class Report extends Component {
               net_new_revenue,
               cost_per_lead,
               customers_needed_for_revenue_target,
+              cost_per_new_customer,
               // Calculations
               conversion_rate_CALCULATION,
               average_qualified_leads_per_month_CALCULATION,
@@ -208,6 +273,12 @@ export class Report extends Component {
               net_new_revenue_CALCULATION,
               cost_per_lead_CALCULATION,
               customers_needed_for_revenue_target_CALCULATION,
+              cost_per_new_customer_CALCULATION,
+              // Projections
+              conversion_rate_PROJECTION,
+              average_qualified_leads_per_month_PROJECTION,
+              average_new_customers_per_month_PROJECTION,
+              average_cost_per_lead_PROJECTION,
             })
             console.log(this.state)
           }, timer)

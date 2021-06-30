@@ -1,4 +1,6 @@
 // Helpers
+
+// **Generic Helpers**
 export const capitalizeFirstLetter = string => {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
@@ -17,15 +19,13 @@ export const checkValidObjectProperties = obj => {
   return true
 }
 
-// Calculations
-
 export const convertToInt = str => {
   str = str.toString()
   const neatStr = str.replace(/[^0-9.-]+/g, "")
   return Number(neatStr)
 }
 
-const convertMBtoInt = str => {
+export const convertMBtoInt = str => {
   const arr = str.split(" ")
   const abbreviation = arr.pop()
   let zeroesInMillion = "000000"
@@ -51,12 +51,36 @@ export const roundToTwoDecimals = n => {
   return Number(Math.round(n * 100) / 100)
 }
 
+// **Calculations**
+
 // Get Conversion Rate
 export const getConversionRate = (monthlyLeads, monthlyTraffic) => {
   const output =
     (convertToInt(monthlyLeads) / convertToInt(monthlyTraffic)) * 100
   return roundToTwoDecimals(output)
 }
+
+// // Conversion Rate Projections
+// export const getConversionRatePROJECTION = (
+//   monthlyLeads,
+//   monthlyTraffic,
+//   maxLimit
+// ) => {
+//   const projection = []
+//   for (let i = 1; i <= maxLimit; i++) {
+//     if (i % 2 == 0) {
+//       const updatedMonthlyLeads =
+//         (convertToInt(monthlyLeads) * i) / 100 + convertToInt(monthlyLeads)
+//       projection.push({
+//         [`Monthly Website Leads Increased by ${i}%`]: getConversionRate(
+//           updatedMonthlyLeads,
+//           monthlyTraffic
+//         ),
+//       })
+//     }
+//   }
+//   return projection
+// }
 
 // Get Average Qualified Leads Per Month
 export const getAverageQualifiedLeadsMonth = (
@@ -130,16 +154,42 @@ export const getCustomersNeededForRevenueTarget = (
 }
 
 // Get Cost Per New Customer
-export const getCostPerNewCusomter = (
+export const getCostPerNewCustomer = (
   monthlyLeadsWebsite,
   monthlyLeadsOther,
   qualifiedLeadsPercentage,
-  closeRatio
+  closeRatio,
+  annualBudget
 ) => {
   const totalLeads =
     convertToInt(monthlyLeadsWebsite) + convertToInt(monthlyLeadsOther)
-  const totalQualifiedLeads =
-    (totalLeads * convertToInt(qualifiedLeadsPercentage)) / 100
-  const totalClosedLeads =
-    (totalQualifiedLeads * convertToInt(closeRatio)) / 100
+  const totalLeadsPerYear = totalLeads * 12
+  const totalQualifiedLeadsPerYear =
+    (totalLeadsPerYear * convertToInt(qualifiedLeadsPercentage)) / 100
+  const totalClosedLeadsPerYear =
+    (totalQualifiedLeadsPerYear * convertToInt(closeRatio)) / 100
+  const costPerCustomer = convertToInt(annualBudget) / totalClosedLeadsPerYear
+  return roundToTwoDecimals(costPerCustomer)
+}
+
+// **Projections**
+export const getProjectionTwoParams = (
+  n, // Gets Incremented by 2%
+  m, // Second Parameter (number)
+  k, // Max Limit
+  str, // String which was updated
+  cb, // callback to call
+  switched // (optional) set to true if params have been switched
+) => {
+  const projection = []
+  for (let i = 1; i <= k; i++) {
+    if (i % 2 == 0) {
+      const v = (convertToInt(n) * i) / 100 + convertToInt(n)
+      projection.push({
+        description: `${str} <strong>Increased</strong> By <strong>${i}%</strong>`,
+        value: switched ? cb(m, v) : cb(v, m),
+      })
+    }
+  }
+  return projection
 }
