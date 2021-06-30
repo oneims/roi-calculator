@@ -5,7 +5,6 @@ import ReportLayout from "src/components/report/ReportLayout"
 import ReportDashboard from "src/components/dynamic-pages/report/ReportDashboard"
 // Axios
 import axios from "axios"
-import { baseURL } from "src/base/axios.js"
 // Helpers
 import {
   getConversionRate,
@@ -61,7 +60,7 @@ export class Report extends Component {
     const timer = 150
 
     axios
-      .get(`${baseURL}/reports?record_uid=${id}`)
+      .get(`${process.env.GATSBY_API_URL}/reports?record_uid=${id}`)
       .then(res => {
         if (res.data.length > 0) {
           setTimeout(() => {

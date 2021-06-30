@@ -13,7 +13,6 @@ import {
 } from "src/components/StyledElements"
 // Axios
 import axios from "axios"
-import { baseURL } from "src/base/axios.js"
 // Helpers
 import { capitalizeFirstLetter } from "src/util/helpers"
 
@@ -68,7 +67,7 @@ export class Editor extends Component {
     const timer = 500
 
     axios
-      .get(`${baseURL}/reports?record_uid=${id}`)
+      .get(`${process.env.GATSBY_API_URL}/reports?record_uid=${id}`)
       .then(res => {
         if (res.data.length > 0) {
           const data = res.data[0]
@@ -182,7 +181,10 @@ export class Editor extends Component {
       record_uid: this.state.id,
     }
     axios
-      .put(`${baseURL}/reports/${this.state.strapiID}`, reportData)
+      .put(
+        `${process.env.GATSBY_API_URL}/reports/${this.state.strapiID}`,
+        reportData
+      )
       .then(res => {
         this.pendingChangesStateChanger(false)
         setTimeout(() => {

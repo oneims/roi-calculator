@@ -15,7 +15,6 @@ import {
 } from "src/components/StyledElements"
 // Axios
 import axios from "axios"
-import { baseURL } from "src/base/axios.js"
 
 export class Onboarding extends Component {
   state = {
@@ -347,7 +346,7 @@ export class Onboarding extends Component {
       record_uid,
     }
     axios
-      .post(`${baseURL}/reports`, reportData)
+      .post(`${process.env.GATSBY_API_URL}/reports`, reportData)
       .then(res => {
         setTimeout(() => {
           this.setState({
