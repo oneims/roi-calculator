@@ -1,7 +1,23 @@
 // Helpers
-export function capitalizeFirstLetter(string) {
+export const capitalizeFirstLetter = string => {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
+
+export const checkValidObjectProperties = obj => {
+  for (const key of Object.keys(obj)) {
+    if (
+      obj[key] === "" ||
+      obj[key] === " Million" ||
+      obj[key] === " Billion" ||
+      obj[key] === " Months" ||
+      obj[key] === " Years"
+    )
+      return false
+  }
+  return true
+}
+
+// Calculations
 
 export const convertToInt = str => {
   str = str.toString()
@@ -111,4 +127,19 @@ export const getCustomersNeededForRevenueTarget = (
   const customersNeeded =
     differenceBetweenRevenues / convertToInt(revenuePerCustomer)
   return roundToTwoDecimals(customersNeeded)
+}
+
+// Get Cost Per New Customer
+export const getCostPerNewCusomter = (
+  monthlyLeadsWebsite,
+  monthlyLeadsOther,
+  qualifiedLeadsPercentage,
+  closeRatio
+) => {
+  const totalLeads =
+    convertToInt(monthlyLeadsWebsite) + convertToInt(monthlyLeadsOther)
+  const totalQualifiedLeads =
+    (totalLeads * convertToInt(qualifiedLeadsPercentage)) / 100
+  const totalClosedLeads =
+    (totalQualifiedLeads * convertToInt(closeRatio)) / 100
 }

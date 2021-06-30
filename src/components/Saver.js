@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { Button } from "src/components/StyledElements"
+import { Button, StyledToolTip } from "src/components/StyledElements"
+import ReactTooltip from "react-tooltip"
 
 const StyledSaver = styled.div`
   position: fixed;
@@ -34,9 +35,24 @@ const Saver = props => {
     <>
       <StyledSaver className={props.className}>
         <StyledSaverWrapper>
-          <Button Dashboard className="mr-3" onClick={props.handleSubmit}>
-            Save
-          </Button>
+          {props.disabled ? (
+            <>
+              <StyledToolTip data-tip="Some fields are empty">
+                <Button
+                  Dashboard
+                  className="mr-3 disabled"
+                  onClick={props.handleSubmit}
+                >
+                  Save
+                </Button>
+              </StyledToolTip>
+              <ReactTooltip place="top" type="dark" effect="solid" />
+            </>
+          ) : (
+            <Button Dashboard className="mr-3" onClick={props.handleSubmit}>
+              Save
+            </Button>
+          )}
           <Button
             onClick={props.handleCancel}
             className="mr-3"

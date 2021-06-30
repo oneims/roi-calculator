@@ -14,7 +14,10 @@ import {
 // Axios
 import axios from "axios"
 // Helpers
-import { capitalizeFirstLetter } from "src/util/helpers"
+import {
+  capitalizeFirstLetter,
+  checkValidObjectProperties,
+} from "src/util/helpers"
 
 let originalFetchedData
 
@@ -51,6 +54,15 @@ export class Editor extends Component {
     error: false,
     success: false,
     notificationVisibility: false,
+    validForm: true,
+  }
+
+  checkValidForm = () => {
+    setTimeout(() => {
+      checkValidObjectProperties(this.state)
+        ? this.setState({ validForm: true })
+        : this.setState({ validForm: false })
+    }, 50)
   }
 
   handleUpdateIDState = id => {
@@ -138,6 +150,7 @@ export class Editor extends Component {
 
   //   Editor Specific
   pendingChangesStateChanger = bool => {
+    this.checkValidForm()
     this.setState({
       changesPending: bool,
     })
@@ -290,6 +303,7 @@ export class Editor extends Component {
           </Router>
         </ReportLayout>
         <Saver
+          disabled={!this.state.validForm}
           className={this.state.changesPending ? "active" : ``}
           handleCancel={this.cancelChanges}
           handleSubmit={this.handleSubmit}

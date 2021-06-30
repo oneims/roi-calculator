@@ -37,7 +37,7 @@ const options = [
 
 export class ReportEditor extends Component {
   componentDidMount() {
-    console.log(`component mounted`)
+    // console.log(`component mounted`)
     this.props.handleUpdateIDState(this.props.id)
     this.props.handleGetDataByID(this.props.id)
   }
@@ -185,6 +185,8 @@ export class ReportEditor extends Component {
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
+                                    allowNegative={false}
+                                    isAllowed={({ value }) => value <= 100}
                                     name="yoy_growth_rate"
                                     value={yoy_growth_rate}
                                     onChange={handleChange}
@@ -315,6 +317,8 @@ export class ReportEditor extends Component {
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
+                                    allowNegative={false}
+                                    isAllowed={({ value }) => value <= 100}
                                     name="gross_margin_per_sale"
                                     value={gross_margin_per_sale}
                                     onChange={handleChange}
@@ -332,6 +336,8 @@ export class ReportEditor extends Component {
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
+                                    allowNegative={false}
+                                    isAllowed={({ value }) => value <= 100}
                                     name="average_conversion_rate_on_meetings_to_opportunities"
                                     value={
                                       average_conversion_rate_on_meetings_to_opportunities
@@ -351,6 +357,8 @@ export class ReportEditor extends Component {
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
+                                    allowNegative={false}
+                                    isAllowed={({ value }) => value <= 100}
                                     name="average_close_ratio_from_opportunities_to_deals"
                                     value={
                                       average_close_ratio_from_opportunities_to_deals
@@ -493,6 +501,8 @@ export class ReportEditor extends Component {
                                     suffix={"%"}
                                     placeholder="%"
                                     name="percentage_of_qualified_leads"
+                                    allowNegative={false}
+                                    isAllowed={({ value }) => value <= 100}
                                     value={percentage_of_qualified_leads}
                                     onChange={handleChange}
                                   />
@@ -529,6 +539,8 @@ export class ReportEditor extends Component {
                                     name="percentage_of_marketing_budget_spent_on_online_advertisement"
                                     suffix={"%"}
                                     placeholder="%"
+                                    allowNegative={false}
+                                    isAllowed={({ value }) => value <= 100}
                                     value={
                                       percentage_of_marketing_budget_spent_on_online_advertisement
                                     }
