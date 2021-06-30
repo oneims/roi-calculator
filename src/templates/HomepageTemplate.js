@@ -1,7 +1,7 @@
 import React, { Component } from "react"
-import Layout from "../components/Layout"
-import SEO from "../components/Seo"
-import HP__Hero from "../sections/HP__Hero"
+import Layout from "src/components/Layout"
+import SEO from "src/components/Seo"
+import HP__Hero from "src/components/sections/HP__Hero"
 import { graphql } from "gatsby"
 
 export class IndexPage extends Component {

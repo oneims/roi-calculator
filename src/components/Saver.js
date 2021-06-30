@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Button } from "./StyledElements"
+import { Button } from "src/components/StyledElements"
 
 const StyledSaver = styled.div`
   position: fixed;

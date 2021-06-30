@@ -1,6 +1,6 @@
 import React from "react"
 import { Container } from "react-bootstrap"
-import { colors } from "../theme/variables"
+import { colors } from "src/theme/variables"
 import styled, { css } from "styled-components"
 import {
   Button,
@@ -8,7 +8,7 @@ import {
   StyledToolTip,
   StyledLogoBox,
   StyledLogo,
-} from "./StyledElements"
+} from "src/components/StyledElements"
 import { Link } from "gatsby"
 import ReactTooltip from "react-tooltip"
 

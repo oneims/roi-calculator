@@ -12,6 +12,7 @@ module.exports = {
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-remark`,
     `gatsby-plugin-no-index`,
+    "gatsby-plugin-root-import",
     {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/onboarding/*`, `/report/*`, `/editor/*`] },

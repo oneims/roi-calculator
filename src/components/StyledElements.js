@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { colors } from "../theme/variables"
+import { colors } from "src/theme/variables"
 
 // Blocks
 const VerticallyCentered = `

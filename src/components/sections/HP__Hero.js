@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import Pattern from "../images/pattern.svg"
+import Pattern from "src/images/pattern.svg"
 import { Container } from "react-bootstrap"
 import {
   Section,
@@ -11,7 +11,7 @@ import {
   Subtitle,
   Button,
   PatternWrapper,
-} from "../components/StyledElements"
+} from "src/components/StyledElements"
 
 const HP__Hero = ({
   heading,

@@ -3,10 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "../../styles/index.scss"
 import styled from "styled-components"
 // Components
-import ReportHeader from "./ReportHeader"
-import ReportSidebarMenu from "./ReportSidebarMenu"
-import { colors } from "../../theme/variables"
-import ReportFooter from "./ReportFooter"
+import ReportHeader from "src/components/report/ReportHeader"
+import ReportSidebarMenu from "src/components/report/ReportSidebarMenu"
+import { colors } from "src/theme/variables"
+import ReportFooter from "src/components/report/ReportFooter"
 
 const StyledParentWrap = styled.div``
 

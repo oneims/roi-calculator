@@ -1,12 +1,12 @@
 import React from "react"
-import { colors } from "../../theme/variables"
+import { colors } from "src/theme/variables"
 import {
   StyledLogoBox,
   StyledLogo,
   StyledSidebarMenuCard,
   StyledSidebarMenuIcon,
   StyledSidebarMenuTitle,
-} from "../StyledElements"
+} from "src/components/StyledElements"
 import styled from "styled-components"
 import { Link } from "gatsby"
 

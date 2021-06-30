@@ -1,11 +1,11 @@
 import React, { Component } from "react"
-import SEO from "../../components/Seo"
+import SEO from "src/components/Seo"
 import { Container, Table } from "react-bootstrap"
 import {
   Section,
   StyledLoaderWrapper,
   StyledLoader,
-} from "../../components/StyledElements"
+} from "src/components/StyledElements"
 
 export class ReportDashboard extends Component {
   componentDidMount() {

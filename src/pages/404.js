@@ -1,6 +1,6 @@
 import React from "react"
-import Layout from "../components/Layout"
-import SEO from "../components/Seo"
+import Layout from "src/components/Layout"
+import SEO from "src/components/Seo"
 import Container from "react-bootstrap/Container"
 import { Link } from "gatsby"
 import {
@@ -8,7 +8,7 @@ import {
   PageHeading,
   Subtitle,
   Button,
-} from "../components/StyledElements"
+} from "src/components/StyledElements"
 
 const NotFoundPage = () => (
   <Layout>

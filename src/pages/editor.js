@@ -1,21 +1,21 @@
 import React, { Component } from "react"
 import { Router } from "@reach/router"
-import ReportLayout from "../components/report/ReportLayout"
+import ReportLayout from "src/components/report/ReportLayout"
 // Pages
-import ReportEditor from "../dynamic-components/report/ReportEditor"
+import ReportEditor from "src/components/dynamic-pages/report/ReportEditor"
 // Components
-import Saver from "../components/Saver"
+import Saver from "src/components/Saver"
 import { Modal } from "react-bootstrap"
 import {
   StyledLoaderWrapper,
   StyledLoader,
   ContentBox,
-} from "../components/StyledElements"
+} from "src/components/StyledElements"
 // Axios
 import axios from "axios"
-import { baseURL } from "../base/axios.js"
+import { baseURL } from "src/base/axios.js"
 // Helpers
-import { capitalizeFirstLetter } from "../util/helpers"
+import { capitalizeFirstLetter } from "src/util/helpers"
 
 let originalFetchedData
 

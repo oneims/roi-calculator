@@ -1,11 +1,11 @@
 import React, { Component } from "react"
 import { Router } from "@reach/router"
-import ReportLayout from "../components/report/ReportLayout"
+import ReportLayout from "src/components/report/ReportLayout"
 // Pages
-import ReportDashboard from "../dynamic-components/report/ReportDashboard"
+import ReportDashboard from "src/components/dynamic-pages/report/ReportDashboard"
 // Axios
 import axios from "axios"
-import { baseURL } from "../base/axios.js"
+import { baseURL } from "src/base/axios.js"
 // Helpers
 import {
   getConversionRate,
@@ -17,7 +17,7 @@ import {
   getNetNewRevenue,
   getCostPerLead,
   getCustomersNeededForRevenueTarget,
-} from "../util/helpers"
+} from "src/util/helpers"
 
 export class Report extends Component {
   state = {

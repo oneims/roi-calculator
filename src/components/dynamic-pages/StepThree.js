@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { navigate } from "gatsby"
-import SEO from "../components/Seo"
+import SEO from "src/components/Seo"
 import { Container } from "react-bootstrap"
 import NumberFormat from "react-number-format"
 import {
@@ -16,7 +16,7 @@ import {
   Label,
   StyledField,
   StyledInput,
-} from "../components/StyledElements"
+} from "src/components/StyledElements"
 
 export class StepThree extends Component {
   componentDidMount() {

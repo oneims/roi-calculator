@@ -1,21 +1,21 @@
 import React, { Component } from "react"
 import { Router } from "@reach/router"
-import Layout from "../components/Layout"
+import Layout from "src/components/Layout"
 import { navigate } from "gatsby"
 // Pages
-import StepOne from "../dynamic-components/StepOne"
-import StepTwo from "../dynamic-components/StepTwo"
-import StepThree from "../dynamic-components/StepThree"
+import StepOne from "src/components/dynamic-pages/StepOne"
+import StepTwo from "src/components/dynamic-pages/StepTwo"
+import StepThree from "src/components/dynamic-pages/StepThree"
 // Components
 import { Modal } from "react-bootstrap"
 import {
   StyledLoaderWrapper,
   StyledLoader,
   ContentBox,
-} from "../components/StyledElements"
+} from "src/components/StyledElements"
 // Axios
 import axios from "axios"
-import { baseURL } from "../base/axios.js"
+import { baseURL } from "src/base/axios.js"
 
 export class Onboarding extends Component {
   state = {

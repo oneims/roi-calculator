@@ -1,8 +1,8 @@
 import React from "react"
 import { Container } from "react-bootstrap"
-import { colors } from "../theme/variables"
+import { colors } from "src/theme/variables"
 import styled from "styled-components"
-import { Button, StyledToolTip } from "./StyledElements"
+import { Button, StyledToolTip } from "src/components/StyledElements"
 import { Link } from "gatsby"
 
 const StyledFooter = styled.footer``
