@@ -11,8 +11,6 @@ import styled from "styled-components"
 import { Link } from "gatsby"
 
 const StyledReportSidebarMenu = styled.aside`
-  display: flex;
-  flex-direction: column;
   border-right: 1px solid #eceff2;
   background: ${colors.white};
   box-shadow: 1px 0 5px rgb(0 0 0 / 1%);
@@ -23,6 +21,11 @@ const StyledReportSidebarMenu = styled.aside`
   font-weight: 500;
   font-size: 0.9rem;
   z-index: 9999;
+  display: none;
+  @media (min-width: 992px) {
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 const StyledReportSidebarMenuHeader = styled.div`
@@ -39,7 +42,7 @@ const StyledReportSidebarMenuWrap = styled.div`
   height: 100%;
 `
 
-const ReportSidebarMenu = ({ reportID }) => {
+const ReportSidebarMenu = ({ paths }) => {
   return (
     <>
       <StyledReportSidebarMenu>
@@ -53,26 +56,19 @@ const ReportSidebarMenu = ({ reportID }) => {
           </StyledLogoBox>
         </StyledReportSidebarMenuHeader>
         <StyledReportSidebarMenuWrap>
-          <Link
-            className="no-styles"
-            activeClassName="active-link"
-            to={`/report/${reportID}`}
-          >
-            <StyledSidebarMenuCard>
-              <StyledSidebarMenuIcon>D</StyledSidebarMenuIcon>
-              <StyledSidebarMenuTitle>Dashboard</StyledSidebarMenuTitle>
-            </StyledSidebarMenuCard>
-          </Link>
-          <Link
-            className="no-styles"
-            activeClassName="active-link"
-            to={`/editor/${reportID}`}
-          >
-            <StyledSidebarMenuCard>
-              <StyledSidebarMenuIcon>E</StyledSidebarMenuIcon>
-              <StyledSidebarMenuTitle>Editor</StyledSidebarMenuTitle>
-            </StyledSidebarMenuCard>
-          </Link>
+          {paths.map((elem, index) => (
+            <Link
+              key={index}
+              className="no-styles"
+              activeClassName="active-link"
+              to={elem.destination}
+            >
+              <StyledSidebarMenuCard>
+                <StyledSidebarMenuIcon>{elem.icon}</StyledSidebarMenuIcon>
+                <StyledSidebarMenuTitle>{elem.label}</StyledSidebarMenuTitle>
+              </StyledSidebarMenuCard>
+            </Link>
+          ))}
         </StyledReportSidebarMenuWrap>
         <StyledReportSidebarMenuFooter>
           <StyledSidebarMenuCard>

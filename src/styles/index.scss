@@ -1,3 +1,5 @@
+// TODO -- Refactor Styles
+
 $primary_color: #05f;
 $primary_hover: #1d1de8;
 $white: #fff;
@@ -261,6 +263,7 @@ body {
 
 .no-styles {
   text-decoration: none;
+  color: inherit;
   &:hover {
     text-decoration: none;
   }
@@ -268,6 +271,7 @@ body {
 
 .active-link {
   pointer-events: none;
+  color: $primary_color;
   > div {
     background-color: rgba(225, 225, 252, 0.74);
     transition: 0.2s ease;

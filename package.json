@@ -6,6 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "axios": "^0.19.2",
+    "axios-cache-adapter": "^2.7.3",
     "babel-plugin-styled-components": "^1.10.7",
     "bootstrap": "^4.5.0",
     "date-fns": "^2.14.0",

@@ -1,10 +1,14 @@
 import React, { Component } from "react"
 import SEO from "src/components/Seo"
-import { Container, Table } from "react-bootstrap"
+import { Container, Table, Row, Col } from "react-bootstrap"
 import {
   Section,
+  ContentCard,
   StyledLoaderWrapper,
   StyledLoader,
+  StyledSidebarMenuIcon,
+  StyledContentCardLabel,
+  StyledContentCardSpotlight,
 } from "src/components/StyledElements"
 
 export class ReportDashboard extends Component {
@@ -67,6 +71,127 @@ export class ReportDashboard extends Component {
                 </Container>
               ) : (
                 <>
+                  <Container fluid className="mb-4">
+                    <Row>
+                      <Col lg="6" xl="4" className="mb-3">
+                        <ContentCard>
+                          <div className="d-flex align-center">
+                            <StyledSidebarMenuIcon Large className="mr-3">
+                              C
+                            </StyledSidebarMenuIcon>
+                            <div>
+                              <StyledContentCardLabel>
+                                Conversion Rate
+                              </StyledContentCardLabel>
+                              <StyledContentCardSpotlight Gradient>
+                                {conversion_rate}%
+                              </StyledContentCardSpotlight>
+                            </div>
+                          </div>
+                        </ContentCard>
+                      </Col>
+                      <Col lg="6" xl="4" className="mb-3">
+                        <ContentCard>
+                          <div className="d-flex align-center">
+                            <StyledSidebarMenuIcon Large className="mr-3">
+                              A
+                            </StyledSidebarMenuIcon>
+                            <div>
+                              <StyledContentCardLabel>
+                                Average Qualified Leads
+                              </StyledContentCardLabel>
+                              <StyledContentCardSpotlight Gradient>
+                                {average_qualified_leads_per_month}
+                              </StyledContentCardSpotlight>
+                            </div>
+                          </div>
+                        </ContentCard>
+                      </Col>
+
+                      <Col lg="6" xl="4" className="mb-3">
+                        <ContentCard>
+                          <div className="d-flex align-center">
+                            <StyledSidebarMenuIcon Large className="mr-3">
+                              A
+                            </StyledSidebarMenuIcon>
+                            <div>
+                              <StyledContentCardLabel>
+                                Average New Customers
+                              </StyledContentCardLabel>
+                              <StyledContentCardSpotlight Gradient>
+                                {Math.floor(average_new_customers_per_month)}
+                              </StyledContentCardSpotlight>
+                            </div>
+                          </div>
+                        </ContentCard>
+                      </Col>
+
+                      <Col lg="6" xl="4" className="mb-3">
+                        <ContentCard>
+                          <div className="d-flex align-center">
+                            <StyledSidebarMenuIcon Large className="mr-3">
+                              O
+                            </StyledSidebarMenuIcon>
+                            <div>
+                              <StyledContentCardLabel>
+                                Online Marketing Investment
+                              </StyledContentCardLabel>
+                              <StyledContentCardSpotlight Gradient>
+                                $
+                                {Number(
+                                  average_monthly_online_marketing_investment
+                                )
+                                  .toFixed(2)
+                                  .replace(/\d(?=(\d{3})+\.)/g, "$&,")}
+                              </StyledContentCardSpotlight>
+                            </div>
+                          </div>
+                        </ContentCard>
+                      </Col>
+
+                      <Col lg="6" xl="4" className="mb-3">
+                        <ContentCard>
+                          <div className="d-flex align-center">
+                            <StyledSidebarMenuIcon Large className="mr-3">
+                              A
+                            </StyledSidebarMenuIcon>
+                            <div>
+                              <StyledContentCardLabel>
+                                Average Cost Per Lead
+                              </StyledContentCardLabel>
+                              <StyledContentCardSpotlight Gradient>
+                                $
+                                {Number(average_cost_per_lead)
+                                  .toFixed(2)
+                                  .replace(/\d(?=(\d{3})+\.)/g, "$&,")}
+                              </StyledContentCardSpotlight>
+                            </div>
+                          </div>
+                        </ContentCard>
+                      </Col>
+
+                      <Col lg="6" xl="4" className="mb-3">
+                        <ContentCard>
+                          <div className="d-flex align-center">
+                            <StyledSidebarMenuIcon Large className="mr-3">
+                              A
+                            </StyledSidebarMenuIcon>
+                            <div>
+                              <StyledContentCardLabel>
+                                Cost Per Customer
+                              </StyledContentCardLabel>
+                              <StyledContentCardSpotlight Gradient>
+                                $
+                                {Number(cost_per_customer_acquisition)
+                                  .toFixed(2)
+                                  .replace(/\d(?=(\d{3})+\.)/g, "$&,")}
+                              </StyledContentCardSpotlight>
+                            </div>
+                          </div>
+                        </ContentCard>
+                      </Col>
+                    </Row>
+                  </Container>
                   <Container fluid>
                     <Table responsive>
                       <thead>

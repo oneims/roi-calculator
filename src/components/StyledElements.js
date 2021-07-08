@@ -28,7 +28,18 @@ const PatternWrapperFull = `
 `
 
 // Header
-export const StyledLogoBox = styled.div``
+export const StyledLogoBox = styled.div`
+  ${props =>
+    props.OnlySmall
+      ? `
+    display: block;
+    @media (min-width: 992px) {
+      display: none;
+    }
+    
+    `
+      : ``}
+`
 
 export const StyledLogo = styled.div`
   width: ${props => (props.Small ? "35px" : "45px")};
@@ -79,6 +90,15 @@ export const StyledSidebarMenuIcon = styled.div`
   border-radius: 4px;
   background-color: #edf1fd;
   color: ${colors.primary};
+  ${props =>
+    props.Large
+      ? css`
+          width: 70px;
+          height: 70px;
+          font-size: 50px;
+          font-weight: 800;
+        `
+      : ""}
 `
 
 export const StyledSidebarMenuTitle = styled.div`
@@ -209,6 +229,27 @@ export const ContentCard = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+`
+
+export const StyledContentCardLabel = styled.span`
+  font-weight: 700;
+  display: block;
+`
+
+export const StyledContentCardSpotlight = styled.span`
+  font-weight: 700;
+  display: block;
+  font-size: 2rem;
+  ${props =>
+    props.Gradient
+      ? css`
+          background: linear-gradient(-70deg, #0055ff, #8dc1fd);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          -webkit-box-decoration-break: clone;
+        `
+      : ""}
 `
 
 // Progress Bar
