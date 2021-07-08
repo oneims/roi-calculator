@@ -468,3 +468,91 @@ export const ColorStyles = {
   placeholder: styles => ({ ...styles, ...dot() }),
   singleValue: (styles, { data }) => ({ ...styles, ...dot(colors.primary) }),
 }
+
+// Info Drawer
+export const StyledInfoDrawer = styled.div`
+  width: 100vw;
+  @media (min-width: 576px) {
+    width: 31.25rem;
+  }
+  transition-property: none;
+  transition-duration: 150ms;
+  transform: translateX(0%);
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  z-index: 11111;
+  right: 0px;
+  background-color: #fff;
+  box-shadow: -3px 0 8px 0 rgb(66 91 118 / 21%);
+  overflow-y: scroll;
+  transition: 0.2s ease;
+  pointer-events: none;
+  transform: translateX(100%);
+  &.active {
+    transition: 0.3s ease;
+    pointer-events: all;
+    transform: translateX(0rem);
+  }
+`
+export const StyledInfoDrawerWrapper = styled.div``
+export const StyledInfoDrawerHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #00bda5;
+  background-image: linear-gradient(-303deg, #3165cc, #6287d0 56%, #758cbb);
+  color: #fff;
+  padding: 1.5rem 1rem;
+`
+export const StyledInfoDrawerBody = styled.div`
+  padding: 1.5rem 1rem;
+`
+export const StyledInfoDrawerFooter = styled.div``
+
+export const StyledInfoDrawerCloseButtonWrapper = styled.div``
+
+export const StyledInfoDrawerCloseButton = styled.button`
+  outline: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  background-color: #3b6ccd;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  border: 0.0625rem solid #3769cd;
+  transition: 0.2s ease;
+  &:hover {
+    background-color: #305cb3;
+    transition: 0.2s ease;
+    border-color: #305cb3;
+  }
+  figure {
+    margin: 0;
+  }
+  svg {
+    path {
+      fill: #fff;
+    }
+  }
+`
+
+export const TintedBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  transition: 0.2s ease;
+  opacity: 0;
+  z-index: 11111;
+  pointer-events: none;
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+    transition: 0.3s ease;
+  }
+`

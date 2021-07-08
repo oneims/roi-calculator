@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "../../styles/index.scss"
 import styled from "styled-components"
 // Components
+import InfoDrawer from "src/components/InfoDrawer"
 import ReportHeader from "src/components/report/ReportHeader"
 import ReportSidebarMenu from "src/components/report/ReportSidebarMenu"
 import { colors } from "src/theme/variables"
@@ -30,6 +31,18 @@ const Canvas = styled.div`
 `
 
 class ReportLayout extends Component {
+  state = {
+    infoDrawer: false,
+  }
+
+  showInfoDrawer = () => {
+    this.setState({ infoDrawer: true })
+  }
+
+  closeInfoDrawer = () => {
+    this.setState({ infoDrawer: false })
+  }
+
   render() {
     const { children, reportID } = this.props
     const paths = ReportPaths(reportID)
@@ -37,14 +50,24 @@ class ReportLayout extends Component {
       <>
         <StyledParentWrap>
           <DashboardWrapper>
-            <ReportSidebarMenu paths={paths} />
+            <ReportSidebarMenu
+              paths={paths}
+              showInfoDrawer={this.showInfoDrawer}
+            />
             <Viewport>
-              <ReportHeader paths={paths} />
+              <ReportHeader
+                showInfoDrawer={this.showInfoDrawer}
+                paths={paths}
+              />
               <Canvas>{children}</Canvas>
               <ReportFooter />
             </Viewport>
           </DashboardWrapper>
         </StyledParentWrap>
+        <InfoDrawer
+          active={this.state.infoDrawer ? "active" : ""}
+          closeInfoDrawer={this.closeInfoDrawer}
+        />
       </>
     )
   }

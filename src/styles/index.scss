@@ -21,9 +21,19 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
   font-weight: 800;
   // letter-spacing: -0.04em;
+}
+
+.f-600 {
+  font-weight: 600;
 }
 
 button,
@@ -306,5 +316,12 @@ body {
     &:not(.no-min-width) {
       min-width: 1800px;
     }
+  }
+}
+
+.show-after-768 {
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
   }
 }

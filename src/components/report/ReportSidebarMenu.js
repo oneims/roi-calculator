@@ -42,7 +42,7 @@ const StyledReportSidebarMenuWrap = styled.div`
   height: 100%;
 `
 
-const ReportSidebarMenu = ({ paths }) => {
+const ReportSidebarMenu = ({ paths, showInfoDrawer }) => {
   return (
     <>
       <StyledReportSidebarMenu>
@@ -71,7 +71,7 @@ const ReportSidebarMenu = ({ paths }) => {
           ))}
         </StyledReportSidebarMenuWrap>
         <StyledReportSidebarMenuFooter>
-          <StyledSidebarMenuCard>
+          <StyledSidebarMenuCard onClick={showInfoDrawer}>
             <StyledSidebarMenuIcon>@</StyledSidebarMenuIcon>
             <StyledSidebarMenuTitle>
               Email Me This Report

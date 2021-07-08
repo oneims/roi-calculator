@@ -28,6 +28,10 @@ const StyledSaver = styled.div`
 const StyledSaverWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
 `
 
 const Saver = props => {
@@ -55,13 +59,13 @@ const Saver = props => {
           )}
           <Button
             onClick={props.handleCancel}
-            className="mr-3"
+            className="mr-md-3"
             Dashboard
             Secondary
           >
             Cancel
           </Button>
-          <p className="mb-0">
+          <p className="mb-0 show-after-768">
             You have changes pending. Save your changes to avoid losing them!
           </p>
         </StyledSaverWrapper>

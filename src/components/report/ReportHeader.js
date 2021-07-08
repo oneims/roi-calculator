@@ -43,7 +43,7 @@ const StyledReportHeaderWrap = styled.div`
   }
 `
 
-const ReportHeader = ({ paths }) => {
+const ReportHeader = ({ paths, showInfoDrawer }) => {
   return (
     <>
       <StyledReportHeaderParent>
@@ -57,7 +57,10 @@ const ReportHeader = ({ paths }) => {
                   </StyledLogo>
                 </Link>
               </StyledLogoBox>
-              <StyledSidebarMenuCard className="mt-0 mb-0 mr-0 ml-0">
+              <StyledSidebarMenuCard
+                onClick={showInfoDrawer}
+                className="mt-0 mb-0 mr-0 ml-0"
+              >
                 <StyledSidebarMenuIcon>@</StyledSidebarMenuIcon>
                 <StyledSidebarMenuTitle>
                   Email Me This Report
