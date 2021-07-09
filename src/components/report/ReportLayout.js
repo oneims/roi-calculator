@@ -25,6 +25,7 @@ const Viewport = styled.div`
 `
 
 const Canvas = styled.div`
+  min-height: 95vh;
   @media (min-width: 992px) {
     padding-top: 68px;
   }
