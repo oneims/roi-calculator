@@ -51,6 +51,10 @@ export const roundToTwoDecimals = n => {
   return Number(Math.round(n * 100) / 100)
 }
 
+export const removeSpecialChars = str => {
+  return str.toString().replace(/[^a-z\d\s]+/gi, "")
+}
+
 // **Calculations**
 
 // Get Conversion Rate

@@ -332,4 +332,30 @@ body {
     display: block;
   }
 }
+
+
+// Funnel
+.dashboard-funnel {
+  @media (max-width: 768px) {
+    overflow-x: scroll;
+  }
+  > div {
+    min-width: 700px;
+    > div:nth-child(2) {
+      > div {
+        animation-delay: 0s !important;
+        animation-duration: 0.3s !important;
+        padding: 1rem 1.5rem;
+      }
+    }
+    > div:nth-child(1) {
+      svg {
+        path {
+          animation-delay: 0.2s !important;
+          animation-duration: 0.4s !important;
+        }
+      }
+    }
+  }
+}
 `

@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import SEO from "src/components/Seo"
 import { Container, Table, Row, Col } from "react-bootstrap"
+import ReportFunnel from "src/components/report/ReportFunnel"
 import {
   Section,
   ContentCard,
@@ -21,6 +22,9 @@ export class ReportDashboard extends Component {
       // Misc
       loading,
       error,
+      // Useful for funnel
+      average_monthly_website_traffic,
+      average_monthly_leads_from_website,
       // Values needed to build report
       conversion_rate,
       average_qualified_leads_per_month,
@@ -71,6 +75,22 @@ export class ReportDashboard extends Component {
                 </Container>
               ) : (
                 <>
+                  <Container fluid className="mb-4">
+                    <ReportFunnel
+                      average_monthly_website_traffic={
+                        average_monthly_website_traffic
+                      }
+                      average_monthly_leads_from_website={
+                        average_monthly_leads_from_website
+                      }
+                      average_qualified_leads_per_month={
+                        average_qualified_leads_per_month
+                      }
+                      average_new_customers_per_month={
+                        average_new_customers_per_month
+                      }
+                    />
+                  </Container>
                   <Container fluid className="mb-4">
                     <Row>
                       <Col lg="6" xl="4" className="mb-3">

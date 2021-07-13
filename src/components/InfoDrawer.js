@@ -20,15 +20,19 @@ const InfoDrawer = ({ active, closeInfoDrawer }) => {
         <StyledInfoDrawerWrapper>
           <StyledInfoDrawerHeader>
             <div>
-              <h2 class="h4 mb-0 f-600">Email Me This Report</h2>
+              <h2 className="h4 mb-0 f-600">Email Me This Report</h2>
             </div>
             <StyledInfoDrawerCloseButtonWrapper>
               <StyledInfoDrawerCloseButton onClick={closeInfoDrawer}>
                 <figure>
-                  <svg class="x-29px_svg__svgIcon-use" width="29" height="29">
+                  <svg
+                    className="x-29px_svg__svgIcon-use"
+                    width="29"
+                    height="29"
+                  >
                     <path
                       d="M20.13 8.11l-5.61 5.61-5.6-5.61-.81.8 5.61 5.61-5.61 5.61.8.8 5.61-5.6 5.61 5.6.8-.8-5.6-5.6 5.6-5.62"
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                     ></path>
                   </svg>
                 </figure>

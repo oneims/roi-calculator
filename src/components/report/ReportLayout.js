@@ -7,7 +7,6 @@ import { Theme, GlobalStyle } from "src/styles/ThemeConfig"
 import InfoDrawer from "src/components/InfoDrawer"
 import ReportHeader from "src/components/report/ReportHeader"
 import ReportSidebarMenu from "src/components/report/ReportSidebarMenu"
-import { Theme } from "src/styles/ThemeConfig"
 import ReportFooter from "src/components/report/ReportFooter"
 import { ReportPaths } from "src/components/report/ReportPaths"
 

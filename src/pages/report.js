@@ -28,6 +28,9 @@ export class Report extends Component {
     data: null,
     loading: false,
     error: false,
+    // Useful for Funnel
+    average_monthly_website_traffic: null,
+    average_monthly_leads_from_website: null,
     // Values needed to build report
     conversion_rate: null,
     average_qualified_leads_per_month: null,
@@ -251,7 +254,9 @@ export class Report extends Component {
             // Updating State
             this.setState({
               data: res.data,
-              loading: false,
+              // Useful for funnel
+              average_monthly_website_traffic,
+              average_monthly_leads_from_website,
               // Values needed to build report
               conversion_rate,
               average_qualified_leads_per_month,
@@ -279,6 +284,8 @@ export class Report extends Component {
               average_qualified_leads_per_month_PROJECTION,
               average_new_customers_per_month_PROJECTION,
               average_cost_per_lead_PROJECTION,
+              // Loader
+              loading: false,
             })
             console.log(this.state)
           }, timer)
