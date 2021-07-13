@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import "../../styles/index.scss"
 import styled from "styled-components"
+import { ThemeProvider } from "styled-components"
+import { Theme, GlobalStyle } from "src/styles/ThemeConfig"
 // Components
 import InfoDrawer from "src/components/InfoDrawer"
 import ReportHeader from "src/components/report/ReportHeader"
@@ -49,26 +50,29 @@ class ReportLayout extends Component {
     const paths = ReportPaths(reportID)
     return (
       <>
-        <StyledParentWrap>
-          <DashboardWrapper>
-            <ReportSidebarMenu
-              paths={paths}
-              showInfoDrawer={this.showInfoDrawer}
-            />
-            <Viewport>
-              <ReportHeader
-                showInfoDrawer={this.showInfoDrawer}
+        <GlobalStyle />
+        <ThemeProvider theme={Theme}>
+          <StyledParentWrap>
+            <DashboardWrapper>
+              <ReportSidebarMenu
                 paths={paths}
+                showInfoDrawer={this.showInfoDrawer}
               />
-              <Canvas>{children}</Canvas>
-              <ReportFooter />
-            </Viewport>
-          </DashboardWrapper>
-        </StyledParentWrap>
-        <InfoDrawer
-          active={this.state.infoDrawer ? "active" : ""}
-          closeInfoDrawer={this.closeInfoDrawer}
-        />
+              <Viewport>
+                <ReportHeader
+                  showInfoDrawer={this.showInfoDrawer}
+                  paths={paths}
+                />
+                <Canvas>{children}</Canvas>
+                <ReportFooter />
+              </Viewport>
+            </DashboardWrapper>
+          </StyledParentWrap>
+          <InfoDrawer
+            active={this.state.infoDrawer ? "active" : ""}
+            closeInfoDrawer={this.closeInfoDrawer}
+          />
+        </ThemeProvider>
       </>
     )
   }

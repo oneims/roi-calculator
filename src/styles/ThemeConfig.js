@@ -2,45 +2,28 @@
 
 import { createGlobalStyle } from "styled-components"
 
-export const theme = {
+export const Theme = {
   colors: {
-    primary: "#818cf8",
-    secondary: "#111827",
-    headingColor: "#111827",
-    bodyColor: "#4b505a",
-    purple: "#a855f7",
-    red: "#ec4899",
-    orange: "#fb923c",
-    green: "#4ade80",
-    dark: "#111827",
+    primary: "#05f",
+    primaryHover: "#1d1de8",
+    secondary: "#2b2b2b",
+    secondaryHover: "#000",
+    lightBlue: "#09f",
     white: "#fff",
-    lightGray: "#eee",
-    silver: "#6b7280",
-    gray: "#6b7280",
-    primaryGradient:
-      "linear-gradient(140deg, rgba(129,140,248,1) 0%, rgba(14,165,233,1) 100%)",
-    purpleGradient: "linear-gradient(140deg, #a855f7 0%, #6366f1 100%)",
-    redGradient: "linear-gradient(140deg, #ec4899 0%, #f43f5e 100%)",
-    orangeGradient: "linear-gradient(140deg, #fb923c 0%, #db2777 100%)",
-    greenGradient: "linear-gradient(140deg, #4ade80 0%, #06b6d4 100%)",
-    sectionLightPrimary: "#06b6d40f",
-    sectionLightPurple: "#fbf7ff",
-    sectionLightGreen: "#f8fffb",
-    sectionWhite: "#fff",
+    silver: "#ccc",
+    black: "#000",
+    gradientText: "linear-gradient( -70deg,#0055ff,#8dc1fd)",
+    darkTeal: "#33475b",
+    dark: "#212b36",
+    dashboardBackground: "#f5f6f9",
+    errorSolid: "#ffe6e6",
+    errorBorder: "#ffaeaec9",
+    successSolid: "#e5f8f6",
+    successBorder: "#7fded2",
   },
-  hoverIntensity: 0.1,
-  sectionWhite: "#fff",
-  sectionLightPrimary: "#06b6d40f",
-  defaultBorderRadius: "0.25rem",
-  primaryBoxShadow:
-    "0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)",
 }
 
 export const GlobalStyle = createGlobalStyle`
-// $primary_color: #05f;
-// $primary_hover: #1d1de8;
-// $white: #fff;
-
 body,
 html {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
@@ -48,7 +31,7 @@ html {
   @media (min-width: 768px) {
     overflow-x: hidden;
   }
-  color: #000;
+  color: ${Theme.colors.black};
   line-height: 1.5;
   font-weight: 300;
 }
@@ -66,7 +49,6 @@ h6,
 .h5,
 .h6 {
   font-weight: 800;
-  // letter-spacing: -0.04em;
 }
 
 .f-600 {
@@ -93,7 +75,7 @@ textarea {
   p,
   ul li,
   ol li {
-    color: #fff !important;
+    color: ${Theme.colors.white} !important;
   }
 }
 
@@ -192,7 +174,7 @@ body {
 }
 
 .modal-notification {
-  color: #33475b;
+  color: ${Theme.colors.darkTeal};
   &__title {
     font-weight: 700;
   }
@@ -212,26 +194,14 @@ body {
     position: relative;
     text-align: left;
     &-error {
-      border-color: #ffaeaec9;
-      background-color: #ffe6e6;
+      border-color: ${Theme.colors.errorBorder};
+      background-color: ${Theme.colors.errorSolid};
     }
     &-success {
-      background-color: #e5f8f6;
-      border-color: #7fded2;
+      background-color: ${Theme.colors.successSolid};
+      border-color: ${Theme.colors.successBorder};
     }
   }
-}
-
-.json-data {
-  background-color: #fdeddc;
-  padding: 2rem;
-  border-radius: 4px;
-  font-weight: 500;
-  position: relative;
-  border: 2px solid #eee;
-  text-align: left;
-  line-height: 3;
-  min-height: 500px;
 }
 
 // Date Picker
@@ -279,17 +249,17 @@ body {
 .react-datepicker__current-month,
 .react-datepicker-time__header,
 .react-datepicker-year-header {
-  background-color: $primary_color;
-  color: $white;
+  background-color: ${Theme.colors.primary};
+  color: ${Theme.colors.white};
   padding: 0.75rem;
   font-size: 1.25rem;
   font-weight: 800;
 }
 
 .react-datepicker__month-text--keyboard-selected {
-  background-color: $primary_color;
+  background-color: ${Theme.colors.primary};
   &:hover {
-    background-color: $primary_color !important;
+    background-color: ${Theme.colors.primary} !important;
   }
 }
 
@@ -318,7 +288,7 @@ body {
 
 .active-link {
   pointer-events: none;
-  color: $primary_color;
+  color: ${Theme.colors.primary};
   > div {
     background-color: rgba(225, 225, 252, 0.74);
     transition: 0.2s ease;
@@ -362,5 +332,4 @@ body {
     display: block;
   }
 }
-
 `

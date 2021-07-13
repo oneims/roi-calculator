@@ -1,5 +1,9 @@
+// TODO -- Refactor Styled Components
+
 import styled, { css } from "styled-components"
-import { colors } from "src/theme/variables"
+import { Theme } from "src/styles/ThemeConfig"
+
+const { colors } = Theme
 
 // Blocks
 const VerticallyCentered = `
