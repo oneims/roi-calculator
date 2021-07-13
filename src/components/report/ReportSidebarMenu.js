@@ -1,5 +1,5 @@
 import React from "react"
-import { colors } from "src/theme/variables"
+import { Theme } from "src/styles/ThemeConfig"
 import {
   StyledLogoBox,
   StyledLogo,
@@ -9,6 +9,8 @@ import {
 } from "src/components/StyledElements"
 import styled from "styled-components"
 import { Link } from "gatsby"
+
+const { colors } = Theme
 
 const StyledReportSidebarMenu = styled.aside`
   border-right: 1px solid #eceff2;

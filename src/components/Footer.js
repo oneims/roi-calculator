@@ -1,9 +1,11 @@
 import React from "react"
 import { Container } from "react-bootstrap"
-import { colors } from "src/theme/variables"
+import { Theme } from "src/styles/ThemeConfig"
 import styled from "styled-components"
 import { Button, StyledToolTip } from "src/components/StyledElements"
 import { Link } from "gatsby"
+
+const { colors } = Theme
 
 const StyledFooter = styled.footer``
 

@@ -1,6 +1,6 @@
 import React from "react"
 import { Container } from "react-bootstrap"
-import { colors } from "src/theme/variables"
+import { Theme } from "src/styles/ThemeConfig"
 import {
   StyledSidebarMenuCard,
   StyledSidebarMenuIcon,
@@ -11,6 +11,8 @@ import {
 import ReportMobileMenu from "src/components/report/ReportMobileMenu"
 import { Link } from "gatsby"
 import styled from "styled-components"
+
+const { colors } = Theme
 
 // Blocks
 

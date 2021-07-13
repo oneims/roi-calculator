@@ -1,6 +1,6 @@
 import React from "react"
 import { Container } from "react-bootstrap"
-import { colors } from "src/theme/variables"
+import { Theme } from "src/styles/ThemeConfig"
 import styled, { css } from "styled-components"
 import {
   Button,
@@ -11,6 +11,8 @@ import {
 } from "src/components/StyledElements"
 import { Link } from "gatsby"
 import ReactTooltip from "react-tooltip"
+
+const { colors } = Theme
 
 // Blocks
 const WithProgressBar = `
