@@ -2,8 +2,7 @@ import React, { Component } from "react"
 import { Funnel } from "funnel-react-2"
 import { ContentCard } from "src/components/StyledElements"
 import { Theme } from "src/styles/ThemeConfig"
-import { removeSpecialChars } from "src/util/helpers"
-
+import { removeSpecialChars, numberWithCommas } from "src/util/helpers"
 const { colors } = Theme
 
 class ReportFunnel extends Component {
@@ -81,7 +80,7 @@ class ReportFunnel extends Component {
                   <>
                     <span style={{ color: colors.primary, fontWeight: 700 }}>
                       {" "}
-                      {value}{" "}
+                      {numberWithCommas(value)}
                     </span>
                   </>
                 )

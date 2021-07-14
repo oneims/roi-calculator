@@ -20,6 +20,8 @@ import {
   getCostPerNewCustomer,
   // Projection Helpers
   getProjectionTwoParams,
+  getProjectionTwoParamsGraph,
+  PROJECTChangeInMonthlyTraffic,
 } from "src/util/helpers"
 
 export class Report extends Component {
@@ -58,6 +60,8 @@ export class Report extends Component {
     average_qualified_leads_per_month_PROJECTION: null,
     average_new_customers_per_month_PROJECTION: null,
     average_cost_per_lead_PROJECTION: null,
+    // Projections Graphs
+    monthly_leads_PROJECTION_GRAPH: null,
   }
 
   handleUpdateIDState = id => {
@@ -105,6 +109,12 @@ export class Report extends Component {
               20,
               "Monthly Website Leads",
               getConversionRate
+            )
+
+            const monthly_leads_PROJECTION_GRAPH = PROJECTChangeInMonthlyTraffic(
+              average_monthly_website_traffic,
+              conversion_rate,
+              100
             )
 
             const conversion_rate_CALCULATION = `Monthly Leads <strong>(${average_monthly_leads_from_website})</strong> / Monthly Website Traffic <strong>(${average_monthly_website_traffic})</strong> * <strong>100</strong>`
@@ -284,6 +294,8 @@ export class Report extends Component {
               average_qualified_leads_per_month_PROJECTION,
               average_new_customers_per_month_PROJECTION,
               average_cost_per_lead_PROJECTION,
+              // Projections Graphs
+              monthly_leads_PROJECTION_GRAPH,
               // Loader
               loading: false,
             })

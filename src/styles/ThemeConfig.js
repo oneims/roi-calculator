@@ -358,4 +358,23 @@ body {
     }
   }
 }
+
+// Recharts
+
+.recharts-cartesian-axis { 
+  font-family: inherit;
+  color: #33475b;
+  cursor: default;
+  font-size: 12px;
+  fill: #33475b;
+}
+.recharts-default-tooltip {
+  background-color: #fff;
+  border-radius : 4px;
+  border: 2px solid #eee !important;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
 `

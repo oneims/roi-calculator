@@ -2,6 +2,9 @@ import React, { Component } from "react"
 import SEO from "src/components/Seo"
 import { Container, Table, Row, Col } from "react-bootstrap"
 import ReportFunnel from "src/components/report/ReportFunnel"
+import InfoAlert from "src/components/InfoAlert"
+import { removeSpecialChars, numberWithCommas } from "src/util/helpers"
+import ReportAreaGraph from "src/components/report/ReportAreaGraph"
 import {
   Section,
   ContentCard,
@@ -52,7 +55,71 @@ export class ReportDashboard extends Component {
       average_qualified_leads_per_month_PROJECTION,
       average_new_customers_per_month_PROJECTION,
       average_cost_per_lead_PROJECTION,
+      // Projections Graph
+      monthly_leads_PROJECTION_GRAPH,
     } = this.props
+
+    const dummyData = [
+      {
+        name: "A",
+        Leads: 1400,
+      },
+      {
+        name: "B",
+        Leads: 400,
+      },
+      {
+        name: "C",
+        Leads: 4500,
+      },
+      {
+        name: "D",
+        Leads: 2500,
+      },
+      {
+        name: "E",
+        Leads: 9000,
+      },
+      {
+        name: "F",
+        Leads: 15000,
+      },
+      {
+        name: "G",
+        Leads: 2400,
+      },
+    ]
+
+    const dummyDataTwo = [
+      {
+        name: "A",
+        Leads: 480,
+      },
+      {
+        name: "B",
+        Leads: 15000,
+      },
+      {
+        name: "C",
+        Leads: 1500,
+      },
+      {
+        name: "D",
+        Leads: 2500,
+      },
+      {
+        name: "E",
+        Leads: 1500,
+      },
+      {
+        name: "F",
+        Leads: 9000,
+      },
+      {
+        name: "G",
+        Leads: 2400,
+      },
+    ]
 
     return (
       <>
@@ -76,6 +143,16 @@ export class ReportDashboard extends Component {
               ) : (
                 <>
                   <Container fluid className="mb-4">
+                    <InfoAlert>
+                      <strong>Optimization Tip:</strong> <br />
+                      Your Cost Per Lead is currently ${average_cost_per_lead}
+                      {average_cost_per_lead < 5 ? `, which is great! ` : `. `}
+                      Spend your marketing budget in a way which increases the
+                      conversion rate from {conversion_rate}% to{" "}
+                      {conversion_rate + 1}%
+                    </InfoAlert>
+                  </Container>
+                  <Container fluid className="mb-4">
                     <ReportFunnel
                       average_monthly_website_traffic={
                         average_monthly_website_traffic
@@ -91,7 +168,7 @@ export class ReportDashboard extends Component {
                       }
                     />
                   </Container>
-                  <Container fluid className="mb-4">
+                  <Container fluid className="mb-2">
                     <Row>
                       <Col lg="6" xl="4" className="mb-3">
                         <ContentCard>
@@ -158,11 +235,11 @@ export class ReportDashboard extends Component {
                               </StyledContentCardLabel>
                               <StyledContentCardSpotlight Gradient>
                                 $
-                                {Number(
-                                  average_monthly_online_marketing_investment
-                                )
-                                  .toFixed(2)
-                                  .replace(/\d(?=(\d{3})+\.)/g, "$&,")}
+                                {numberWithCommas(
+                                  Number(
+                                    average_monthly_online_marketing_investment
+                                  )
+                                )}
                               </StyledContentCardSpotlight>
                             </div>
                           </div>
@@ -181,9 +258,9 @@ export class ReportDashboard extends Component {
                               </StyledContentCardLabel>
                               <StyledContentCardSpotlight Gradient>
                                 $
-                                {Number(average_cost_per_lead)
-                                  .toFixed(2)
-                                  .replace(/\d(?=(\d{3})+\.)/g, "$&,")}
+                                {numberWithCommas(
+                                  Number(average_cost_per_lead)
+                                )}
                               </StyledContentCardSpotlight>
                             </div>
                           </div>
@@ -202,9 +279,9 @@ export class ReportDashboard extends Component {
                               </StyledContentCardLabel>
                               <StyledContentCardSpotlight Gradient>
                                 $
-                                {Number(cost_per_customer_acquisition)
-                                  .toFixed(2)
-                                  .replace(/\d(?=(\d{3})+\.)/g, "$&,")}
+                                {numberWithCommas(
+                                  Number(cost_per_customer_acquisition)
+                                )}
                               </StyledContentCardSpotlight>
                             </div>
                           </div>
@@ -212,6 +289,69 @@ export class ReportDashboard extends Component {
                       </Col>
                     </Row>
                   </Container>
+                  <Container fluid className="mb-4">
+                    <Row>
+                      <Col lg="12">
+                        <ContentCard>
+                          <StyledContentCardSpotlight className="text-center mt-2 mb-1">
+                            Road to{" "}
+                            {numberWithCommas(
+                              Number(
+                                removeSpecialChars(
+                                  average_monthly_leads_from_website
+                                )
+                              ) * 2
+                            )}{" "}
+                            Leads
+                          </StyledContentCardSpotlight>
+                          <ReportAreaGraph
+                            data={monthly_leads_PROJECTION_GRAPH}
+                          />
+                        </ContentCard>
+                      </Col>
+                    </Row>
+                  </Container>
+                  <Container fluid className="mb-4">
+                    <InfoAlert Warning>
+                      <strong>Optimization Tip:</strong> <br />
+                      Your Cost Per Lead is currently ${average_cost_per_lead}
+                      {average_cost_per_lead < 5 ? `, which is great! ` : `. `}
+                      Spend your marketing budget in a way which increases the
+                      conversion rate from {conversion_rate}% to{" "}
+                      {conversion_rate + 1}%
+                    </InfoAlert>
+                  </Container>
+
+                  <Container fluid className="mb-4">
+                    <Row>
+                      <Col lg="6">
+                        <ContentCard>
+                          <ReportAreaGraph data={dummyData} />
+                        </ContentCard>
+                      </Col>
+                      <Col lg="6">
+                        <ContentCard>
+                          <ReportAreaGraph data={dummyDataTwo} />
+                        </ContentCard>
+                      </Col>
+                    </Row>
+                  </Container>
+
+                  {/* <Container fluid className="mb-4">
+                    <Row>
+                      <Col lg="12">
+                        <ContentCard>
+                          <StyledContentCardLabel>
+                            Conversion Rate Projection
+                          </StyledContentCardLabel>
+                          <ReportLineGraph
+                            data={monthly_leads_PROJECTION_GRAPH}
+                          />
+                        </ContentCard>
+                      </Col>
+                    </Row>
+                  </Container> */}
+
                   <Container fluid>
                     <Table responsive>
                       <thead>

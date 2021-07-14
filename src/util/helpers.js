@@ -52,7 +52,13 @@ export const roundToTwoDecimals = n => {
 }
 
 export const removeSpecialChars = str => {
-  return str.toString().replace(/[^a-z\d\s]+/gi, "")
+  if (str !== null) {
+    return str.toString().replace(/[^a-z\d\s]+/gi, "")
+  }
+}
+
+export const numberWithCommas = x => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
 // **Calculations**
@@ -192,6 +198,48 @@ export const getProjectionTwoParams = (
       projection.push({
         description: `${str} <strong>Increased</strong> By <strong>${i}%</strong>`,
         value: switched ? cb(m, v) : cb(v, m),
+      })
+    }
+  }
+  return projection
+}
+
+export const getProjectionTwoParamsGraph = (
+  n, // Gets Incremented by 2%
+  m, // Second Parameter (number)
+  k, // Max Limit
+  str, // String which was updated
+  cb, // callback to call,
+  switched // (optional) set to true if params have been switched
+) => {
+  const projection = []
+  for (let i = 1; i <= k; i++) {
+    if (i % 2 == 0) {
+      const v = (convertToInt(n) * i) / 100 + convertToInt(n)
+      projection.push({
+        name: `${str} Up By ${i}%`,
+        Traffic: switched ? cb(m, v) : cb(v, m),
+      })
+    }
+  }
+  return projection
+}
+
+export const PROJECTChangeInMonthlyTraffic = (
+  currentMonthlyTraffic,
+  currentConversionRate,
+  maxLimit
+) => {
+  const projection = []
+  for (let i = 1; i <= maxLimit; i++) {
+    if (i % 2 == 0) {
+      const changeInTraffic =
+        (convertToInt(currentMonthlyTraffic) * i) / 100 +
+        convertToInt(currentMonthlyTraffic)
+      const v = (changeInTraffic * convertToInt(currentConversionRate)) / 100
+      projection.push({
+        name: `Traffic Up By ${i}%`,
+        Leads: Math.floor(v),
       })
     }
   }
