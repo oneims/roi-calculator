@@ -52,13 +52,15 @@ export const roundToTwoDecimals = n => {
 }
 
 export const removeSpecialChars = str => {
-  if (str !== null) {
+  if (str) {
     return str.toString().replace(/[^a-z\d\s]+/gi, "")
   }
 }
 
 export const numberWithCommas = x => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  if (x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
 }
 
 // **Calculations**
@@ -244,4 +246,25 @@ export const PROJECTChangeInMonthlyTraffic = (
     }
   }
   return projection
+}
+
+// Budget Optimizer
+
+export const budgetOptimizer = budget => {
+  budget = convertToInt(budget)
+  const allocation = {
+    SEO: 40,
+    "Content Marketing": 28,
+    "Paid Media": 22,
+    "Social Promotion": 10,
+  }
+  const output = []
+
+  for (const key of Object.keys(allocation)) {
+    output.push({
+      name: key,
+      value: Math.floor((allocation[key] * budget) / 100),
+    })
+  }
+  return output
 }

@@ -5,6 +5,7 @@ import ReportFunnel from "src/components/report/ReportFunnel"
 import InfoAlert from "src/components/InfoAlert"
 import { removeSpecialChars, numberWithCommas } from "src/util/helpers"
 import ReportAreaGraph from "src/components/report/ReportAreaGraph"
+import ReportPieChart from "src/components/report/ReportPieChart"
 import {
   Section,
   ContentCard,
@@ -25,6 +26,9 @@ export class ReportDashboard extends Component {
       // Misc
       loading,
       error,
+      // Base Data
+      revenue_growth_goal,
+      current_annual_marketing_budget,
       // Useful for funnel
       average_monthly_website_traffic,
       average_monthly_leads_from_website,
@@ -57,6 +61,8 @@ export class ReportDashboard extends Component {
       average_cost_per_lead_PROJECTION,
       // Projections Graph
       monthly_leads_PROJECTION_GRAPH,
+      // Budget Optimizer
+      budget_optimizer,
     } = this.props
 
     const dummyData = [
@@ -329,9 +335,35 @@ export class ReportDashboard extends Component {
                           <ReportAreaGraph data={dummyData} />
                         </ContentCard>
                       </Col>
-                      <Col lg="6">
+                      <Col lg="6" className="mt-4 mt-lg-0">
                         <ContentCard>
                           <ReportAreaGraph data={dummyDataTwo} />
+                        </ContentCard>
+                      </Col>
+                    </Row>
+                  </Container>
+
+                  <Container fluid className="mb-4">
+                    <Row>
+                      <Col lg="12">
+                        <ContentCard>
+                          <StyledContentCardSpotlight
+                            Gradient
+                            className="text-center mt-2 mb-1"
+                          >
+                            Budget Optimizer
+                          </StyledContentCardSpotlight>
+                          <p className="text-center f-400">
+                            Based on your current goal to reach{" "}
+                            <span className="text-color-primary f-700">
+                              {revenue_growth_goal}
+                            </span>{" "}
+                            and your current marketing budget of{" "}
+                            <span className="text-color-primary f-700">
+                              {current_annual_marketing_budget}
+                            </span>
+                          </p>
+                          <ReportPieChart data={budget_optimizer} />
                         </ContentCard>
                       </Col>
                     </Row>

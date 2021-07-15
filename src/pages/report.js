@@ -22,6 +22,8 @@ import {
   getProjectionTwoParams,
   getProjectionTwoParamsGraph,
   PROJECTChangeInMonthlyTraffic,
+  // Budget Optimizer
+  budgetOptimizer,
 } from "src/util/helpers"
 
 export class Report extends Component {
@@ -30,7 +32,10 @@ export class Report extends Component {
     data: null,
     loading: false,
     error: false,
-    // Useful for Funnel
+    // Base Data
+    revenue_growth_goal: null,
+    current_annual_marketing_budget: null,
+    // // Useful for Funnel
     average_monthly_website_traffic: null,
     average_monthly_leads_from_website: null,
     // Values needed to build report
@@ -62,6 +67,8 @@ export class Report extends Component {
     average_cost_per_lead_PROJECTION: null,
     // Projections Graphs
     monthly_leads_PROJECTION_GRAPH: null,
+    // Budget Optimizer
+    budget_optimizer: null,
   }
 
   handleUpdateIDState = id => {
@@ -261,9 +268,18 @@ export class Report extends Component {
             * Close Ratio <strong>(${average_close_ratio_from_opportunities_to_deals})</strong>
             `
 
+            // Budget Optimizer
+
+            const budget_optimizer = budgetOptimizer(
+              current_annual_marketing_budget
+            )
+
             // Updating State
             this.setState({
               data: res.data,
+              // Base Data
+              revenue_growth_goal,
+              current_annual_marketing_budget,
               // Useful for funnel
               average_monthly_website_traffic,
               average_monthly_leads_from_website,
@@ -296,6 +312,8 @@ export class Report extends Component {
               average_cost_per_lead_PROJECTION,
               // Projections Graphs
               monthly_leads_PROJECTION_GRAPH,
+              // Budget Optimizer
+              budget_optimizer,
               // Loader
               loading: false,
             })

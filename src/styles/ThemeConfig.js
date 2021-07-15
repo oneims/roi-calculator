@@ -33,7 +33,43 @@ html {
   }
   color: ${Theme.colors.black};
   line-height: 1.5;
-  font-weight: 300;
+  font-weight: 400;
+}
+
+.f-400 {
+  font-weight: 400;
+}
+
+.f-500 {
+  font-weight: 500;
+}
+
+.f-600 {
+  font-weight: 600;
+}
+
+.f-700 {
+  font-weight: 700;
+}
+
+.mw-500 {
+  max-width: 500px;
+}
+
+.mw-600 {
+  max-width: 600px;
+}
+
+.mw-700 {
+  max-width: 700px;
+}
+
+.mw-800 {
+  max-width: 800px;
+}
+
+.mw-900 {
+  max-width: 900px;
 }
 
 h1,
@@ -359,6 +395,10 @@ body {
   }
 }
 
+.text-color-primary {
+  color: ${Theme.colors.primary}
+}
+
 // Recharts
 
 .recharts-cartesian-axis { 
@@ -375,6 +415,18 @@ body {
   font-size: 12px;
   font-weight: 500;
   opacity: 0.9;
+}
+
+.flex-responsive-container {
+  width: 100%;
+  @media (min-width: 768px) {
+    max-width: 70%;
+  }
+}
+
+.recharts-pie {
+  font-size: 13px;
+  font-weight: 600;
 }
 
 `
