@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import SEO from "src/components/Seo"
 import Select from "react-select"
 import { Container, Row, Col } from "react-bootstrap"
+import { STATIC_Industries } from "src/util/STATIC_Data"
 import NumberFormat from "react-number-format"
 import DatePicker from "react-datepicker"
 import {
@@ -22,22 +23,10 @@ import {
   StyledChoiceItem,
 } from "src/components/StyledElements"
 
-const options = [
-  {
-    industry: [
-      { value: "retail", label: "Retail" },
-      { value: "finance", label: "Finance" },
-      { value: "trade", label: "Trade" },
-      { value: "transport", label: "Transport" },
-      { value: "construction", label: "Construction" },
-      { value: "health_care", label: "Health Care" },
-    ],
-  },
-]
+const options = STATIC_Industries
 
 export class ReportEditor extends Component {
   componentDidMount() {
-    // console.log(`component mounted`)
     this.props.handleUpdateIDState(this.props.id)
     this.props.handleGetDataByID(this.props.id)
   }
@@ -69,6 +58,7 @@ export class ReportEditor extends Component {
       current_annual_marketing_budget,
       percentage_of_marketing_budget_spent_on_online_advertisement,
     } = this.props
+
     return (
       <>
         <SEO title="Editor" />

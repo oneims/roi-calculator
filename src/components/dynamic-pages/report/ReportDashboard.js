@@ -1,18 +1,30 @@
 import React, { Component } from "react"
 import SEO from "src/components/Seo"
+// Static Data
+import { STATIC_Industry_Metrics } from "src/util/STATIC_Data"
+// Helpers
+import {
+  removeSpecialChars,
+  numberWithCommas,
+  printIndustryNeatly,
+  printCompanySizeAnnualRevenueNeatly,
+  getDifferenceInMonths,
+  parseISOString,
+  getDifferenceBetweenTargetRevenueAndNewCustomers,
+} from "src/util/helpers"
+// Components
 import { Container, Table, Row, Col } from "react-bootstrap"
 import ReportFunnel from "src/components/report/ReportFunnel"
 import InfoAlert from "src/components/InfoAlert"
-import { removeSpecialChars, numberWithCommas } from "src/util/helpers"
 import ReportAreaGraph from "src/components/report/ReportAreaGraph"
 import ReportPieChart from "src/components/report/ReportPieChart"
+import ReportSolidMetrics from "src/components/report/ReportSolidMetrics"
+import ReportBarChart from "src/components/report/ReportBarChart"
 import {
   Section,
   ContentCard,
   StyledLoaderWrapper,
   StyledLoader,
-  StyledSidebarMenuIcon,
-  StyledContentCardLabel,
   StyledContentCardSpotlight,
 } from "src/components/StyledElements"
 
@@ -27,8 +39,13 @@ export class ReportDashboard extends Component {
       loading,
       error,
       // Base Data
+      industry,
+      company_size_in_revenue,
       revenue_growth_goal,
       current_annual_marketing_budget,
+      average_revenue_per_customer,
+      target_date_to_reach_revenue,
+      current_annual_revenue,
       // Useful for funnel
       average_monthly_website_traffic,
       average_monthly_leads_from_website,
@@ -127,6 +144,129 @@ export class ReportDashboard extends Component {
       },
     ]
 
+    let DATA_current_funnel
+    let DATA_optimized_funnel
+    let DATA_comparison_bar_chart
+    let monthsToReachTarget
+    let deficitFromTargetRevenue
+
+    if (!loading) {
+      monthsToReachTarget = getDifferenceInMonths(
+        new Date(),
+        parseISOString(target_date_to_reach_revenue)
+      )
+
+      deficitFromTargetRevenue = getDifferenceBetweenTargetRevenueAndNewCustomers(
+        Math.ceil(Number(customers_needed_for_revenue_target)),
+        average_revenue_per_customer,
+        revenue_growth_goal
+      )
+
+      DATA_comparison_bar_chart = [
+        // {
+        //   name: "Average Conversion Rate",
+        //   Industry: STATIC_Industry_Metrics[industry].conversion_rate,
+        //   Yours: removeSpecialChars(conversion_rate),
+        // },
+        {
+          name: "Average Monthly Website Traffic",
+          Industry:
+            STATIC_Industry_Metrics[industry].average_monthly_website_traffic,
+          Yours: removeSpecialChars(average_monthly_website_traffic),
+        },
+        {
+          name: "Average New Customers Per Month",
+          Industry:
+            STATIC_Industry_Metrics[industry].average_new_customers_per_month,
+          Yours: removeSpecialChars(average_new_customers_per_month),
+        },
+        {
+          name: "Average Revenue Per Customer",
+          Industry:
+            STATIC_Industry_Metrics[industry].average_revenue_per_customer,
+          Yours: removeSpecialChars(average_revenue_per_customer),
+        },
+      ]
+
+      DATA_current_funnel = [
+        {
+          _id: "5de52b4ac4275a463f912042",
+          item: "website_traffic",
+          label: "Website Traffic",
+          quantity: Number(removeSpecialChars(average_monthly_website_traffic)),
+        },
+        {
+          _id: "5de52b4ac4275a463f912041",
+          item: "website_conversion",
+          label: "Website Conversions",
+          quantity: Number(
+            Math.floor(removeSpecialChars(average_monthly_leads_from_website))
+          ),
+        },
+        {
+          _id: "5de52b4ac4275a463f912040",
+          item: "qualified_leads",
+          label: "Qualified Leads",
+          quantity: Number(
+            Math.floor(removeSpecialChars(average_qualified_leads_per_month))
+          ),
+        },
+        {
+          _id: "5de52b4ac4275a463f91203f",
+          item: "deals_won",
+          label: "Deals Won",
+          quantity: Number(
+            Math.floor(removeSpecialChars(average_new_customers_per_month))
+          ),
+        },
+      ]
+
+      DATA_optimized_funnel = [
+        {
+          _id: "5de52b4ac4275a463f912042",
+          item: "website_traffic",
+          label: "Website Traffic",
+          quantity: Number(
+            removeSpecialChars(average_monthly_website_traffic) *
+              monthsToReachTarget
+          ),
+        },
+        {
+          _id: "5de52b4ac4275a463f912041",
+          item: "website_conversion",
+          label: "Website Conversions",
+          quantity: Number(
+            Math.floor(
+              removeSpecialChars(average_monthly_leads_from_website) *
+                monthsToReachTarget
+            )
+          ),
+        },
+        {
+          _id: "5de52b4ac4275a463f912040",
+          item: "qualified_leads",
+          label: "Qualified Leads",
+          quantity: Number(
+            Math.floor(
+              removeSpecialChars(average_qualified_leads_per_month) *
+                monthsToReachTarget
+            )
+          ),
+        },
+        {
+          _id: "5de52b4ac4275a463f91203f",
+          item: "deals_won",
+          label: "Deals Won",
+          quantity: Number(
+            Math.floor(
+              removeSpecialChars(average_new_customers_per_month) *
+                monthsToReachTarget
+            )
+          ),
+        },
+      ]
+    }
+
     return (
       <>
         <SEO title="Report" />
@@ -148,159 +288,57 @@ export class ReportDashboard extends Component {
                 </Container>
               ) : (
                 <>
+                  {/* BLOCK_01: Conversion Rate TIP */}
                   <Container fluid className="mb-4">
-                    <InfoAlert>
-                      <strong>Optimization Tip:</strong> <br />
-                      Your Cost Per Lead is currently ${average_cost_per_lead}
-                      {average_cost_per_lead < 5 ? `, which is great! ` : `. `}
-                      Spend your marketing budget in a way which increases the
-                      conversion rate from {conversion_rate}% to{" "}
-                      {conversion_rate + 1}%
-                    </InfoAlert>
+                    {conversion_rate >=
+                    STATIC_Industry_Metrics[industry].conversion_rate ? (
+                      <InfoAlert>
+                        <strong>Great News!</strong> <br />
+                        Your conversion rate is currently at{" "}
+                        <strong>{conversion_rate}%</strong>, which is great! The
+                        industry average for {printIndustryNeatly(industry)} is
+                        about{" "}
+                        <strong>
+                          {STATIC_Industry_Metrics[industry].conversion_rate}%
+                        </strong>
+                      </InfoAlert>
+                    ) : (
+                      <InfoAlert Warning>
+                        <strong>Optimization Tip:</strong> <br />
+                        Your conversion rate is currently at{" "}
+                        <strong>{conversion_rate}%</strong>, which is a little
+                        too low than the industry average! The industry average
+                        for {printIndustryNeatly(industry)} is about{" "}
+                        <strong>
+                          {STATIC_Industry_Metrics[industry].conversion_rate}%
+                        </strong>
+                      </InfoAlert>
+                    )}
                   </Container>
+                  {/* // BLOCK_01: Conversion Rate TIP */}
+
+                  {/* BLOCK_02: Current Funnel */}
                   <Container fluid className="mb-4">
-                    <ReportFunnel
-                      average_monthly_website_traffic={
-                        average_monthly_website_traffic
-                      }
-                      average_monthly_leads_from_website={
-                        average_monthly_leads_from_website
-                      }
-                      average_qualified_leads_per_month={
-                        average_qualified_leads_per_month
-                      }
-                      average_new_customers_per_month={
-                        average_new_customers_per_month
-                      }
-                    />
+                    <ReportFunnel data={DATA_current_funnel} />
                   </Container>
+                  {/* // BLOCK_02: Current Funnel */}
+
+                  {/* BLOCK_03: Solid Metrics */}
                   <Container fluid className="mb-2">
-                    <Row>
-                      <Col lg="6" xl="4" className="mb-3">
-                        <ContentCard>
-                          <div className="d-flex align-center">
-                            <StyledSidebarMenuIcon Large className="mr-3">
-                              C
-                            </StyledSidebarMenuIcon>
-                            <div>
-                              <StyledContentCardLabel>
-                                Conversion Rate
-                              </StyledContentCardLabel>
-                              <StyledContentCardSpotlight Gradient>
-                                {conversion_rate}%
-                              </StyledContentCardSpotlight>
-                            </div>
-                          </div>
-                        </ContentCard>
-                      </Col>
-                      <Col lg="6" xl="4" className="mb-3">
-                        <ContentCard>
-                          <div className="d-flex align-center">
-                            <StyledSidebarMenuIcon Large className="mr-3">
-                              A
-                            </StyledSidebarMenuIcon>
-                            <div>
-                              <StyledContentCardLabel>
-                                Average Qualified Leads
-                              </StyledContentCardLabel>
-                              <StyledContentCardSpotlight Gradient>
-                                {average_qualified_leads_per_month}
-                              </StyledContentCardSpotlight>
-                            </div>
-                          </div>
-                        </ContentCard>
-                      </Col>
-
-                      <Col lg="6" xl="4" className="mb-3">
-                        <ContentCard>
-                          <div className="d-flex align-center">
-                            <StyledSidebarMenuIcon Large className="mr-3">
-                              A
-                            </StyledSidebarMenuIcon>
-                            <div>
-                              <StyledContentCardLabel>
-                                Average New Customers
-                              </StyledContentCardLabel>
-                              <StyledContentCardSpotlight Gradient>
-                                {Math.floor(average_new_customers_per_month)}
-                              </StyledContentCardSpotlight>
-                            </div>
-                          </div>
-                        </ContentCard>
-                      </Col>
-
-                      <Col lg="6" xl="4" className="mb-3">
-                        <ContentCard>
-                          <div className="d-flex align-center">
-                            <StyledSidebarMenuIcon Large className="mr-3">
-                              O
-                            </StyledSidebarMenuIcon>
-                            <div>
-                              <StyledContentCardLabel>
-                                Online Marketing Investment
-                              </StyledContentCardLabel>
-                              <StyledContentCardSpotlight Gradient>
-                                $
-                                {numberWithCommas(
-                                  Number(
-                                    average_monthly_online_marketing_investment
-                                  )
-                                )}
-                              </StyledContentCardSpotlight>
-                            </div>
-                          </div>
-                        </ContentCard>
-                      </Col>
-
-                      <Col lg="6" xl="4" className="mb-3">
-                        <ContentCard>
-                          <div className="d-flex align-center">
-                            <StyledSidebarMenuIcon Large className="mr-3">
-                              A
-                            </StyledSidebarMenuIcon>
-                            <div>
-                              <StyledContentCardLabel>
-                                Average Cost Per Lead
-                              </StyledContentCardLabel>
-                              <StyledContentCardSpotlight Gradient>
-                                $
-                                {numberWithCommas(
-                                  Number(average_cost_per_lead)
-                                )}
-                              </StyledContentCardSpotlight>
-                            </div>
-                          </div>
-                        </ContentCard>
-                      </Col>
-
-                      <Col lg="6" xl="4" className="mb-3">
-                        <ContentCard>
-                          <div className="d-flex align-center">
-                            <StyledSidebarMenuIcon Large className="mr-3">
-                              A
-                            </StyledSidebarMenuIcon>
-                            <div>
-                              <StyledContentCardLabel>
-                                Cost Per Customer
-                              </StyledContentCardLabel>
-                              <StyledContentCardSpotlight Gradient>
-                                $
-                                {numberWithCommas(
-                                  Number(cost_per_customer_acquisition)
-                                )}
-                              </StyledContentCardSpotlight>
-                            </div>
-                          </div>
-                        </ContentCard>
-                      </Col>
-                    </Row>
+                    <ReportSolidMetrics {...this.props} />
                   </Container>
+                  {/* // BLOCK_03: Solid Metrics */}
+
+                  {/* BLOCK_04: Road to Doubled Leads */}
                   <Container fluid className="mb-4">
                     <Row>
                       <Col lg="12">
                         <ContentCard>
-                          <StyledContentCardSpotlight className="text-center mt-2 mb-1">
-                            Road to{" "}
+                          <StyledContentCardSpotlight
+                            Gradient
+                            className="text-center mt-2 mb-1"
+                          >
+                            Path to{" "}
                             {numberWithCommas(
                               Number(
                                 removeSpecialChars(
@@ -310,6 +348,12 @@ export class ReportDashboard extends Component {
                             )}{" "}
                             Leads
                           </StyledContentCardSpotlight>
+                          <p className="text-center f-400">
+                            Based on your current monthly leads of{" "}
+                            <span className="text-color-primary f-700">
+                              {average_monthly_leads_from_website}
+                            </span>
+                          </p>
                           <ReportAreaGraph
                             data={monthly_leads_PROJECTION_GRAPH}
                           />
@@ -317,22 +361,63 @@ export class ReportDashboard extends Component {
                       </Col>
                     </Row>
                   </Container>
-                  <Container fluid className="mb-4">
-                    <InfoAlert Warning>
-                      <strong>Optimization Tip:</strong> <br />
-                      Your Cost Per Lead is currently ${average_cost_per_lead}
-                      {average_cost_per_lead < 5 ? `, which is great! ` : `. `}
-                      Spend your marketing budget in a way which increases the
-                      conversion rate from {conversion_rate}% to{" "}
-                      {conversion_rate + 1}%
-                    </InfoAlert>
-                  </Container>
+                  {/* // BLOCK_04: Road to Doubled Leads */}
 
+                  {/* BLOCK_05: Optimization Tip Cost Per Lead */}
+                  <Container fluid className="mb-4">
+                    {average_cost_per_lead <
+                    STATIC_Industry_Metrics[industry].average_cost_per_lead[
+                      company_size_in_revenue
+                    ] ? (
+                      <InfoAlert>
+                        <strong>Great News!</strong> <br />
+                        Your average cost per lead is currently at{" "}
+                        <strong>${average_cost_per_lead}</strong>, which is
+                        great! The industry average for{" "}
+                        {printIndustryNeatly(industry)} is about{" "}
+                        <strong>
+                          $
+                          {
+                            STATIC_Industry_Metrics[industry]
+                              .average_cost_per_lead[company_size_in_revenue]
+                          }
+                        </strong>{" "}
+                        for companies with annual revenue being{" "}
+                        {printCompanySizeAnnualRevenueNeatly(
+                          company_size_in_revenue
+                        )}{" "}
+                        USD
+                      </InfoAlert>
+                    ) : (
+                      <InfoAlert Warning>
+                        <strong>Great News!</strong> <br />
+                        Your average cost per lead is currently at{" "}
+                        <strong>${average_cost_per_lead}</strong>, which is
+                        high! The industry average for{" "}
+                        {printIndustryNeatly(industry)} is about{" "}
+                        <strong>
+                          $
+                          {
+                            STATIC_Industry_Metrics[industry]
+                              .average_cost_per_lead[company_size_in_revenue]
+                          }
+                        </strong>{" "}
+                        for companies with annual revenue being{" "}
+                        {printCompanySizeAnnualRevenueNeatly(
+                          company_size_in_revenue
+                        )}{" "}
+                        USD
+                      </InfoAlert>
+                    )}
+                  </Container>
+                  {/* // BLOCK_05: Optimization Tip Cost Per Lead */}
+
+                  {/* BLOCK_06: Comparison Bar Chart */}
                   <Container fluid className="mb-4">
                     <Row>
                       <Col lg="6">
                         <ContentCard>
-                          <ReportAreaGraph data={dummyData} />
+                          <ReportBarChart data={DATA_comparison_bar_chart} />
                         </ContentCard>
                       </Col>
                       <Col lg="6" className="mt-4 mt-lg-0">
@@ -342,7 +427,9 @@ export class ReportDashboard extends Component {
                       </Col>
                     </Row>
                   </Container>
+                  {/* // BLOCK_06: Comparison Bar Chart */}
 
+                  {/* BLOCK_07: Report */}
                   <Container fluid className="mb-4">
                     <Row>
                       <Col lg="12">
@@ -368,21 +455,57 @@ export class ReportDashboard extends Component {
                       </Col>
                     </Row>
                   </Container>
+                  {/* // BLOCK_07: Comparison Bar Chart */}
 
-                  {/* <Container fluid className="mb-4">
-                    <Row>
-                      <Col lg="12">
-                        <ContentCard>
-                          <StyledContentCardLabel>
-                            Conversion Rate Projection
-                          </StyledContentCardLabel>
-                          <ReportLineGraph
-                            data={monthly_leads_PROJECTION_GRAPH}
-                          />
-                        </ContentCard>
-                      </Col>
-                    </Row>
-                  </Container> */}
+                  {/* BLOCK_08: Optimization Tip Cost Per Lead */}
+                  <Container fluid className="mb-4">
+                    <InfoAlert Warning>
+                      <strong>Optimization Tip:</strong> <br />
+                      You need{" "}
+                      <strong>
+                        {Math.floor(customers_needed_for_revenue_target)}
+                      </strong>{" "}
+                      new customers in{" "}
+                      <strong>
+                        {getDifferenceInMonths(
+                          new Date(),
+                          parseISOString(target_date_to_reach_revenue)
+                        )}{" "}
+                        months
+                      </strong>{" "}
+                      to reach your target revenue of{" "}
+                      <strong>{revenue_growth_goal}</strong>. That's about{" "}
+                      <strong>
+                        {Math.floor(
+                          Math.floor(customers_needed_for_revenue_target) /
+                            getDifferenceInMonths(
+                              new Date(),
+                              parseISOString(target_date_to_reach_revenue)
+                            )
+                        )}
+                      </strong>{" "}
+                      new customers every month. See how your funnel in{" "}
+                      <strong>
+                        {getDifferenceInMonths(
+                          new Date(),
+                          parseISOString(target_date_to_reach_revenue)
+                        )}{" "}
+                        months
+                      </strong>{" "}
+                      may look like to make up the{" "}
+                      <strong>
+                        ${numberWithCommas(deficitFromTargetRevenue)}
+                      </strong>{" "}
+                      target
+                    </InfoAlert>
+                  </Container>
+                  {/* // BLOCK_08: Optimization Tip Cost Per Lead */}
+
+                  {/* BLOCK_09: Current Funnel */}
+                  <Container fluid className="mb-4">
+                    <ReportFunnel data={DATA_optimized_funnel} />
+                  </Container>
+                  {/* // BLOCK_09: Current Funnel */}
 
                   <Container fluid>
                     <Table responsive>

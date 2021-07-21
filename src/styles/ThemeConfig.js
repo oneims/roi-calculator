@@ -429,4 +429,20 @@ body {
   font-weight: 600;
 }
 
+.recharts-legend-item {
+    font-weight: 700;
+    font-size: 13px;
+    svg {
+      border-radius: 6px;
+    }
+    &-text {
+      position: relative;
+      top: 1px;
+    }
+}
+
+.recharts-legend-wrapper {
+  bottom: 10px !important;
+}
+
 `

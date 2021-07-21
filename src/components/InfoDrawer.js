@@ -15,7 +15,7 @@ import {
 const InfoDrawer = ({ active, closeInfoDrawer }) => {
   return (
     <>
-      <TintedBackground className={active ? "active" : ""} />
+      {/* <TintedBackground className={active ? "active" : ""} /> */}
       <StyledInfoDrawer className={active ? "active" : ""}>
         <StyledInfoDrawerWrapper>
           <StyledInfoDrawerHeader>

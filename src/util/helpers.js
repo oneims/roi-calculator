@@ -53,7 +53,7 @@ export const roundToTwoDecimals = n => {
 
 export const removeSpecialChars = str => {
   if (str) {
-    return str.toString().replace(/[^a-z\d\s]+/gi, "")
+    return str.toString().replace(/[^.a-z\d\s]+/gi, "")
   }
 }
 
@@ -61,6 +61,25 @@ export const numberWithCommas = x => {
   if (x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   }
+}
+
+// Print Industry Neatly
+export const printIndustryNeatly = str => {
+  return str
+    .split("_")
+    .map(elem => capitalizeFirstLetter(elem))
+    .join(" ")
+    .split("+")
+    .map(elem => capitalizeFirstLetter(elem))
+    .join("/")
+}
+
+// Print Company Size in Annual Revenue neatly
+export const printCompanySizeAnnualRevenueNeatly = str => {
+  str = str.split("_")
+  str = str.slice(Math.max(str.length - 4, 1))
+  str = str.join(" ").replace(" m", " million")
+  return str
 }
 
 // **Calculations**
@@ -165,6 +184,35 @@ export const getCustomersNeededForRevenueTarget = (
   return roundToTwoDecimals(customersNeeded)
 }
 
+export const getDifferenceBetweenCurrentAndTargetRevenue = (ca, ga) => {
+  const differenceBetweenRevenues = convertMBtoInt(ga) - convertMBtoInt(ca)
+  return roundToTwoDecimals(differenceBetweenRevenues)
+}
+
+export const getDifferenceBetweenTargetRevenueAndNewCustomers = (
+  newCustomers,
+  revenuePerCustomer,
+  revenueGoal
+) => {
+  const revenueFromCustomers =
+    convertToInt(newCustomers) * removeSpecialChars(revenuePerCustomer)
+  const difference = convertMBtoInt(revenueGoal) - revenueFromCustomers
+  return roundToTwoDecimals(difference)
+}
+
+// export const getCustomersNeededForRevenueTargetPerMonth = (
+//   revenuePerCustomer,
+//   revenueGoalAnnual,
+//   currentRevenueAnnual,
+//   targetDate
+// ) => {
+//   const differenceBetweenRevenues =
+//     convertMBtoInt(revenueGoalAnnual) - convertMBtoInt(currentRevenueAnnual)
+//   const customersNeeded =
+//     differenceBetweenRevenues / convertToInt(revenuePerCustomer)
+//   return roundToTwoDecimals(customersNeeded)
+// }
+
 // Get Cost Per New Customer
 export const getCostPerNewCustomer = (
   monthlyLeadsWebsite,
@@ -182,6 +230,36 @@ export const getCostPerNewCustomer = (
     (totalQualifiedLeadsPerYear * convertToInt(closeRatio)) / 100
   const costPerCustomer = convertToInt(annualBudget) / totalClosedLeadsPerYear
   return roundToTwoDecimals(costPerCustomer)
+}
+
+// Get Company Size In Revenue
+
+export const getCompanySizeInRevenue = string => {
+  string = convertMBtoInt(string)
+  if (string < 1000000) {
+    return "company_has_annual_revenue_less_than_1_m"
+  } else if (string > 1000000 && string < 10000000) {
+    return "company_has_annual_revenue_less_than_10_m"
+  } else if (string > 10000000 && string < 500000000) {
+    return "company_has_annual_revenue_less_than_500_m"
+  } else {
+    return "company_has_annual_revenue_greater_than_500_m"
+  }
+}
+
+// Convert ISO Date to Date Object
+export const parseISOString = s => {
+  const b = s.split(/\D+/)
+  return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]))
+}
+
+// Get difference in months for two date objects
+export const getDifferenceInMonths = (dateFrom, dateTo) => {
+  return (
+    dateTo.getMonth() -
+    dateFrom.getMonth() +
+    12 * (dateTo.getFullYear() - dateFrom.getFullYear())
+  )
 }
 
 // **Projections**

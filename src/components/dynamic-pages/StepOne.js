@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import SEO from "src/components/Seo"
 import { Container } from "react-bootstrap"
+import { STATIC_Industries } from "src/util/STATIC_Data"
 import Select from "react-select"
 import NumberFormat from "react-number-format"
 import DatePicker from "react-datepicker"
@@ -23,18 +24,7 @@ import {
   StyledChoiceItem,
 } from "src/components/StyledElements"
 
-const options = [
-  {
-    industry: [
-      { value: "retail", label: "Retail" },
-      { value: "finance", label: "Finance" },
-      { value: "trade", label: "Trade" },
-      { value: "transport", label: "Transport" },
-      { value: "construction", label: "Construction" },
-      { value: "health_care", label: "Health Care" },
-    ],
-  },
-]
+const options = STATIC_Industries
 
 export class StepOne extends Component {
   componentDidMount() {

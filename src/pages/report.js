@@ -18,6 +18,7 @@ import {
   getCostPerLead,
   getCustomersNeededForRevenueTarget,
   getCostPerNewCustomer,
+  getCompanySizeInRevenue,
   // Projection Helpers
   getProjectionTwoParams,
   getProjectionTwoParamsGraph,
@@ -30,11 +31,16 @@ export class Report extends Component {
   state = {
     id: null,
     data: null,
-    loading: false,
+    loading: true,
     error: false,
     // Base Data
+    industry: null,
     revenue_growth_goal: null,
     current_annual_marketing_budget: null,
+    company_size_in_revenue: null,
+    average_revenue_per_customer: null,
+    target_date_to_reach_revenue: null,
+    current_annual_revenue: null,
     // // Useful for Funnel
     average_monthly_website_traffic: null,
     average_monthly_leads_from_website: null,
@@ -92,6 +98,7 @@ export class Report extends Component {
             const data = res.data[0]
             // Useful Variables
             const {
+              industry,
               average_monthly_leads_from_website,
               average_monthly_website_traffic,
               percentage_of_qualified_leads,
@@ -102,7 +109,13 @@ export class Report extends Component {
               average_monthly_leads_from_all_other_sources,
               revenue_growth_goal,
               current_annual_revenue,
+              target_date_to_reach_revenue,
             } = data
+
+            // Company Size in Revenue
+            const company_size_in_revenue = getCompanySizeInRevenue(
+              current_annual_revenue
+            )
 
             // Conversion Rate
             const conversion_rate = getConversionRate(
@@ -278,8 +291,13 @@ export class Report extends Component {
             this.setState({
               data: res.data,
               // Base Data
+              industry,
               revenue_growth_goal,
               current_annual_marketing_budget,
+              company_size_in_revenue,
+              average_revenue_per_customer,
+              target_date_to_reach_revenue,
+              current_annual_revenue,
               // Useful for funnel
               average_monthly_website_traffic,
               average_monthly_leads_from_website,

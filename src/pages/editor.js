@@ -17,6 +17,7 @@ import axios from "axios"
 import {
   capitalizeFirstLetter,
   checkValidObjectProperties,
+  printIndustryNeatly,
 } from "src/util/helpers"
 
 let originalFetchedData
@@ -88,9 +89,7 @@ export class Editor extends Component {
               //   Step One
               industry: {
                 value: data.industry.toLowerCase().split(" ").join("_"),
-                label: capitalizeFirstLetter(
-                  data.industry.split("_").join(" ")
-                ),
+                label: printIndustryNeatly(data.industry),
               },
               current_annual_revenue: data.current_annual_revenue,
               current_annual_revenue_selector: data.current_annual_revenue
