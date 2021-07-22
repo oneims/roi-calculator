@@ -11,7 +11,7 @@ class ReportFunnel extends Component {
 
     return (
       <>
-        <ContentCard className="p-0 dashboard-funnel">
+        <ContentCard className={`p-0 dashboard-funnel ${this.props.className}`}>
           <Funnel
             labelKey="label"
             height={300}
@@ -29,7 +29,19 @@ class ReportFunnel extends Component {
                 <>
                   <span style={{ fontSize: 20, fontWeight: 700 }}>
                     {" "}
-                    {value}{" "}
+                    {value}
+                    {data[index].description && (
+                      <div className="mb-2">
+                        <span className="funnel-info-text">
+                          {data[index].description}
+                        </span>
+                        {data[index].percentageChange && (
+                          <span className="funnel-info-text text-success">
+                            {data[index].percentageChange}
+                          </span>
+                        )}
+                      </div>
+                    )}
                   </span>
                 </>
               )
@@ -39,7 +51,9 @@ class ReportFunnel extends Component {
                 <>
                   <span style={{ color: colors.primary, fontWeight: 700 }}>
                     {" "}
-                    {numberWithCommas(value)}
+                    {index === 4
+                      ? `$${numberWithCommas(value)}`
+                      : numberWithCommas(value)}
                   </span>
                 </>
               )

@@ -445,4 +445,11 @@ body {
   bottom: 10px !important;
 }
 
+.funnel-info-text {
+  display: block;
+  font-size: 0.8rem;
+  color: #33475b;
+  font-weight: 600;
+}
+
 `

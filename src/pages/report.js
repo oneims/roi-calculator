@@ -5,6 +5,8 @@ import ReportLayout from "src/components/report/ReportLayout"
 import ReportDashboard from "src/components/dynamic-pages/report/ReportDashboard"
 // Axios
 import axios from "axios"
+// Static Data
+import { STATIC_Industry_Metrics } from "src/util/STATIC_Data"
 // Helpers
 import {
   // Calculation Helpers
@@ -19,12 +21,17 @@ import {
   getCustomersNeededForRevenueTarget,
   getCostPerNewCustomer,
   getCompanySizeInRevenue,
+  getDifferenceInMonths,
+  parseISOString,
   // Projection Helpers
   getProjectionTwoParams,
   getProjectionTwoParamsGraph,
   PROJECTChangeInMonthlyTraffic,
   // Budget Optimizer
   budgetOptimizer,
+  // Optimized Funnel
+  createFunnel,
+  createOptimizedFunnel,
 } from "src/util/helpers"
 
 export class Report extends Component {
@@ -75,6 +82,13 @@ export class Report extends Component {
     monthly_leads_PROJECTION_GRAPH: null,
     // Budget Optimizer
     budget_optimizer: null,
+    // Interactive Funnel
+    months_to_reach_target: null,
+    OPTIMIZED_website_traffic: null,
+    OPTIMIZED_conversion_rate: null,
+    OPTIMIZED_qualified_leads_percentage: null,
+    OPTIMIZED_close_ratio: null,
+    OPTIMIZED_FUNNEL_DATA: null,
   }
 
   handleUpdateIDState = id => {
@@ -287,6 +301,20 @@ export class Report extends Component {
               current_annual_marketing_budget
             )
 
+            // Optimized Funnel
+
+            const months_to_reach_target = getDifferenceInMonths(
+              new Date(),
+              parseISOString(target_date_to_reach_revenue)
+            )
+            const OPTIMIZED_FUNNEL_DATA = createOptimizedFunnel(
+              average_monthly_website_traffic,
+              conversion_rate,
+              percentage_of_qualified_leads,
+              average_close_ratio_from_opportunities_to_deals,
+              customers_needed_for_revenue_target / months_to_reach_target
+            )
+
             // Updating State
             this.setState({
               data: res.data,
@@ -332,6 +360,18 @@ export class Report extends Component {
               monthly_leads_PROJECTION_GRAPH,
               // Budget Optimizer
               budget_optimizer,
+              // Interactive Funnel
+              months_to_reach_target,
+              OPTIMIZED_FUNNEL_DATA,
+              OPTIMIZED_website_traffic:
+                OPTIMIZED_FUNNEL_DATA.updatedInputs.websiteTraffic.newValue,
+              OPTIMIZED_conversion_rate:
+                OPTIMIZED_FUNNEL_DATA.updatedInputs.conversionRate.newValue,
+              OPTIMIZED_qualified_leads_percentage:
+                OPTIMIZED_FUNNEL_DATA.updatedInputs.qualifiedLeadsPercentage
+                  .newValue,
+              OPTIMIZED_close_ratio:
+                OPTIMIZED_FUNNEL_DATA.updatedInputs.closeRatio.newValue,
               // Loader
               loading: false,
             })

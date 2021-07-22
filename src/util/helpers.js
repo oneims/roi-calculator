@@ -346,3 +346,157 @@ export const budgetOptimizer = budget => {
   }
   return output
 }
+
+// Optimized Funnel
+
+export const createFunnel = (
+  websiteTraffic,
+  conversionRate,
+  qualifiedLeadsPercentage,
+  closeRatio
+) => {
+  websiteTraffic = convertToInt(removeSpecialChars(websiteTraffic))
+  conversionRate = convertToInt(removeSpecialChars(conversionRate))
+  qualifiedLeadsPercentage = convertToInt(
+    removeSpecialChars(qualifiedLeadsPercentage)
+  )
+  closeRatio = convertToInt(removeSpecialChars(closeRatio))
+
+  const average_monthly_leads_from_website_OPTIMIZED = Math.ceil(
+    (websiteTraffic * conversionRate) / 100
+  )
+  const average_qualified_leads_per_month_OPTIMIZED = Math.ceil(
+    (average_monthly_leads_from_website_OPTIMIZED * qualifiedLeadsPercentage) /
+      100
+  )
+  const average_new_customers_per_month_OPTIMIZED = Math.ceil(
+    (average_qualified_leads_per_month_OPTIMIZED * closeRatio) / 100
+  )
+
+  const output = [
+    {
+      name: "average_monthly_website_traffic_OPTIMIZED",
+      label: "Website Traffic",
+      value: websiteTraffic,
+    },
+    {
+      name: "average_monthly_leads_from_website_OPTIMIZED",
+      label: "Website Conversions",
+      value: average_monthly_leads_from_website_OPTIMIZED,
+    },
+    {
+      name: "average_qualified_leads_per_month_OPTIMIZED",
+      label: "Qualified Leads",
+      value: average_qualified_leads_per_month_OPTIMIZED,
+    },
+    {
+      name: "average_new_customers_per_month_OPTIMIZED",
+      label: "Deals Won",
+      value: average_new_customers_per_month_OPTIMIZED,
+    },
+  ]
+  return output
+}
+
+export const createOptimizedFunnel = (
+  websiteTraffic,
+  conversionRate,
+  qualifiedLeadsPercentage,
+  closeRatio,
+  targetCustomers
+) => {
+  websiteTraffic = convertToInt(removeSpecialChars(websiteTraffic))
+  conversionRate = convertToInt(removeSpecialChars(conversionRate))
+  qualifiedLeadsPercentage = convertToInt(
+    removeSpecialChars(qualifiedLeadsPercentage)
+  )
+  closeRatio = convertToInt(removeSpecialChars(closeRatio))
+  targetCustomers = convertToInt(removeSpecialChars(targetCustomers))
+
+  const loopThreshold = 200
+
+  const currentFunnel = createFunnel(
+    websiteTraffic,
+    conversionRate,
+    qualifiedLeadsPercentage,
+    closeRatio
+  )
+
+  let optimizedFunnel = createFunnel(
+    websiteTraffic,
+    conversionRate,
+    qualifiedLeadsPercentage,
+    closeRatio
+  )
+
+  optimizedFunnel.updatedInputs = {
+    websiteTraffic: {
+      oldValue: websiteTraffic,
+      newValue: websiteTraffic,
+    },
+    conversionRate: {
+      oldValue: conversionRate,
+      newValue: conversionRate,
+    },
+    qualifiedLeadsPercentage: {
+      oldValue: qualifiedLeadsPercentage,
+      newValue: qualifiedLeadsPercentage,
+    },
+    closeRatio: {
+      oldValue: closeRatio,
+      newValue: closeRatio,
+    },
+  }
+
+  let wtIncremental = 0
+  let crIncremental = 0
+  let qlIncremental = 0
+  for (let i = 0; i < loopThreshold; i++) {
+    if (optimizedFunnel[optimizedFunnel.length - 1].value <= targetCustomers) {
+      const rndInt = Math.floor(Math.random() * 1) + 1
+      wtIncremental = wtIncremental + (websiteTraffic / 100) * rndInt
+      crIncremental = crIncremental + (conversionRate / 100) * rndInt
+      qlIncremental = qlIncremental + (qualifiedLeadsPercentage / 100) * rndInt
+      optimizedFunnel = createFunnel(
+        websiteTraffic + wtIncremental,
+        conversionRate + crIncremental,
+        qualifiedLeadsPercentage + qlIncremental,
+        closeRatio
+      )
+      optimizedFunnel.updatedInputs = {
+        websiteTraffic: {
+          oldValue: websiteTraffic,
+          newValue: roundToTwoDecimals(websiteTraffic + wtIncremental),
+        },
+        conversionRate: {
+          oldValue: conversionRate,
+          newValue: roundToTwoDecimals(conversionRate + crIncremental),
+        },
+        qualifiedLeadsPercentage: {
+          oldValue: qualifiedLeadsPercentage,
+          newValue: roundToTwoDecimals(
+            qualifiedLeadsPercentage + qlIncremental
+          ),
+        },
+        closeRatio: {
+          oldValue: closeRatio,
+          newValue: closeRatio,
+        },
+      }
+    }
+  }
+
+  for (let i = 0; i < optimizedFunnel.length; i++) {
+    optimizedFunnel[i].originalValue = currentFunnel[i].value
+    const difference =
+      optimizedFunnel[i].value - optimizedFunnel[i].originalValue
+    const change = (difference / optimizedFunnel[i].originalValue) * 100
+    optimizedFunnel[i].description = `Increased ${
+      optimizedFunnel[i].label
+    } by ${roundToTwoDecimals(change)}%`
+    optimizedFunnel[i].percentageChange =
+      change > 0 ? roundToTwoDecimals(change) : 0
+  }
+
+  return optimizedFunnel
+}

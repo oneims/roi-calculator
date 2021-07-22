@@ -8,9 +8,8 @@ import {
   numberWithCommas,
   printIndustryNeatly,
   printCompanySizeAnnualRevenueNeatly,
-  getDifferenceInMonths,
-  parseISOString,
-  getDifferenceBetweenTargetRevenueAndNewCustomers,
+  roundToTwoDecimals,
+  getDifferenceBetweenCurrentAndTargetRevenue,
 } from "src/util/helpers"
 // Components
 import { Container, Table, Row, Col } from "react-bootstrap"
@@ -80,6 +79,10 @@ export class ReportDashboard extends Component {
       monthly_leads_PROJECTION_GRAPH,
       // Budget Optimizer
       budget_optimizer,
+      // Interactive Funnel
+      months_to_reach_target,
+      OPTIMIZED_FUNNEL_DATA,
+      OPTIMIZED_website_traffic,
     } = this.props
 
     const dummyData = [
@@ -147,19 +150,35 @@ export class ReportDashboard extends Component {
     let DATA_current_funnel
     let DATA_optimized_funnel
     let DATA_comparison_bar_chart
-    let monthsToReachTarget
     let deficitFromTargetRevenue
+    let OPTIMIZED_website_conversions
+    let OPTIMIZED_qualified_leads
+    let OPTIMIZED_deals_won
+    let CURRENT_revenue
+    let OPTIMIZED_revenue
+    let DIFFERENCE_in_revenues
+    let OPTIMIZED_revenue_change
+    // Optimized Values for Funnel
 
     if (!loading) {
-      monthsToReachTarget = getDifferenceInMonths(
-        new Date(),
-        parseISOString(target_date_to_reach_revenue)
+      deficitFromTargetRevenue = getDifferenceBetweenCurrentAndTargetRevenue(
+        current_annual_revenue,
+        revenue_growth_goal
       )
 
-      deficitFromTargetRevenue = getDifferenceBetweenTargetRevenueAndNewCustomers(
-        Math.ceil(Number(customers_needed_for_revenue_target)),
-        average_revenue_per_customer,
-        revenue_growth_goal
+      OPTIMIZED_website_conversions = OPTIMIZED_FUNNEL_DATA[1].value
+      OPTIMIZED_qualified_leads = OPTIMIZED_FUNNEL_DATA[2].value
+      OPTIMIZED_deals_won = OPTIMIZED_FUNNEL_DATA[3].value
+      CURRENT_revenue = Number(Math.floor(net_new_revenue))
+      OPTIMIZED_revenue = Number(
+        Math.floor(
+          removeSpecialChars(OPTIMIZED_deals_won) *
+            removeSpecialChars(average_revenue_per_customer)
+        )
+      )
+      DIFFERENCE_in_revenues = OPTIMIZED_revenue - CURRENT_revenue
+      OPTIMIZED_revenue_change = roundToTwoDecimals(
+        (DIFFERENCE_in_revenues / CURRENT_revenue) * 100
       )
 
       DATA_comparison_bar_chart = [
@@ -226,43 +245,76 @@ export class ReportDashboard extends Component {
           _id: "5de52b4ac4275a463f912042",
           item: "website_traffic",
           label: "Website Traffic",
-          quantity: Number(
-            removeSpecialChars(average_monthly_website_traffic) *
-              monthsToReachTarget
-          ),
+          percentageChange:
+            OPTIMIZED_FUNNEL_DATA[0].percentageChange > 0
+              ? `Increase by ${numberWithCommas(
+                  OPTIMIZED_FUNNEL_DATA[0].percentageChange
+                )}%`
+              : `No change`,
+          description: `Current: ${numberWithCommas(
+            OPTIMIZED_FUNNEL_DATA[0].originalValue
+          )}`,
+          quantity: Number(removeSpecialChars(OPTIMIZED_website_traffic)),
         },
         {
           _id: "5de52b4ac4275a463f912041",
           item: "website_conversion",
           label: "Website Conversions",
+          percentageChange:
+            OPTIMIZED_FUNNEL_DATA[1].percentageChange > 0
+              ? `Increase by ${numberWithCommas(
+                  OPTIMIZED_FUNNEL_DATA[1].percentageChange
+                )}%`
+              : `No change`,
+          description: `Current: ${numberWithCommas(
+            OPTIMIZED_FUNNEL_DATA[1].originalValue
+          )}`,
           quantity: Number(
-            Math.floor(
-              removeSpecialChars(average_monthly_leads_from_website) *
-                monthsToReachTarget
-            )
+            Math.floor(removeSpecialChars(OPTIMIZED_website_conversions))
           ),
         },
         {
           _id: "5de52b4ac4275a463f912040",
           item: "qualified_leads",
           label: "Qualified Leads",
+          percentageChange:
+            OPTIMIZED_FUNNEL_DATA[2].percentageChange > 0
+              ? `Increase by ${numberWithCommas(
+                  OPTIMIZED_FUNNEL_DATA[2].percentageChange
+                )}%`
+              : `No change`,
+          description: `Current: ${numberWithCommas(
+            OPTIMIZED_FUNNEL_DATA[2].originalValue
+          )}`,
           quantity: Number(
-            Math.floor(
-              removeSpecialChars(average_qualified_leads_per_month) *
-                monthsToReachTarget
-            )
+            Math.floor(removeSpecialChars(OPTIMIZED_qualified_leads))
           ),
         },
         {
           _id: "5de52b4ac4275a463f91203f",
           item: "deals_won",
           label: "Deals Won",
-          quantity: Number(
-            Math.floor(
-              removeSpecialChars(average_new_customers_per_month) *
-                monthsToReachTarget
-            )
-          ),
+          percentageChange:
+            OPTIMIZED_FUNNEL_DATA[3].percentageChange > 0
+              ? `Increase by ${numberWithCommas(
+                  OPTIMIZED_FUNNEL_DATA[3].percentageChange
+                )}%`
+              : `No change`,
+          description: `Current: ${numberWithCommas(
+            OPTIMIZED_FUNNEL_DATA[3].originalValue
+          )}`,
+          quantity: Number(Math.floor(removeSpecialChars(OPTIMIZED_deals_won))),
+        },
+        {
+          _id: "5de52b4ac4275a463f91201i",
+          item: "revenue_till_target_date",
+          label: `Revenue Per Month`,
+          percentageChange:
+            OPTIMIZED_revenue_change > 0
+              ? `Increase by ${numberWithCommas(OPTIMIZED_revenue_change)}%`
+              : `No change`,
+          description: `Current: $${numberWithCommas(CURRENT_revenue)}`,
+          quantity: OPTIMIZED_revenue,
         },
       ]
     }
@@ -429,7 +481,7 @@ export class ReportDashboard extends Component {
                   </Container>
                   {/* // BLOCK_06: Comparison Bar Chart */}
 
-                  {/* BLOCK_07: Report */}
+                  {/* BLOCK_07: Budget Optimizer */}
                   <Container fluid className="mb-4">
                     <Row>
                       <Col lg="12">
@@ -455,57 +507,88 @@ export class ReportDashboard extends Component {
                       </Col>
                     </Row>
                   </Container>
-                  {/* // BLOCK_07: Comparison Bar Chart */}
+                  {/* // BLOCK_07: Budget Optimizer */}
 
-                  {/* BLOCK_08: Optimization Tip Cost Per Lead */}
+                  {/* BLOCK_08: Optimization Funnel Tip */}
                   <Container fluid className="mb-4">
-                    <InfoAlert Warning>
-                      <strong>Optimization Tip:</strong> <br />
-                      You need{" "}
-                      <strong>
-                        {Math.floor(customers_needed_for_revenue_target)}
-                      </strong>{" "}
-                      new customers in{" "}
-                      <strong>
-                        {getDifferenceInMonths(
-                          new Date(),
-                          parseISOString(target_date_to_reach_revenue)
-                        )}{" "}
-                        months
-                      </strong>{" "}
-                      to reach your target revenue of{" "}
-                      <strong>{revenue_growth_goal}</strong>. That's about{" "}
-                      <strong>
-                        {Math.floor(
-                          Math.floor(customers_needed_for_revenue_target) /
-                            getDifferenceInMonths(
-                              new Date(),
-                              parseISOString(target_date_to_reach_revenue)
+                    {OPTIMIZED_revenue_change > 0 ? (
+                      <InfoAlert Warning>
+                        <strong>Optimization Tip:</strong> <br />
+                        You need{" "}
+                        <strong>
+                          {numberWithCommas(
+                            Math.floor(customers_needed_for_revenue_target)
+                          )}
+                        </strong>{" "}
+                        new customers in the next{" "}
+                        <strong>{months_to_reach_target} months</strong> to
+                        reach your target revenue of{" "}
+                        <strong>{revenue_growth_goal}</strong>. That's about{" "}
+                        <strong>
+                          {numberWithCommas(
+                            Math.floor(
+                              Math.floor(customers_needed_for_revenue_target) /
+                                months_to_reach_target
                             )
-                        )}
-                      </strong>{" "}
-                      new customers every month. See how your funnel in{" "}
-                      <strong>
-                        {getDifferenceInMonths(
-                          new Date(),
-                          parseISOString(target_date_to_reach_revenue)
-                        )}{" "}
-                        months
-                      </strong>{" "}
-                      may look like to make up the{" "}
-                      <strong>
-                        ${numberWithCommas(deficitFromTargetRevenue)}
-                      </strong>{" "}
-                      target
-                    </InfoAlert>
+                          )}
+                        </strong>{" "}
+                        new customers every month. See how your monthly funnel
+                        for <strong>{months_to_reach_target} months</strong> may
+                        look like to make up the remaining{" "}
+                        <strong>
+                          ${numberWithCommas(deficitFromTargetRevenue)}
+                        </strong>{" "}
+                        target
+                      </InfoAlert>
+                    ) : (
+                      <InfoAlert>
+                        <strong>Great News, you're on target!</strong> <br />
+                        You need{" "}
+                        <strong>
+                          {numberWithCommas(
+                            Math.floor(customers_needed_for_revenue_target)
+                          )}
+                        </strong>{" "}
+                        new customers in the next{" "}
+                        <strong>{months_to_reach_target} months</strong> to
+                        reach your target revenue of{" "}
+                        <strong>{revenue_growth_goal}</strong>. That's about{" "}
+                        <strong>
+                          {numberWithCommas(
+                            Math.floor(
+                              Math.floor(customers_needed_for_revenue_target) /
+                                months_to_reach_target
+                            )
+                          )}
+                        </strong>{" "}
+                        new customers every month. You're already acquiring{" "}
+                        <strong>
+                          {Math.floor(average_new_customers_per_month)}
+                        </strong>{" "}
+                        new customers with an estimated revenue of{" "}
+                        <strong>${numberWithCommas(net_new_revenue)}</strong>{" "}
+                        monthly. Keep the same metrics consistent to generate{" "}
+                        <strong>
+                          $
+                          {numberWithCommas(
+                            net_new_revenue * months_to_reach_target
+                          )}
+                        </strong>{" "}
+                        in the next{" "}
+                        <strong>{months_to_reach_target} months</strong>{" "}
+                      </InfoAlert>
+                    )}
                   </Container>
-                  {/* // BLOCK_08: Optimization Tip Cost Per Lead */}
+                  {/* // BLOCK_08: Optimization Funnel Tip */}
 
-                  {/* BLOCK_09: Current Funnel */}
+                  {/* BLOCK_09: Optimized Funnel */}
                   <Container fluid className="mb-4">
-                    <ReportFunnel data={DATA_optimized_funnel} />
+                    <ReportFunnel
+                      data={DATA_optimized_funnel}
+                      className="optimized-funnel"
+                    />
                   </Container>
-                  {/* // BLOCK_09: Current Funnel */}
+                  {/* // BLOCK_09: Optimized Funnel */}
 
                   <Container fluid>
                     <Table responsive>
