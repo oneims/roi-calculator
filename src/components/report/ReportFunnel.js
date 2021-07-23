@@ -8,11 +8,14 @@ const { colors } = Theme
 class ReportFunnel extends Component {
   render() {
     const { data } = this.props
-
     return (
       <>
-        <ContentCard className={`p-0 dashboard-funnel ${this.props.className}`}>
+        <ContentCard
+          style={{ minHeight: 470 }}
+          className={`p-0 dashboard-funnel ${this.props.className}`}
+        >
           <Funnel
+            key={this.props.interactive_key}
             labelKey="label"
             height={300}
             colors={{
@@ -36,8 +39,19 @@ class ReportFunnel extends Component {
                           {data[index].description}
                         </span>
                         {data[index].percentageChange && (
-                          <span className="funnel-info-text text-success">
-                            {data[index].percentageChange}
+                          <span
+                            className={`funnel-info-text ${
+                              Number(
+                                data[index].percentageChange
+                                  .replace("Increase by ", "")
+                                  .replace("Decrease by ")
+                                  .replace("%", "")
+                              ) > 0
+                                ? `text-success`
+                                : `text-danger`
+                            }`}
+                          >
+                            {data[index].percentageChange} <br />
                           </span>
                         )}
                       </div>
@@ -49,12 +63,57 @@ class ReportFunnel extends Component {
             renderValue={(index, value) => {
               return (
                 <>
+                  {index === data.length - 1 && (
+                    <button
+                      type="button"
+                      className="funnel-button"
+                      onClick={this.props.handleHideRevenue}
+                    >
+                      {data.length === 4 ? `Show` : `Hide`} Revenue
+                    </button>
+                  )}
                   <span style={{ color: colors.primary, fontWeight: 700 }}>
                     {" "}
                     {index === 4
-                      ? `$${numberWithCommas(value)}`
-                      : numberWithCommas(value)}
+                      ? `$${numberWithCommas(Math.floor(value))}`
+                      : numberWithCommas(Math.floor(value))}
                   </span>
+                  {data[index].interactiveValue && (
+                    <div className="interactive-tip__wrapper mt-3">
+                      <div className="interactive-tip__symbol-wrapper interactive-tip__symbol-wrapper-left">
+                        <div
+                          data-intent="negative"
+                          data-index={index}
+                          data-item={data[index].interactiveLabelName}
+                          data-value={data[index].interactiveValue}
+                          onClick={this.props.handleInteractiveClick}
+                          className="interactive-tip__symbol"
+                        >
+                          -
+                        </div>
+                      </div>
+                      <div className="interactive-tip__value-wrapper">
+                        <div className="interactive-tip__value">
+                          {data[index].interactiveLabel}
+                          <span className="text-color-primary">
+                            {data[index].interactiveValue}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="interactive-tip__symbol-wrapper interactive-tip__symbol-wrapper-right">
+                        <div
+                          className="interactive-tip__symbol"
+                          data-intent="positive"
+                          data-index={index}
+                          data-item={data[index].interactiveLabelName}
+                          data-value={data[index].interactiveValue}
+                          onClick={this.props.handleInteractiveClick}
+                        >
+                          +
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </>
               )
             }}

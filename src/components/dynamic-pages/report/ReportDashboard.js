@@ -80,9 +80,12 @@ export class ReportDashboard extends Component {
       // Budget Optimizer
       budget_optimizer,
       // Interactive Funnel
+      interactive_funnel_key,
       months_to_reach_target,
       OPTIMIZED_FUNNEL_DATA,
-      OPTIMIZED_website_traffic,
+      handleInteractiveClick,
+      handleHideRevenue,
+      revenueVisible,
     } = this.props
 
     const dummyData = [
@@ -152,6 +155,7 @@ export class ReportDashboard extends Component {
     let DATA_comparison_bar_chart
     let deficitFromTargetRevenue
     let OPTIMIZED_website_conversions
+    let OPTIMIZED_website_traffic
     let OPTIMIZED_qualified_leads
     let OPTIMIZED_deals_won
     let CURRENT_revenue
@@ -166,6 +170,7 @@ export class ReportDashboard extends Component {
         revenue_growth_goal
       )
 
+      OPTIMIZED_website_traffic = OPTIMIZED_FUNNEL_DATA[0].value
       OPTIMIZED_website_conversions = OPTIMIZED_FUNNEL_DATA[1].value
       OPTIMIZED_qualified_leads = OPTIMIZED_FUNNEL_DATA[2].value
       OPTIMIZED_deals_won = OPTIMIZED_FUNNEL_DATA[3].value
@@ -245,9 +250,17 @@ export class ReportDashboard extends Component {
           _id: "5de52b4ac4275a463f912042",
           item: "website_traffic",
           label: "Website Traffic",
+          interactiveLabelName: `websiteTraffic`,
+          interactiveLabel: `Traffic: `,
+          interactiveValue: `${numberWithCommas(OPTIMIZED_website_traffic)}`,
           percentageChange:
-            OPTIMIZED_FUNNEL_DATA[0].percentageChange > 0
-              ? `Increase by ${numberWithCommas(
+            OPTIMIZED_FUNNEL_DATA[0].percentageChange > 0 ||
+            interactive_funnel_key > 1
+              ? `${
+                  OPTIMIZED_FUNNEL_DATA[0].percentageChange > 0
+                    ? `Increase`
+                    : `Decrease`
+                } by ${numberWithCommas(
                   OPTIMIZED_FUNNEL_DATA[0].percentageChange
                 )}%`
               : `No change`,
@@ -260,9 +273,19 @@ export class ReportDashboard extends Component {
           _id: "5de52b4ac4275a463f912041",
           item: "website_conversion",
           label: "Website Conversions",
+          interactiveLabelName: `conversionRate`,
+          interactiveLabel: `Conversion Rate: `,
+          interactiveValue: `${removeSpecialChars(
+            OPTIMIZED_FUNNEL_DATA.updatedInputs.conversionRate.newValue
+          )}%`,
           percentageChange:
-            OPTIMIZED_FUNNEL_DATA[1].percentageChange > 0
-              ? `Increase by ${numberWithCommas(
+            OPTIMIZED_FUNNEL_DATA[1].percentageChange > 0 ||
+            interactive_funnel_key > 1
+              ? `${
+                  OPTIMIZED_FUNNEL_DATA[1].percentageChange > 0
+                    ? `Increase`
+                    : `Decrease`
+                } by ${numberWithCommas(
                   OPTIMIZED_FUNNEL_DATA[1].percentageChange
                 )}%`
               : `No change`,
@@ -277,9 +300,20 @@ export class ReportDashboard extends Component {
           _id: "5de52b4ac4275a463f912040",
           item: "qualified_leads",
           label: "Qualified Leads",
+          interactiveLabelName: `qualifiedLeadsPercentage`,
+          interactiveLabel: `Leads in %: `,
+          interactiveValue: `${removeSpecialChars(
+            OPTIMIZED_FUNNEL_DATA.updatedInputs.qualifiedLeadsPercentage
+              .newValue
+          )}%`,
           percentageChange:
-            OPTIMIZED_FUNNEL_DATA[2].percentageChange > 0
-              ? `Increase by ${numberWithCommas(
+            OPTIMIZED_FUNNEL_DATA[2].percentageChange > 0 ||
+            interactive_funnel_key > 1
+              ? `${
+                  OPTIMIZED_FUNNEL_DATA[2].percentageChange > 0
+                    ? `Increase`
+                    : `Decrease`
+                } by ${numberWithCommas(
                   OPTIMIZED_FUNNEL_DATA[2].percentageChange
                 )}%`
               : `No change`,
@@ -294,9 +328,19 @@ export class ReportDashboard extends Component {
           _id: "5de52b4ac4275a463f91203f",
           item: "deals_won",
           label: "Deals Won",
+          interactiveLabelName: `closeRatio`,
+          interactiveLabel: `Close Ratio in %: `,
+          interactiveValue: `${removeSpecialChars(
+            OPTIMIZED_FUNNEL_DATA.updatedInputs.closeRatio.newValue
+          )}%`,
           percentageChange:
-            OPTIMIZED_FUNNEL_DATA[3].percentageChange > 0
-              ? `Increase by ${numberWithCommas(
+            OPTIMIZED_FUNNEL_DATA[3].percentageChange > 0 ||
+            interactive_funnel_key > 1
+              ? `${
+                  OPTIMIZED_FUNNEL_DATA[3].percentageChange > 0
+                    ? `Increase`
+                    : `Decrease`
+                } by ${numberWithCommas(
                   OPTIMIZED_FUNNEL_DATA[3].percentageChange
                 )}%`
               : `No change`,
@@ -310,13 +354,23 @@ export class ReportDashboard extends Component {
           item: "revenue_till_target_date",
           label: `Revenue Per Month`,
           percentageChange:
-            OPTIMIZED_revenue_change > 0
-              ? `Increase by ${numberWithCommas(OPTIMIZED_revenue_change)}%`
+            OPTIMIZED_revenue_change > 0 || interactive_funnel_key > 1
+              ? `${
+                  OPTIMIZED_revenue_change > 0 ? `Increase` : `Decrease`
+                } by ${numberWithCommas(OPTIMIZED_revenue_change)}%`
               : `No change`,
           description: `Current: $${numberWithCommas(CURRENT_revenue)}`,
           quantity: OPTIMIZED_revenue,
         },
       ]
+
+      const DATA_optimized_funnel_copy = [...DATA_optimized_funnel]
+
+      if (!revenueVisible) {
+        DATA_optimized_funnel.pop()
+      } else {
+        DATA_optimized_funnel = DATA_optimized_funnel_copy
+      }
     }
 
     return (
@@ -371,7 +425,7 @@ export class ReportDashboard extends Component {
 
                   {/* BLOCK_02: Current Funnel */}
                   <Container fluid className="mb-4">
-                    <ReportFunnel data={DATA_current_funnel} />
+                    <ReportFunnel key={1} data={DATA_current_funnel} />
                   </Container>
                   {/* // BLOCK_02: Current Funnel */}
 
@@ -584,8 +638,11 @@ export class ReportDashboard extends Component {
                   {/* BLOCK_09: Optimized Funnel */}
                   <Container fluid className="mb-4">
                     <ReportFunnel
+                      interactive_key={interactive_funnel_key}
                       data={DATA_optimized_funnel}
-                      className="optimized-funnel"
+                      handleInteractiveClick={handleInteractiveClick}
+                      handleHideRevenue={handleHideRevenue}
+                      className="interactive-funnel"
                     />
                   </Container>
                   {/* // BLOCK_09: Optimized Funnel */}

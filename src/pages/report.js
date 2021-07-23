@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import { Router } from "@reach/router"
 import ReportLayout from "src/components/report/ReportLayout"
+// Helpers
+import { roundToTwoDecimals } from "src/util/helpers"
 // Pages
 import ReportDashboard from "src/components/dynamic-pages/report/ReportDashboard"
 // Axios
@@ -31,6 +33,7 @@ import {
   budgetOptimizer,
   // Optimized Funnel
   createFunnel,
+  reCreateFunnel,
   createOptimizedFunnel,
 } from "src/util/helpers"
 
@@ -48,6 +51,8 @@ export class Report extends Component {
     average_revenue_per_customer: null,
     target_date_to_reach_revenue: null,
     current_annual_revenue: null,
+    percentage_of_qualified_leads: null,
+    average_close_ratio_from_opportunities_to_deals: null,
     // // Useful for Funnel
     average_monthly_website_traffic: null,
     average_monthly_leads_from_website: null,
@@ -84,11 +89,12 @@ export class Report extends Component {
     budget_optimizer: null,
     // Interactive Funnel
     months_to_reach_target: null,
-    OPTIMIZED_website_traffic: null,
+    interactive_funnel_key: 1,
+    OPTIMIZED_FUNNEL_DATA: null,
+    OPTIMIZED_close_ratio: null,
     OPTIMIZED_conversion_rate: null,
     OPTIMIZED_qualified_leads_percentage: null,
-    OPTIMIZED_close_ratio: null,
-    OPTIMIZED_FUNNEL_DATA: null,
+    OPTIMIZED_website_traffic: null,
   }
 
   handleUpdateIDState = id => {
@@ -326,6 +332,8 @@ export class Report extends Component {
               average_revenue_per_customer,
               target_date_to_reach_revenue,
               current_annual_revenue,
+              percentage_of_qualified_leads,
+              average_close_ratio_from_opportunities_to_deals,
               // Useful for funnel
               average_monthly_website_traffic,
               average_monthly_leads_from_website,
@@ -362,16 +370,17 @@ export class Report extends Component {
               budget_optimizer,
               // Interactive Funnel
               months_to_reach_target,
+              revenueVisible: true,
               OPTIMIZED_FUNNEL_DATA,
-              OPTIMIZED_website_traffic:
-                OPTIMIZED_FUNNEL_DATA.updatedInputs.websiteTraffic.newValue,
+              OPTIMIZED_close_ratio:
+                OPTIMIZED_FUNNEL_DATA.updatedInputs.closeRatio.newValue,
               OPTIMIZED_conversion_rate:
                 OPTIMIZED_FUNNEL_DATA.updatedInputs.conversionRate.newValue,
               OPTIMIZED_qualified_leads_percentage:
                 OPTIMIZED_FUNNEL_DATA.updatedInputs.qualifiedLeadsPercentage
                   .newValue,
-              OPTIMIZED_close_ratio:
-                OPTIMIZED_FUNNEL_DATA.updatedInputs.closeRatio.newValue,
+              OPTIMIZED_website_traffic:
+                OPTIMIZED_FUNNEL_DATA.updatedInputs.websiteTraffic.newValue,
               // Loader
               loading: false,
             })
@@ -394,6 +403,61 @@ export class Report extends Component {
       })
   }
 
+  // Interactive Funnel
+  handleInteractiveClick = event => {
+    const intent = event.target.getAttribute("data-intent")
+    const index = event.target.getAttribute("data-index")
+    let updatedData
+    let parameters = [
+      this.state.OPTIMIZED_website_traffic,
+      this.state.OPTIMIZED_conversion_rate,
+      this.state.OPTIMIZED_qualified_leads_percentage,
+      this.state.OPTIMIZED_close_ratio,
+      this.state.OPTIMIZED_FUNNEL_DATA,
+    ]
+    if (intent === "negative") {
+      parameters[index] = roundToTwoDecimals(
+        parameters[index] - (parameters[index] / 100) * 10
+      )
+    } else {
+      parameters[index] = roundToTwoDecimals(
+        parameters[index] + (parameters[index] / 100) * 10
+      )
+    }
+
+    updatedData = reCreateFunnel(
+      parameters[0],
+      parameters[1],
+      parameters[2],
+      parameters[3],
+      parameters[4]
+    )
+
+    this.setState({
+      OPTIMIZED_FUNNEL_DATA: updatedData,
+      OPTIMIZED_website_traffic: parameters[0],
+      OPTIMIZED_conversion_rate: parameters[1],
+      OPTIMIZED_qualified_leads_percentage: parameters[2],
+      OPTIMIZED_close_ratio: parameters[3],
+      interactive_funnel_key: this.state.interactive_funnel_key + 1,
+    })
+  }
+
+  handleHideRevenue = () => {
+    if (this.state.revenueVisible) {
+      this.setState({
+        revenueVisible: false,
+      })
+    } else {
+      this.setState({
+        revenueVisible: true,
+      })
+    }
+    this.setState({
+      interactive_funnel_key: this.state.interactive_funnel_key + 1,
+    })
+  }
+
   render() {
     return (
       <ReportLayout reportID={this.state.id}>
@@ -402,6 +466,8 @@ export class Report extends Component {
             {...this.state}
             handleUpdateIDState={this.handleUpdateIDState}
             handleGetDataByID={this.handleGetDataByID}
+            handleInteractiveClick={this.handleInteractiveClick}
+            handleHideRevenue={this.handleHideRevenue}
             path="/:id"
           />
         </Router>

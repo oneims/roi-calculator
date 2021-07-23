@@ -500,3 +500,56 @@ export const createOptimizedFunnel = (
 
   return optimizedFunnel
 }
+
+export const reCreateFunnel = (
+  websiteTraffic,
+  conversionRate,
+  qualifiedLeadsPercentage,
+  closeRatio,
+  data
+) => {
+  websiteTraffic = convertToInt(removeSpecialChars(websiteTraffic))
+  conversionRate = convertToInt(removeSpecialChars(conversionRate))
+  qualifiedLeadsPercentage = convertToInt(
+    removeSpecialChars(qualifiedLeadsPercentage)
+  )
+  closeRatio = convertToInt(removeSpecialChars(closeRatio))
+
+  const reCreatedFunnel = createFunnel(
+    websiteTraffic,
+    conversionRate,
+    qualifiedLeadsPercentage,
+    closeRatio
+  )
+
+  reCreatedFunnel.updatedInputs = {
+    websiteTraffic: {
+      oldValue: data.updatedInputs.websiteTraffic.oldValue,
+      newValue: websiteTraffic,
+    },
+    conversionRate: {
+      oldValue: data.updatedInputs.conversionRate.oldValue,
+      newValue: conversionRate,
+    },
+    qualifiedLeadsPercentage: {
+      oldValue: data.updatedInputs.qualifiedLeadsPercentage.oldValue,
+      newValue: qualifiedLeadsPercentage,
+    },
+    closeRatio: {
+      oldValue: data.updatedInputs.closeRatio.oldValue,
+      newValue: closeRatio,
+    },
+  }
+
+  for (let i = 0; i < reCreatedFunnel.length; i++) {
+    const difference = reCreatedFunnel[i].value - data[i].originalValue
+    const change = (difference / data[i].originalValue) * 100
+    reCreatedFunnel[i].originalValue = data[i].originalValue
+    reCreatedFunnel[i].description = `Increased ${
+      reCreatedFunnel[i].label
+    } by ${roundToTwoDecimals(change)}%`
+    reCreatedFunnel[i].percentageChange = roundToTwoDecimals(change)
+  }
+
+  return reCreatedFunnel
+}

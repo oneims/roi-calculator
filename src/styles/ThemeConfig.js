@@ -382,6 +382,7 @@ body {
         animation-delay: 0s !important;
         animation-duration: 0.3s !important;
         padding: 1rem 1.5rem;
+        position: relative;
       }
     }
     > div:nth-child(1) {
@@ -451,5 +452,81 @@ body {
   color: #33475b;
   font-weight: 600;
 }
+
+
+.interactive-tip {
+  &__wrapper {
+    display: flex;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    position: absolute;
+    top: unset;
+    bottom: 0;
+    width: 100%;
+    left: 50%;
+    max-width: 75%;
+    transform: translateX(-50%);
+    margin-bottom: 1rem;
+  }
+  &__symbol-wrapper, &__value-wrapper {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: .7rem;
+    font-weight: 600;
+    color: #34485c;
+  }
+  &__symbol-wrapper {
+    width: 100%;
+    cursor: pointer;
+    max-width: 25%;
+    &:hover {
+      background-color: #eee;
+    }
+    &-left {
+      border-right: 2px solid #eee;
+    }
+    &-right {
+      border-left: 2px solid #eee;
+    }
+  }
+  &__value-wrapper {
+    width: 100%;
+    padding: 0.25rem;
+    max-width: 50%;
+  }
+  &__symbol {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.funnel-button {
+  display: none;
+}
+
+.interactive-funnel {
+  .funnel-button {
+    display: block;
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    outline: none;
+    border: none;
+    background-color: #0055ff;
+    border-radius: 4px;
+    padding: 0.15rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid #eee;
+    color: #fff;
+  }
+}
+
 
 `
