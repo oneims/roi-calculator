@@ -521,7 +521,7 @@ body {
     background-color: #0055ff;
     border-radius: 4px;
     padding: 0.15rem 1rem;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     border: 1px solid #eee;
     color: #fff;
