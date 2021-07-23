@@ -256,7 +256,7 @@ export class ReportDashboard extends Component {
           item: "website_traffic",
           label: "Website Traffic",
           interactiveLabelName: `websiteTraffic`,
-          interactiveLabel: `Website Traffic: `,
+          interactiveLabel: `Traffic: `,
           interactiveValue: `${numberWithCommas(OPTIMIZED_website_traffic)}`,
           percentageChangeValue: OPTIMIZED_FUNNEL_DATA[0].percentageChange,
           percentageChange:
