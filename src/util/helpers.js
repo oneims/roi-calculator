@@ -548,7 +548,8 @@ export const reCreateFunnel = (
     reCreatedFunnel[i].description = `Increased ${
       reCreatedFunnel[i].label
     } by ${roundToTwoDecimals(change)}%`
-    reCreatedFunnel[i].percentageChange = roundToTwoDecimals(change)
+    reCreatedFunnel[i].percentageChange =
+      roundToTwoDecimals(change) !== undefined ? roundToTwoDecimals(change) : 0
   }
 
   return reCreatedFunnel

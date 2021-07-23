@@ -27,10 +27,13 @@ import {
   StyledContentCardSpotlight,
 } from "src/components/StyledElements"
 
+let OPTIMIZED_revenue_change_default = []
+
 export class ReportDashboard extends Component {
   componentDidMount() {
     this.props.handleUpdateIDState(this.props.id)
     this.props.handleGetDataByID(this.props.id)
+    OPTIMIZED_revenue_change_default = []
   }
   render() {
     const {
@@ -186,6 +189,8 @@ export class ReportDashboard extends Component {
         (DIFFERENCE_in_revenues / CURRENT_revenue) * 100
       )
 
+      OPTIMIZED_revenue_change_default.push(OPTIMIZED_revenue_change)
+
       DATA_comparison_bar_chart = [
         // {
         //   name: "Average Conversion Rate",
@@ -251,11 +256,11 @@ export class ReportDashboard extends Component {
           item: "website_traffic",
           label: "Website Traffic",
           interactiveLabelName: `websiteTraffic`,
-          interactiveLabel: `Traffic: `,
+          interactiveLabel: `Website Traffic: `,
           interactiveValue: `${numberWithCommas(OPTIMIZED_website_traffic)}`,
+          percentageChangeValue: OPTIMIZED_FUNNEL_DATA[0].percentageChange,
           percentageChange:
-            OPTIMIZED_FUNNEL_DATA[0].percentageChange > 0 ||
-            interactive_funnel_key > 1
+            OPTIMIZED_FUNNEL_DATA[0].percentageChange !== 0
               ? `${
                   OPTIMIZED_FUNNEL_DATA[0].percentageChange > 0
                     ? `Increase`
@@ -278,9 +283,9 @@ export class ReportDashboard extends Component {
           interactiveValue: `${removeSpecialChars(
             OPTIMIZED_FUNNEL_DATA.updatedInputs.conversionRate.newValue
           )}%`,
+          percentageChangeValue: OPTIMIZED_FUNNEL_DATA[1].percentageChange,
           percentageChange:
-            OPTIMIZED_FUNNEL_DATA[1].percentageChange > 0 ||
-            interactive_funnel_key > 1
+            OPTIMIZED_FUNNEL_DATA[1].percentageChange !== 0
               ? `${
                   OPTIMIZED_FUNNEL_DATA[1].percentageChange > 0
                     ? `Increase`
@@ -306,9 +311,9 @@ export class ReportDashboard extends Component {
             OPTIMIZED_FUNNEL_DATA.updatedInputs.qualifiedLeadsPercentage
               .newValue
           )}%`,
+          percentageChangeValue: OPTIMIZED_FUNNEL_DATA[2].percentageChange,
           percentageChange:
-            OPTIMIZED_FUNNEL_DATA[2].percentageChange > 0 ||
-            interactive_funnel_key > 1
+            OPTIMIZED_FUNNEL_DATA[2].percentageChange !== 0
               ? `${
                   OPTIMIZED_FUNNEL_DATA[2].percentageChange > 0
                     ? `Increase`
@@ -333,9 +338,9 @@ export class ReportDashboard extends Component {
           interactiveValue: `${removeSpecialChars(
             OPTIMIZED_FUNNEL_DATA.updatedInputs.closeRatio.newValue
           )}%`,
+          percentageChangeValue: OPTIMIZED_FUNNEL_DATA[3].percentageChange,
           percentageChange:
-            OPTIMIZED_FUNNEL_DATA[3].percentageChange > 0 ||
-            interactive_funnel_key > 1
+            OPTIMIZED_FUNNEL_DATA[3].percentageChange !== 0
               ? `${
                   OPTIMIZED_FUNNEL_DATA[3].percentageChange > 0
                     ? `Increase`
@@ -353,8 +358,9 @@ export class ReportDashboard extends Component {
           _id: "5de52b4ac4275a463f91201i",
           item: "revenue_till_target_date",
           label: `Revenue Per Month`,
+          percentageChangeValue: OPTIMIZED_revenue_change,
           percentageChange:
-            OPTIMIZED_revenue_change > 0 || interactive_funnel_key > 1
+            OPTIMIZED_revenue_change !== 0
               ? `${
                   OPTIMIZED_revenue_change > 0 ? `Increase` : `Decrease`
                 } by ${numberWithCommas(OPTIMIZED_revenue_change)}%`
@@ -565,7 +571,7 @@ export class ReportDashboard extends Component {
 
                   {/* BLOCK_08: Optimization Funnel Tip */}
                   <Container fluid className="mb-4">
-                    {OPTIMIZED_revenue_change > 0 ? (
+                    {OPTIMIZED_revenue_change_default[0] > 0 ? (
                       <InfoAlert Warning>
                         <strong>Optimization Tip:</strong> <br />
                         You need{" "}

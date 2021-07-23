@@ -41,12 +41,7 @@ class ReportFunnel extends Component {
                         {data[index].percentageChange && (
                           <span
                             className={`funnel-info-text ${
-                              Number(
-                                data[index].percentageChange
-                                  .replace("Increase by ", "")
-                                  .replace("Decrease by ")
-                                  .replace("%", "")
-                              ) > 0
+                              data[index].percentageChangeValue >= 0
                                 ? `text-success`
                                 : `text-danger`
                             }`}
