@@ -8,6 +8,8 @@ export const Theme = {
     primaryHover: "#1d1de8",
     secondary: "#2b2b2b",
     secondaryHover: "#000",
+    tertiary: "#c14d9a",
+    tertiaryHover: "#b13888",
     lightBlue: "#09f",
     white: "#fff",
     silver: "#ccc",
@@ -34,6 +36,21 @@ html {
   color: ${Theme.colors.black};
   line-height: 1.5;
   font-weight: 400;
+}
+
+a {
+  color: ${Theme.colors.primary};
+  font-weight: 700;
+  &:hover {
+    color: ${Theme.colors.primary};
+  }
+  &.no-styles {
+    color: inherit;
+    font-weight: inherit;
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
 
 .f-400 {
@@ -348,6 +365,10 @@ body {
 
 .text-info {
   color: #847613;
+}
+
+.br-10px {
+  border-radius: 10px;
 }
 
 .table-responsive {

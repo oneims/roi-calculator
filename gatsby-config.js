@@ -13,10 +13,20 @@ module.exports = {
     `gatsby-transformer-remark`,
     `gatsby-plugin-no-index`,
     "gatsby-plugin-root-import",
+    // Wordpress
+    {
+      resolve: `gatsby-source-wordpress`,
+      options: {
+        url:
+          process.env.WPGRAPHQL_URL || `https://roicalc.wpengine.com/graphql`,
+      },
+    },
+    // Client Paths
     {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/onboarding/*`, `/report/*`, `/editor/*`] },
     },
+    // Netlify
     {
       resolve: `gatsby-plugin-netlify`,
       options: {

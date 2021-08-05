@@ -116,9 +116,14 @@ const Header = ({
                   </StyledLogo>
                 </Link>
               </StyledLogoBox>
-              <Link to="/onboarding/step-one">
-                <Button>Get Started</Button>
-              </Link>
+              <div className="d-sm-flex">
+                <Link to="/resources" className="d-none d-sm-inline mr-3">
+                  <Button Tertiary>Resources</Button>
+                </Link>
+                <Link to="/onboarding/step-one">
+                  <Button>Get Started</Button>
+                </Link>
+              </div>
             </StyledHeaderWrap>
           </Container>
         </StyledHeader>

@@ -186,8 +186,12 @@ export const Button = styled.button`
   border-radius: 4px;
   background-color: ${props =>
     props.Secondary ? colors.secondary : colors.primary};
+  background-color: ${props =>
+    props.Tertiary ? colors.tertiary : colors.primary};
   box-shadow: ${props =>
-    props.Secondary ? "" : "0 4px 14px 0 rgb(0 118 255 / 39%)"};
+    props.Secondary || props.Tertiary
+      ? ""
+      : "0 4px 14px 0 rgb(0 118 255 / 39%)"};
   color: #fff;
   font-weight: ${props => (props.Dashboard ? `500` : `800`)};
   -webkit-transition: 0.2s ease;
@@ -201,6 +205,8 @@ export const Button = styled.button`
   &:hover {
     background-color: ${props =>
       props.Secondary ? colors.secondaryHover : colors.primaryHover};
+    background-color: ${props =>
+      props.Tertiary ? colors.tertiaryHover : colors.primaryHover};
     transition: 0.2s ease;
   }
 `
@@ -560,3 +566,51 @@ export const TintedBackground = styled.div`
     transition: 0.3s ease;
   }
 `
+
+// Article Card
+export const ArticleCard = styled.div`
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 0.2rem 0.4rem #e8e9eb;
+  background-color: #fff;
+  transition: 0.2s ease;
+  &:hover {
+    transition: 0.2s ease;
+    transform: translateY(-5px);
+  }
+  img {
+    width: 100%;
+    max-width: 100%;
+    height: 235px;
+    object-fit: cover;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+`
+
+export const ArticleCardTop = styled.div``
+
+export const ArticleCardBottom = styled.div`
+  height: 100%;
+  padding: 1rem;
+`
+
+export const ArticleCardTitle = styled.h3``
+
+export const ArticleCardMeta = styled.span`
+  font-size: 0.9rem;
+  font-weight: 700;
+`
+
+export const ArticleCardDesc = styled.div`
+  font-size: 0.9rem;
+  a {
+    display: block;
+    margin-top: 1.5rem;
+  }
+`
+
+export const ArticleCardLink = styled.span``

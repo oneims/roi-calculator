@@ -41,7 +41,7 @@ const HP__Hero = ({
         </ContentBox>
         {image ? (
           <Img
-            className="mt-5 mt-md-5 BoxShadowActive"
+            className="mt-5 mt-md-5 BoxShadowActive br-10px"
             fluid={image}
             alt="ROI Calculator App Screen"
           />
