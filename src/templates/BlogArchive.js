@@ -48,7 +48,7 @@ const BlogArchive = ({
 
   return (
     <Layout>
-      <SEO title="All posts" />
+      <SEO title="All Resources" />
       <Section Small>
         <PatternWrapper PatternWrapperFull>
           <Pattern />
@@ -68,8 +68,11 @@ const BlogArchive = ({
                   post.featuredImage?.node?.localFile?.childImageSharp?.fluid,
                 alt: post.featuredImage?.node?.alt || title,
               }
+              const excerpt =
+                post.excerpt.replace(/(<([^>]+)>)/gi, "").substring(0, 120) +
+                "..."
               return (
-                <Col md="6" key={post.uri} className="mb-4">
+                <Col md="6" lg="4" key={post.uri} className="mb-4">
                   <Link to={post.uri} className="no-styles">
                     <ArticleCard itemScope itemType="http://schema.org/Article">
                       <ArticleCardTop>
@@ -87,35 +90,21 @@ const BlogArchive = ({
                             <ArticleCardTitle>{parse(title)}</ArticleCardTitle>
                           </Link>
                           <ArticleCardMeta className="mt-2 mb-2 d-block">
-                            {post.date}
+                            <p>{post.date}</p>
                           </ArticleCardMeta>
                         </ContentBox>
                         <ContentBox>
-                          <ArticleCardDesc>
-                            {parse(post.excerpt)}
-                          </ArticleCardDesc>
+                          <ArticleCardDesc>{parse(excerpt)}</ArticleCardDesc>
                         </ContentBox>
-                        <ContentBox>
-                          <ArticleCardLink></ArticleCardLink>
+                        <ContentBox className="mt-3">
+                          <ArticleCardLink>
+                            <Link to={post.uri}>Read More</Link>
+                          </ArticleCardLink>
                         </ContentBox>
                       </ArticleCardBottom>
                     </ArticleCard>
                   </Link>
                 </Col>
-
-                //   <div>
-                //       <header>
-                //         <h2>
-                //           <Link to={post.uri} itemProp="url">
-                //             <span itemProp="headline">{parse(title)}</span>
-                //           </Link>
-                //         </h2>
-                //         <small>{post.date}</small>
-                //       </header>
-                //       <section itemProp="description">
-                //         {parse(post.excerpt)}
-                //       </section>
-                //   </div>
               )
             })}
           </Row>
@@ -153,7 +142,7 @@ export const pageQuery = graphql`
             localFile {
               childImageSharp {
                 fluid(maxWidth: 1000, quality: 100) {
-                  ...GatsbyImageSharpFluid_tracedSVG
+                  ...GatsbyImageSharpFluid
                 }
               }
             }

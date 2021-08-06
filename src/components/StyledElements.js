@@ -161,6 +161,7 @@ export const PageHeading = styled.h1`
           ${GradientText}
         `
       : ""}
+  color: ${props => (props.PrimaryColor ? colors.primary : "")};
   @media (min-width: 992px) {
     font-size: 3.5rem;
   }
@@ -581,13 +582,12 @@ export const ArticleCard = styled.div`
     transition: 0.2s ease;
     transform: translateY(-5px);
   }
-  img {
-    width: 100%;
-    max-width: 100%;
-    height: 235px;
-    object-fit: cover;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+  .gatsby-image-wrapper {
+    height: 200px;
+    img {
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+    }
   }
 `
 
@@ -614,3 +614,31 @@ export const ArticleCardDesc = styled.div`
 `
 
 export const ArticleCardLink = styled.span``
+
+// Singular Article
+export const ArticleWrapper = styled.article`
+  img,
+  iframe {
+    max-width: 100%;
+    border-radius: 5px;
+    margin: 1rem 0;
+  }
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 2.25rem;
+    margin-bottom: 1.25rem;
+  }
+`
+
+export const FeaturedImageWrapper = styled.div`
+  img {
+    border-radius: 5px;
+  }
+  .gatsby-image-wrapper {
+    max-height: 500px;
+    border-radius: 5px;
+  }
+`
