@@ -781,27 +781,83 @@ export class ReportDashboard extends Component {
                     </p>
                   </Container>
                   <Container fluid className="mt-4">
-                    <Table responsive className="no-min-width">
-                      <thead>
-                        <tr>
-                          <th>Conversion Rate</th>
-                          <th>Value</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {conversion_rate_PROJECTION &&
-                          conversion_rate_PROJECTION.map((elem, index) => (
-                            <tr key={index}>
-                              <td
-                                dangerouslySetInnerHTML={{
-                                  __html: elem.description,
-                                }}
-                              />
-                              <td className="text-success">{elem.value}%</td>
+                    <Row>
+                      <Col lg="4">
+                        <Table responsive className="no-min-width">
+                          <thead>
+                            <tr>
+                              <th>Conversion Rate</th>
+                              <th>Value</th>
                             </tr>
-                          ))}
-                      </tbody>
-                    </Table>
+                          </thead>
+                          <tbody>
+                            {conversion_rate_PROJECTION &&
+                              conversion_rate_PROJECTION.map((elem, index) => (
+                                <tr key={index}>
+                                  <td
+                                    dangerouslySetInnerHTML={{
+                                      __html: elem.description,
+                                    }}
+                                  />
+                                  <td className="text-success">
+                                    {elem.value}%
+                                  </td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </Table>
+                      </Col>
+                      <Col lg="4">
+                        <Table responsive className="no-min-width">
+                          <thead>
+                            <tr>
+                              <th>Conversion Rate</th>
+                              <th>Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {conversion_rate_PROJECTION &&
+                              conversion_rate_PROJECTION.map((elem, index) => (
+                                <tr key={index}>
+                                  <td
+                                    dangerouslySetInnerHTML={{
+                                      __html: elem.description,
+                                    }}
+                                  />
+                                  <td className="text-success">
+                                    {elem.value}%
+                                  </td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </Table>
+                      </Col>
+                      <Col lg="4">
+                        <Table responsive className="no-min-width">
+                          <thead>
+                            <tr>
+                              <th>Conversion Rate</th>
+                              <th>Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {conversion_rate_PROJECTION &&
+                              conversion_rate_PROJECTION.map((elem, index) => (
+                                <tr key={index}>
+                                  <td
+                                    dangerouslySetInnerHTML={{
+                                      __html: elem.description,
+                                    }}
+                                  />
+                                  <td className="text-success">
+                                    {elem.value}%
+                                  </td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </Table>
+                      </Col>
+                    </Row>
                   </Container>
 
                   <Container fluid className="mt-4">
