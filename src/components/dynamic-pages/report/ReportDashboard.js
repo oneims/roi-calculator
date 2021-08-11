@@ -63,17 +63,6 @@ export class ReportDashboard extends Component {
       cost_per_lead,
       customers_needed_for_revenue_target,
       cost_per_new_customer,
-      // Calculations
-      conversion_rate_CALCULATION,
-      average_qualified_leads_per_month_CALCULATION,
-      average_new_customers_per_month_CALCULATION,
-      average_monthly_online_marketing_investment_CALCULATION,
-      average_cost_per_lead_CALCULATION,
-      cost_per_customer_acquisition_CALCULATION,
-      net_new_revenue_CALCULATION,
-      cost_per_lead_CALCULATION,
-      customers_needed_for_revenue_target_CALCULATION,
-      cost_per_new_customer_CALCULATION,
       // Projections
       conversion_rate_PROJECTION,
       average_qualified_leads_per_month_PROJECTION,
@@ -168,7 +157,7 @@ export class ReportDashboard extends Component {
     let OPTIMIZED_revenue_change
     // Optimized Values for Funnel
 
-    if (!loading) {
+    if (!loading && !error) {
       deficitFromTargetRevenue = getDifferenceBetweenCurrentAndTargetRevenue(
         current_annual_revenue,
         revenue_growth_goal

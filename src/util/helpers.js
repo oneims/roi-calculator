@@ -572,7 +572,6 @@ export const getProjectionForRevenue = (
       qualifiedLeadsPercentage,
       closeRatio
     )
-    console.log(revenuePerCustomer)
     funnel.push(
       {
         name: "net_revenue",

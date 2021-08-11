@@ -533,18 +533,20 @@ export class Report extends Component {
 
   render() {
     return (
-      <ReportLayout reportID={this.state.id}>
-        <Router basepath="/report">
-          <ReportDashboard
-            {...this.state}
-            {...this.infoDrawerHandlers}
-            handleUpdateIDState={this.handleUpdateIDState}
-            handleGetDataByID={this.handleGetDataByID}
-            handleInteractiveClick={this.handleInteractiveClick}
-            handleHideRevenue={this.handleHideRevenue}
-            path="/:id"
-          />
-        </Router>
+      <>
+        <ReportLayout reportID={this.state.id}>
+          <Router basepath="/report">
+            <ReportDashboard
+              {...this.state}
+              {...this.infoDrawerHandlers}
+              handleUpdateIDState={this.handleUpdateIDState}
+              handleGetDataByID={this.handleGetDataByID}
+              handleInteractiveClick={this.handleInteractiveClick}
+              handleHideRevenue={this.handleHideRevenue}
+              path="/:id"
+            />
+          </Router>
+        </ReportLayout>
         <InfoDrawer
           information={true}
           loading={this.state.infoDrawer.loading}
@@ -553,7 +555,7 @@ export class Report extends Component {
           active={this.state.infoDrawer.visible ? "active" : ""}
           closeInfoDrawer={this.infoDrawerHandlers.closeInfoDrawer}
         />
-      </ReportLayout>
+      </>
     )
   }
 }
