@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { Router } from "@reach/router"
 import ReportLayout from "src/components/report/ReportLayout"
+import InfoDrawer from "src/components/InfoDrawer"
 // Helpers
 import { roundToTwoDecimals } from "src/util/helpers"
 // Pages
@@ -43,6 +44,14 @@ export class Report extends Component {
     data: null,
     loading: true,
     error: false,
+    // Base Components
+    infoDrawer: {
+      visible: false,
+      actionable: false,
+      heading: null,
+      content: null,
+      loading: false,
+    },
     // Base Data
     industry: null,
     revenue_growth_goal: null,
@@ -458,12 +467,64 @@ export class Report extends Component {
     })
   }
 
+  // Info Drawer
+  infoDrawerHandlers = {
+    showInfoDrawer: (heading, content) => {
+      if (heading && content) {
+        this.setState(prevState => ({
+          infoDrawer: {
+            ...prevState.infoDrawer,
+            visible: true,
+            loading: true,
+            heading: heading.toString(),
+          },
+        }))
+        setTimeout(() => {
+          this.setState(prevState => ({
+            infoDrawer: {
+              ...prevState.infoDrawer,
+              content: content.toString(),
+              loading: false,
+            },
+          }))
+        }, 600)
+      } else {
+        console.error("Missing Heading and Content on infoDrawerHandlers")
+      }
+    },
+    closeInfoDrawer: () => {
+      this.setState(prevState => ({
+        infoDrawer: {
+          ...prevState.infoDrawer,
+          visible: false,
+        },
+      }))
+    },
+    makeInfoDrawerActionable: () => {
+      this.setState(prevState => ({
+        infoDrawer: {
+          ...prevState.infoDrawer,
+          actionable: true,
+        },
+      }))
+    },
+    makeInfoDrawerNotActionable: () => {
+      this.setState(prevState => ({
+        infoDrawer: {
+          ...prevState.infoDrawer,
+          actionable: false,
+        },
+      }))
+    },
+  }
+
   render() {
     return (
       <ReportLayout reportID={this.state.id}>
         <Router basepath="/report">
           <ReportDashboard
             {...this.state}
+            {...this.infoDrawerHandlers}
             handleUpdateIDState={this.handleUpdateIDState}
             handleGetDataByID={this.handleGetDataByID}
             handleInteractiveClick={this.handleInteractiveClick}
@@ -471,6 +532,14 @@ export class Report extends Component {
             path="/:id"
           />
         </Router>
+        <InfoDrawer
+          information={true}
+          loading={this.state.infoDrawer.loading}
+          content={this.state.infoDrawer.content}
+          heading={this.state.infoDrawer.heading}
+          active={this.state.infoDrawer.visible ? "active" : ""}
+          closeInfoDrawer={this.infoDrawerHandlers.closeInfoDrawer}
+        />
       </ReportLayout>
     )
   }

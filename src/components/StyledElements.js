@@ -240,6 +240,18 @@ export const ContentCard = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  ${props =>
+    props.Clickable
+      ? css`
+          transition: 0.2s ease;
+          &:hover {
+            transition: 0.2s ease;
+            transform: translateY(-5px);
+            cursor: pointer;
+            box-shadow: 1px 0 10px RGB(0 0 0 / 8%);
+          }
+        `
+      : ""}
 `
 
 export const StyledContentCardLabel = styled.span`
@@ -488,18 +500,20 @@ export const StyledInfoDrawer = styled.div`
   }
   transition-property: none;
   transition-duration: 150ms;
-  transform: translateX(0%);
   position: fixed;
   top: 0px;
   bottom: 0px;
   z-index: 11111;
-  right: 0px;
+  right: ${props => (props.Left ? "unset" : "0")};
+  left: ${props => (props.Left ? "0" : "unset")};
   background-color: #fff;
   box-shadow: -3px 0 8px 0 rgb(66 91 118 / 21%);
   overflow-y: scroll;
   transition: 0.2s ease;
   pointer-events: none;
   transform: translateX(100%);
+  transform: ${props =>
+    props.Left ? "translateX(-100%)" : "translateX(100%)"};
   &.active {
     transition: 0.3s ease;
     pointer-events: all;
@@ -518,6 +532,8 @@ export const StyledInfoDrawerHeader = styled.div`
 `
 export const StyledInfoDrawerBody = styled.div`
   padding: 1.5rem 1rem;
+  position: relative;
+  min-height: 80vh;
 `
 export const StyledInfoDrawerFooter = styled.div``
 

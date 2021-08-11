@@ -550,4 +550,24 @@ body {
 }
 
 
+// Dashboard Tooltip
+// .dashboard-tooltip {
+//   &.type-dark.place-top,
+//   &.type-dark.place-left {
+//   // max-width: 200px;
+//   font-size: 0.75rem;
+//   font-weight: 500;
+//   border-radius: 4px;
+//   border: 2px solid #fae0b5;
+//   background-color: #fdf3e1;
+//   color: #33475b;
+//   &.show {
+//     opacity: 1;
+//   }
+//   &:after {
+//     display: none;
+//   }
+// }
+
+
 `

@@ -40,6 +40,7 @@ export class ReportDashboard extends Component {
       // Misc
       loading,
       error,
+      infoDrawerHandlers,
       // Base Data
       industry,
       company_size_in_revenue,
@@ -653,7 +654,7 @@ export class ReportDashboard extends Component {
                   </Container>
                   {/* // BLOCK_09: Optimized Funnel */}
 
-                  <Container fluid>
+                  {/* <Container fluid>
                     <Table responsive>
                       <thead>
                         <tr>
@@ -767,9 +768,17 @@ export class ReportDashboard extends Component {
                         </tr>
                       </tbody>
                     </Table>
-                  </Container>
+                  </Container> */}
                   <Container fluid className="mt-5 text-center mb-3">
-                    <h2>Projections</h2>
+                    <StyledContentCardSpotlight
+                      Gradient
+                      className="text-center mt-1 mb-1"
+                    >
+                      Impact on Your Top Line
+                    </StyledContentCardSpotlight>
+                    <p className="text-center f-400">
+                      Based on the numbers provided in the Wizard.
+                    </p>
                   </Container>
                   <Container fluid className="mt-4">
                     <Table responsive className="no-min-width">
