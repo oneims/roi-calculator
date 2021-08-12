@@ -19,12 +19,14 @@ import ReportAreaGraph from "src/components/report/ReportAreaGraph"
 import ReportPieChart from "src/components/report/ReportPieChart"
 import ReportSolidMetrics from "src/components/report/ReportSolidMetrics"
 import ReportBarChart from "src/components/report/ReportBarChart"
+import ReportImpactCards from "src/components/report/ReportImpactCards"
 import {
   Section,
   ContentCard,
   StyledLoaderWrapper,
   StyledLoader,
   StyledContentCardSpotlight,
+  StyledInfoText,
 } from "src/components/StyledElements"
 
 let OPTIMIZED_revenue_change_default = []
@@ -40,14 +42,11 @@ export class ReportDashboard extends Component {
       // Misc
       loading,
       error,
-      infoDrawerHandlers,
       // Base Data
       industry,
       company_size_in_revenue,
       revenue_growth_goal,
-      current_annual_marketing_budget,
       average_revenue_per_customer,
-      target_date_to_reach_revenue,
       current_annual_revenue,
       // Useful for funnel
       average_monthly_website_traffic,
@@ -58,16 +57,10 @@ export class ReportDashboard extends Component {
       average_new_customers_per_month,
       average_monthly_online_marketing_investment,
       average_cost_per_lead,
-      cost_per_customer_acquisition,
       net_new_revenue,
-      cost_per_lead,
       customers_needed_for_revenue_target,
-      cost_per_new_customer,
       // Projections
-      conversion_rate_PROJECTION,
-      average_qualified_leads_per_month_PROJECTION,
-      average_new_customers_per_month_PROJECTION,
-      average_cost_per_lead_PROJECTION,
+      MULTIPLE_PROJECTIONS,
       // Projections Graph
       monthly_leads_PROJECTION_GRAPH,
       // Budget Optimizer
@@ -197,7 +190,9 @@ export class ReportDashboard extends Component {
           name: "Average New Customers Per Month",
           Industry:
             STATIC_Industry_Metrics[industry].average_new_customers_per_month,
-          Yours: removeSpecialChars(average_new_customers_per_month),
+          Yours: removeSpecialChars(
+            Math.floor(average_new_customers_per_month)
+          ),
         },
         {
           name: "Average Revenue Per Customer",
@@ -547,9 +542,12 @@ export class ReportDashboard extends Component {
                             <span className="text-color-primary f-700">
                               {revenue_growth_goal}
                             </span>{" "}
-                            and your current marketing budget of{" "}
+                            and your current online marketing budget of{" "}
                             <span className="text-color-primary f-700">
-                              {current_annual_marketing_budget}
+                              $
+                              {numberWithCommas(
+                                average_monthly_online_marketing_investment * 12
+                              )}
                             </span>
                           </p>
                           <ReportPieChart data={budget_optimizer} />
@@ -643,208 +641,25 @@ export class ReportDashboard extends Component {
                   </Container>
                   {/* // BLOCK_09: Optimized Funnel */}
 
-                  {/* <Container fluid>
-                    <Table responsive>
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>Value</th>
-                          <th>How was this calculated?</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Conversion Rate</td>
-                          <td>{conversion_rate}%</td>
-                          <td
-                            className="text-info"
-                            dangerouslySetInnerHTML={{
-                              __html: conversion_rate_CALCULATION,
-                            }}
-                          />
-                        </tr>
-                        <tr>
-                          <td>Average Qualified Leads Per Month</td>
-                          <td>{average_qualified_leads_per_month}</td>
-                          <td
-                            className="text-info"
-                            dangerouslySetInnerHTML={{
-                              __html: average_qualified_leads_per_month_CALCULATION,
-                            }}
-                          />
-                        </tr>
-                        <tr>
-                          <td>Average New Customers Per Month</td>
-                          <td>{Math.floor(average_new_customers_per_month)}</td>
-                          <td
-                            className="text-info"
-                            dangerouslySetInnerHTML={{
-                              __html: average_new_customers_per_month_CALCULATION,
-                            }}
-                          />
-                        </tr>
-                        <tr>
-                          <td>Average Monthly Online Marketing Investment</td>
-                          <td>
-                            ${average_monthly_online_marketing_investment}
-                          </td>
-                          <td
-                            className="text-info"
-                            dangerouslySetInnerHTML={{
-                              __html: average_monthly_online_marketing_investment_CALCULATION,
-                            }}
-                          />
-                        </tr>
-                        <tr>
-                          <td>Average Cost Per Lead</td>
-                          <td>${average_cost_per_lead}</td>
-                          <td
-                            className="text-info"
-                            dangerouslySetInnerHTML={{
-                              __html: average_cost_per_lead_CALCULATION,
-                            }}
-                          />
-                        </tr>
-                        <tr>
-                          <td>Cost Per Customer Acquisiton</td>
-                          <td>${cost_per_customer_acquisition}</td>
-                          <td
-                            className="text-info"
-                            dangerouslySetInnerHTML={{
-                              __html: cost_per_customer_acquisition_CALCULATION,
-                            }}
-                          />
-                        </tr>
-                        <tr>
-                          <td>Net New Revenue</td>
-                          <td>${net_new_revenue}</td>
-                          <td
-                            className="text-info"
-                            dangerouslySetInnerHTML={{
-                              __html: net_new_revenue_CALCULATION,
-                            }}
-                          />
-                        </tr>
-                        <tr>
-                          <td>Cost Per Lead</td>
-                          <td>${cost_per_lead}</td>
-                          <td
-                            className="text-info"
-                            dangerouslySetInnerHTML={{
-                              __html: cost_per_lead_CALCULATION,
-                            }}
-                          />
-                        </tr>
-                        <tr>
-                          <td>Customers Needed to Reach Target</td>
-                          <td>{customers_needed_for_revenue_target}</td>
-                          <td
-                            className="text-info"
-                            dangerouslySetInnerHTML={{
-                              __html: customers_needed_for_revenue_target_CALCULATION,
-                            }}
-                          />
-                        </tr>
-                        <tr>
-                          <td>Cost Per New Customer</td>
-                          <td>{cost_per_new_customer}</td>
-                          <td
-                            className="text-info"
-                            dangerouslySetInnerHTML={{
-                              __html: cost_per_new_customer_CALCULATION,
-                            }}
-                          />
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </Container> */}
-                  <Container fluid className="mt-5 text-center mb-3">
-                    <StyledContentCardSpotlight
-                      Gradient
-                      className="text-center mt-1 mb-1"
-                    >
-                      Impact on Your Top Line
-                    </StyledContentCardSpotlight>
-                    <p className="text-center f-400">
-                      Based on the numbers provided in the Wizard.
-                    </p>
-                  </Container>
-                  <Container fluid className="mt-4">
+                  {/* BLOCK_10: Projections */}
+                  <Container fluid className="mb-4">
                     <Row>
-                      <Col lg="4">
-                        <Table responsive className="no-min-width">
-                          <thead>
-                            <tr>
-                              <th>Conversion Rate</th>
-                              <th>Value</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {conversion_rate_PROJECTION &&
-                              conversion_rate_PROJECTION.map((elem, index) => (
-                                <tr key={index}>
-                                  <td
-                                    dangerouslySetInnerHTML={{
-                                      __html: elem.description,
-                                    }}
-                                  />
-                                  <td className="text-success">
-                                    {elem.value}%
-                                  </td>
-                                </tr>
-                              ))}
-                          </tbody>
-                        </Table>
-                      </Col>
-                      <Col lg="4">
-                        <Table responsive className="no-min-width">
-                          <thead>
-                            <tr>
-                              <th>Conversion Rate</th>
-                              <th>Value</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {conversion_rate_PROJECTION &&
-                              conversion_rate_PROJECTION.map((elem, index) => (
-                                <tr key={index}>
-                                  <td
-                                    dangerouslySetInnerHTML={{
-                                      __html: elem.description,
-                                    }}
-                                  />
-                                  <td className="text-success">
-                                    {elem.value}%
-                                  </td>
-                                </tr>
-                              ))}
-                          </tbody>
-                        </Table>
-                      </Col>
-                      <Col lg="4">
-                        <Table responsive className="no-min-width">
-                          <thead>
-                            <tr>
-                              <th>Conversion Rate</th>
-                              <th>Value</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {conversion_rate_PROJECTION &&
-                              conversion_rate_PROJECTION.map((elem, index) => (
-                                <tr key={index}>
-                                  <td
-                                    dangerouslySetInnerHTML={{
-                                      __html: elem.description,
-                                    }}
-                                  />
-                                  <td className="text-success">
-                                    {elem.value}%
-                                  </td>
-                                </tr>
-                              ))}
-                          </tbody>
-                        </Table>
+                      <Col lg="12">
+                        <ContentCard>
+                          <StyledContentCardSpotlight
+                            Gradient
+                            className="text-center mt-2 mb-1"
+                          >
+                            Impact on Your Top Line
+                          </StyledContentCardSpotlight>
+                          <p className="text-center f-400">
+                            Based on the numbers provided in the Wizard.
+                          </p>
+                          <ReportImpactCards
+                            data={MULTIPLE_PROJECTIONS}
+                            className="mt-2"
+                          />
+                        </ContentCard>
                       </Col>
                     </Row>
                   </Container>
@@ -853,48 +668,25 @@ export class ReportDashboard extends Component {
                     <Table responsive className="no-min-width">
                       <thead>
                         <tr>
-                          <th>Average Qualified Leads Per Month</th>
-                          <th>Value</th>
+                          <th>Impact of Conversion Rate Change</th>
+                          <th>Revenue Growth</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {average_qualified_leads_per_month_PROJECTION &&
-                          average_qualified_leads_per_month_PROJECTION.map(
+                        {MULTIPLE_PROJECTIONS.cr_increase_MULTIPLE &&
+                          MULTIPLE_PROJECTIONS.cr_increase_MULTIPLE.map(
                             (elem, index) => (
                               <tr key={index}>
-                                <td
-                                  dangerouslySetInnerHTML={{
-                                    __html: elem.description,
-                                  }}
-                                />
-                                <td className="text-success">{elem.value}</td>
-                              </tr>
-                            )
-                          )}
-                      </tbody>
-                    </Table>
-                  </Container>
-
-                  <Container fluid className="mt-4">
-                    <Table responsive className="no-min-width">
-                      <thead>
-                        <tr>
-                          <th>Average New Customers Per Month</th>
-                          <th>Value</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {average_new_customers_per_month_PROJECTION &&
-                          average_new_customers_per_month_PROJECTION.map(
-                            (elem, index) => (
-                              <tr key={index}>
-                                <td
-                                  dangerouslySetInnerHTML={{
-                                    __html: elem.description,
-                                  }}
-                                />
+                                <td>
+                                  <StyledInfoText>
+                                    Conversion Rate Increased by {elem[6].value}
+                                    %
+                                  </StyledInfoText>
+                                </td>
                                 <td className="text-success">
-                                  {Math.floor(elem.value)}
+                                  <StyledInfoText className="text-success">
+                                    + ${numberWithCommas(elem[5].value)}
+                                  </StyledInfoText>
                                 </td>
                               </tr>
                             )
@@ -907,27 +699,33 @@ export class ReportDashboard extends Component {
                     <Table responsive className="no-min-width">
                       <thead>
                         <tr>
-                          <th>Average Cost Per Lead</th>
-                          <th>Value</th>
+                          <th>Impact of Website Traffic Change</th>
+                          <th>Revenue Growth</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {average_cost_per_lead_PROJECTION &&
-                          average_cost_per_lead_PROJECTION.map(
+                        {MULTIPLE_PROJECTIONS.traffic_increase_MULTIPLE &&
+                          MULTIPLE_PROJECTIONS.traffic_increase_MULTIPLE.map(
                             (elem, index) => (
                               <tr key={index}>
-                                <td
-                                  dangerouslySetInnerHTML={{
-                                    __html: elem.description,
-                                  }}
-                                />
-                                <td className="text-success">{elem.value}</td>
+                                <td>
+                                  <StyledInfoText>
+                                    Website Traffic Increased by {elem[6].value}
+                                    %
+                                  </StyledInfoText>
+                                </td>
+                                <td>
+                                  <StyledInfoText className="text-success">
+                                    + ${numberWithCommas(elem[5].value)}
+                                  </StyledInfoText>
+                                </td>
                               </tr>
                             )
                           )}
                       </tbody>
                     </Table>
                   </Container>
+                  {/* // BLOCK_10: Projections */}
                 </>
               )}
             </>

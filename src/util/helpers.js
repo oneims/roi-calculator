@@ -584,46 +584,122 @@ export const PROJECTChangeInMonthlyTraffic = (
   return projection
 }
 
-export const getProjectionForRevenue = (
+export const getProjectionsForRevenue = (
   websiteTraffic,
   conversionRate,
   qualifiedLeadsPercentage,
   closeRatio,
-  revenuePerCustomer
+  revenuePerCustomer,
+  currentRevenue
 ) => {
-  let data = []
-  const originalConversionRate = conversionRate
-  for (let i = 0; i < 10; i++) {
-    conversionRate = Number(conversionRate + (conversionRate * 5) / 100)
-    const funnel = createFunnel(
-      websiteTraffic,
-      conversionRate,
-      qualifiedLeadsPercentage,
-      closeRatio
-    )
-    funnel.push(
+  let data
+  const originalRevenue = currentRevenue
+
+  const revenueCalculator = arr => {
+    arr.push(
       {
         name: "net_revenue",
         label: "Net Revenue",
-        value: Math.floor(funnel[3].value * convertToInt(revenuePerCustomer)),
+        value: Math.floor(arr[3].value * convertToInt(revenuePerCustomer)),
       },
       {
-        name: "new_conversion_rate",
-        label: "New Conversion Rate",
+        name: "change_in_revenue",
+        label: "Change in Revenue",
         value: roundToTwoDecimals(
-          getConversionRate(funnel[1].value, funnel[0].value)
-        ),
-      },
-      {
-        name: "change_in_conversion_rate",
-        label: "Change in Conversion Rate",
-        value: roundToTwoDecimals(
-          getConversionRate(funnel[1].value, funnel[0].value) -
-            originalConversionRate
+          Math.floor(arr[3].value * convertToInt(revenuePerCustomer)) -
+            originalRevenue
         ),
       }
     )
-    data.push(funnel)
   }
+
+  // Conversion Rate Increase
+  const conversionRateIncrease = createFunnel(
+    websiteTraffic,
+    Number(conversionRate + 1),
+    qualifiedLeadsPercentage,
+    closeRatio
+  )
+  revenueCalculator(conversionRateIncrease)
+
+  // Traffic Increase
+  const trafficIncrease = createFunnel(
+    roundToTwoDecimals(
+      convertToInt(websiteTraffic) + (convertToInt(websiteTraffic) * 30) / 100
+    ),
+    conversionRate,
+    qualifiedLeadsPercentage,
+    closeRatio
+  )
+  revenueCalculator(trafficIncrease)
+
+  const trafficAndConversionIncrease = createFunnel(
+    roundToTwoDecimals(
+      convertToInt(websiteTraffic) + (convertToInt(websiteTraffic) * 30) / 100
+    ),
+    Number(conversionRate + 1),
+    qualifiedLeadsPercentage,
+    closeRatio
+  )
+
+  revenueCalculator(trafficAndConversionIncrease)
+
+  // Multiple Conversion Increase Revenue Projection
+  const MULTIPLE_conversion_increase = () => {
+    let multipleConversionRateProjections = []
+    let counter = 0.25
+    for (let i = 0; i < 10; i++) {
+      let crIncremental = createFunnel(
+        websiteTraffic,
+        Number(conversionRate + counter),
+        qualifiedLeadsPercentage,
+        closeRatio
+      )
+      revenueCalculator(crIncremental)
+      counter = counter + 0.25
+      crIncremental.push({
+        name: "change_in_conversion_rate",
+        label: "Change in Conversion Rate",
+        value: counter,
+      })
+      multipleConversionRateProjections.push(crIncremental)
+    }
+    return multipleConversionRateProjections
+  }
+
+  // Multiple Traffic Increase Revenue Projection
+  const MULTIPLE_traffic_increase = () => {
+    let multipleTrafficIncreaseProjections = []
+    let counter = 5
+    for (let i = 0; i < 10; i++) {
+      let trafficIncremental = createFunnel(
+        roundToTwoDecimals(
+          convertToInt(websiteTraffic) +
+            (convertToInt(websiteTraffic) * counter) / 100
+        ),
+        conversionRate,
+        qualifiedLeadsPercentage,
+        closeRatio
+      )
+      revenueCalculator(trafficIncremental)
+      counter = counter + 5
+      trafficIncremental.push({
+        name: "change_in_traffic_percentage",
+        label: "Change in Traffic Percentage",
+        value: counter,
+      })
+      multipleTrafficIncreaseProjections.push(trafficIncremental)
+    }
+    return multipleTrafficIncreaseProjections
+  }
+
+  data = {
+    cr_increase: conversionRateIncrease,
+    traffic_increase: trafficIncrease,
+    cr_and_traffic_increase: trafficAndConversionIncrease,
+    cr_increase_MULTIPLE: MULTIPLE_conversion_increase(),
+    traffic_increase_MULTIPLE: MULTIPLE_traffic_increase(),
+  }
+
   return data
 }

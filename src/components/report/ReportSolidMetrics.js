@@ -3,7 +3,6 @@ import React from "react"
 import { numberWithCommas } from "src/util/helpers"
 // Components
 import { Row, Col } from "react-bootstrap"
-import ReactTooltip from "react-tooltip"
 import {
   ContentCard,
   StyledSidebarMenuIcon,

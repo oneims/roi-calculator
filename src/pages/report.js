@@ -30,7 +30,7 @@ import {
   getProjectionTwoParams,
   getProjectionTwoParamsGraph,
   PROJECTChangeInMonthlyTraffic,
-  getProjectionForRevenue,
+  getProjectionsForRevenue,
   // Budget Optimizer
   budgetOptimizer,
   // Optimized Funnel
@@ -93,7 +93,7 @@ export class Report extends Component {
     average_qualified_leads_per_month_PROJECTION: null,
     average_new_customers_per_month_PROJECTION: null,
     average_cost_per_lead_PROJECTION: null,
-    change_in_revenue_conversion_rate_PROJECTION: null,
+    MULTIPLE_PROJECTIONS: null,
     // Projections Graphs
     monthly_leads_PROJECTION_GRAPH: null,
     // Budget Optimizer
@@ -333,15 +333,17 @@ export class Report extends Component {
             )
 
             // Projections For Revenue Increase
-            const change_in_revenue_conversion_rate_PROJECTION = getProjectionForRevenue(
+            // Multiple Projections
+            const MULTIPLE_PROJECTIONS = getProjectionsForRevenue(
               average_monthly_website_traffic,
               conversion_rate,
               percentage_of_qualified_leads,
               average_close_ratio_from_opportunities_to_deals,
-              average_revenue_per_customer
+              average_revenue_per_customer,
+              net_new_revenue
             )
 
-            console.log(change_in_revenue_conversion_rate_PROJECTION)
+            console.log(MULTIPLE_PROJECTIONS)
 
             // Updating State
             this.setState({
@@ -386,6 +388,7 @@ export class Report extends Component {
               average_qualified_leads_per_month_PROJECTION,
               average_new_customers_per_month_PROJECTION,
               average_cost_per_lead_PROJECTION,
+              MULTIPLE_PROJECTIONS,
               // Projections Graphs
               monthly_leads_PROJECTION_GRAPH,
               // Budget Optimizer
