@@ -1,6 +1,32 @@
 // Helpers
 
+// **Form Field Validator
+export const checkAllValid = (validator, fieldName, callback) => {
+  validator.showMessageFor(fieldName)
+  setTimeout(() => {
+    // console.log(validator.allValid())
+    if (validator.allValid()) {
+      callback(true)
+    } else {
+      callback(false)
+    }
+  }, 50)
+}
+
 // **Generic Helpers**
+
+export const generateToken = length => {
+  var a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_".split(
+    ""
+  )
+  var b = []
+  for (var i = 0; i < length; i++) {
+    var j = (Math.random() * (a.length - 1)).toFixed(0)
+    b[i] = a[j]
+  }
+  return b.join("")
+}
+
 export const capitalizeFirstLetter = string => {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
@@ -26,25 +52,28 @@ export const convertToInt = str => {
 }
 
 export const convertMBtoInt = str => {
-  const arr = str.split(" ")
-  const abbreviation = arr.pop()
-  let zeroesInMillion = "000000"
-  let zeroesInBillion = "000000000"
-  let zeroesUsed = arr[0].includes(".") ? arr[0].split(".")[1].length : ``
-  let zeroesToAdd = ""
-  if (abbreviation === "Million") {
-    for (let i = 0; i < zeroesInMillion.length - zeroesUsed; i++) {
-      zeroesToAdd += "0"
+  if (str) {
+    const arr = str.split(" ")
+    const abbreviation = arr.pop()
+    let zeroesInMillion = "000000"
+    let zeroesInBillion = "000000000"
+    let zeroesUsed = arr[0].includes(".") ? arr[0].split(".")[1].length : ``
+    let zeroesToAdd = ""
+    if (abbreviation === "Million") {
+      for (let i = 0; i < zeroesInMillion.length - zeroesUsed; i++) {
+        zeroesToAdd += "0"
+      }
+    } else {
+      for (let i = 0; i < zeroesInBillion.length - zeroesUsed; i++) {
+        zeroesToAdd += "0"
+      }
     }
-  } else {
-    for (let i = 0; i < zeroesInBillion.length - zeroesUsed; i++) {
-      zeroesToAdd += "0"
-    }
+    arr.push(zeroesToAdd)
+    str = arr.join("")
+    str = str.replace(".", "")
+    // console.log(convertToInt(str))
+    return convertToInt(str)
   }
-  arr.push(zeroesToAdd)
-  str = arr.join("")
-  str = str.replace(".", "")
-  return convertToInt(str)
 }
 
 export const roundToTwoDecimals = n => {

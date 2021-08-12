@@ -4,7 +4,9 @@ import { Container } from "react-bootstrap"
 import { STATIC_Industries } from "src/util/STATIC_Data"
 import Select from "react-select"
 import NumberFormat from "react-number-format"
+import SimpleReactValidator from "simple-react-validator"
 import DatePicker from "react-datepicker"
+import { convertMBtoInt, convertToInt, checkAllValid } from "src/util/helpers"
 import {
   Section,
   ContentBox,
@@ -16,6 +18,7 @@ import {
   StyledFormWrapper,
   StyledFieldWrapper,
   Label,
+  StyledInfoText,
   StyledField,
   ColorStyles,
   StyledInput,
@@ -27,6 +30,10 @@ import {
 const options = STATIC_Industries
 
 export class StepOne extends Component {
+  componentWillMount() {
+    this.validator = new SimpleReactValidator()
+  }
+
   componentDidMount() {
     this.props.updateHeaderState(
       "step__one",
@@ -34,6 +41,11 @@ export class StepOne extends Component {
       "/onboarding/step-two",
       "Next"
     )
+    if (this.validator.allValid()) {
+      this.props.stepOneValidator(true)
+    } else {
+      this.props.stepOneValidator(false)
+    }
     this.props.updateStepOneButtonState()
   }
 
@@ -51,6 +63,7 @@ export class StepOne extends Component {
       handleSelectorChoice,
       handleDateChange,
     } = this.props
+
     return (
       <>
         <SEO title="Onboarding" />
@@ -72,7 +85,12 @@ export class StepOne extends Component {
                 <StyledFormWrapper>
                   <StyledFieldWrapper>
                     <StyledField TwoColumn>
-                      <Label htmlFor="industry">Select Industry</Label>
+                      <Label htmlFor="industry" className="mb-0">
+                        Select Industry
+                      </Label>
+                      <StyledInfoText className="mb-2">
+                        Industry of your business
+                      </StyledInfoText>
                       <Select
                         className="roi-input roi-input__select"
                         name="industry"
@@ -83,13 +101,17 @@ export class StepOne extends Component {
                       />
                     </StyledField>
                     <StyledField TwoColumn>
-                      <Label htmlFor="current_annual_revenue">
+                      <Label htmlFor="current_annual_revenue" className="mb-0">
                         Current Annual Revenue
                       </Label>
+                      <StyledInfoText className="mb-2">
+                        Annual Revenue in Millions or Billions
+                      </StyledInfoText>
                       <StyledInput>
                         <NumberFormat
                           thousandSeparator={true}
                           placeholder="$"
+                          decimalScale={2}
                           prefix={"$"}
                           suffix={
                             current_annual_revenue_selector === "million"
@@ -98,7 +120,14 @@ export class StepOne extends Component {
                           }
                           name="current_annual_revenue"
                           value={current_annual_revenue}
-                          onChange={handleChange}
+                          onChange={e => {
+                            handleChange(e)
+                            checkAllValid(
+                              this.validator,
+                              "current_annual_revenue",
+                              this.props.stepOneValidator
+                            )
+                          }}
                         />
                         <StyledChoiceWrapper>
                           <StyledChoiceColumn>
@@ -141,31 +170,59 @@ export class StepOne extends Component {
                           </StyledChoiceColumn>
                         </StyledChoiceWrapper>
                       </StyledInput>
+                      {this.validator.message(
+                        "current_annual_revenue",
+                        convertMBtoInt(current_annual_revenue),
+                        "required|min:1,num",
+                        { className: "validation-error" }
+                      )}
                     </StyledField>
                   </StyledFieldWrapper>
 
                   <StyledFieldWrapper>
                     <StyledField TwoColumn>
-                      <Label htmlFor="yoy_growth_rate">
-                        YOY Growth Rate in %
+                      <Label htmlFor="yoy_growth_rate" className="mb-0">
+                        YOY Growth Rate
                       </Label>
+                      <StyledInfoText className="mb-2">
+                        In percentage
+                      </StyledInfoText>
                       <StyledInput>
                         <NumberFormat
                           suffix={"%"}
                           placeholder="%"
                           name="yoy_growth_rate"
                           value={yoy_growth_rate}
-                          onChange={handleChange}
+                          isAllowed={({ value }) => value <= 1000}
+                          decimalSeparator={false}
+                          onChange={e => {
+                            handleChange(e)
+                            checkAllValid(
+                              this.validator,
+                              "yoy_growth_rate",
+                              this.props.stepOneValidator
+                            )
+                          }}
                         />
                       </StyledInput>
+                      {this.validator.message(
+                        "yoy_growth_rate",
+                        convertToInt(yoy_growth_rate),
+                        "required|between:1,1000,num",
+                        { className: "validation-error" }
+                      )}
                     </StyledField>
                     <StyledField TwoColumn>
-                      <Label htmlFor="revenue_growth_goal">
+                      <Label htmlFor="revenue_growth_goal" className="mb-0">
                         Revenue Growth Goal
                       </Label>
+                      <StyledInfoText className="mb-2">
+                        Must be greater than Current Annual Revenue
+                      </StyledInfoText>
                       <StyledInput>
                         <NumberFormat
                           thousandSeparator={true}
+                          decimalScale={2}
                           placeholder="$"
                           prefix={"$"}
                           suffix={
@@ -175,7 +232,14 @@ export class StepOne extends Component {
                           }
                           name="revenue_growth_goal"
                           value={revenue_growth_goal}
-                          onChange={handleChange}
+                          onChange={e => {
+                            handleChange(e)
+                            checkAllValid(
+                              this.validator,
+                              "revenue_growth_goal",
+                              this.props.stepOneValidator
+                            )
+                          }}
                         />
                         <StyledChoiceWrapper>
                           <StyledChoiceColumn>
@@ -216,13 +280,27 @@ export class StepOne extends Component {
                           </StyledChoiceColumn>
                         </StyledChoiceWrapper>
                       </StyledInput>
+                      {this.validator.message(
+                        "revenue_growth_goal",
+                        convertMBtoInt(revenue_growth_goal),
+                        `required|min:${convertMBtoInt(
+                          current_annual_revenue
+                        )},num`,
+                        { className: "validation-error" }
+                      )}
                     </StyledField>
                   </StyledFieldWrapper>
                   <StyledFieldWrapper>
                     <StyledField>
-                      <Label htmlFor="target_date_to_reach_revenue">
+                      <Label
+                        htmlFor="target_date_to_reach_revenue"
+                        className="mb-0"
+                      >
                         Target Date to Reach Revenue
                       </Label>
+                      <StyledInfoText className="mb-2">
+                        Select date to reach target revenue
+                      </StyledInfoText>
                       <DatePicker
                         selected={new Date(target_date_to_reach_revenue)}
                         name="target_date_to_reach_revenue"

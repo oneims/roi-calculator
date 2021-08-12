@@ -546,6 +546,11 @@ body {
     font-weight: 600;
     border: 1px solid #eee;
     color: #fff;
+    @media (max-width: 768px) {
+      border: none;
+      top: unset;
+      bottom: 18px;
+    }
   }
 }
 
@@ -568,6 +573,14 @@ body {
 //     display: none;
 //   }
 // }
+
+.validation-error {
+  font-size: 0.8rem;
+  padding-top: 0.45rem;
+  color: #9a4040;
+  font-weight: 600;
+}
+
 
 
 `

@@ -13,6 +13,8 @@ import {
   StyledLoader,
   ContentBox,
 } from "src/components/StyledElements"
+// Helpers
+import { generateToken } from "src/util/helpers"
 // Axios
 import axios from "axios"
 
@@ -138,6 +140,9 @@ export class Onboarding extends Component {
     nextButtonText: "",
     nextButtonState: "disabled",
     nextButtonToolTip: "Please complete the fields",
+    stepOneValid: false,
+    stepTwoValid: false,
+    stepThreeValid: false,
     clearedStepOne:
       typeof window !== "undefined" &&
       window.localStorage.getItem("clearedStepOne")
@@ -160,7 +165,8 @@ export class Onboarding extends Component {
           this.state.current_annual_revenue &&
           this.state.yoy_growth_rate.length &&
           this.state.revenue_growth_goal &&
-          this.state.target_date_to_reach_revenue
+          this.state.target_date_to_reach_revenue &&
+          this.state.stepOneValid
         ) {
           this.setState({
             nextButtonState: "enabled",
@@ -193,7 +199,8 @@ export class Onboarding extends Component {
           this.state.average_conversion_rate_on_meetings_to_opportunities &&
           this.state.average_close_ratio_from_opportunities_to_deals &&
           this.state.average_close_ratio_from_opportunities_to_deals &&
-          this.state.estimated_sales_cycle
+          this.state.estimated_sales_cycle &&
+          this.state.stepTwoValid
         ) {
           this.setState({
             nextButtonState: "enabled",
@@ -227,7 +234,8 @@ export class Onboarding extends Component {
           this.state.percentage_of_qualified_leads &&
           this.state.current_annual_marketing_budget &&
           this.state
-            .percentage_of_marketing_budget_spent_on_online_advertisement
+            .percentage_of_marketing_budget_spent_on_online_advertisement &&
+          this.state.stepThreeValid
         ) {
           this.setState({
             nextButtonState: "enabled",
@@ -312,10 +320,7 @@ export class Onboarding extends Component {
       loading: true,
     })
 
-    const record_uid = `${this.state.current_annual_marketing_budget.replace(
-      /[^0-9.-]+/g,
-      ""
-    )}${Math.floor(Math.random() * (93219319 - 1000) + 1000)}`
+    const record_uid = `${generateToken(16)}`
 
     const timer = 1000
 
@@ -402,6 +407,24 @@ export class Onboarding extends Component {
     })
   }
 
+  stepsValidator = {
+    stepOneValidator: bool => {
+      return bool
+        ? this.setState({ stepOneValid: true })
+        : this.setState({ stepOneValid: false })
+    },
+    stepTwoValidator: bool => {
+      return bool
+        ? this.setState({ stepTwoValid: true })
+        : this.setState({ stepTwoValid: false })
+    },
+    stepThreeValidator: bool => {
+      return bool
+        ? this.setState({ stepThreeValid: true })
+        : this.setState({ stepThreeValid: false })
+    },
+  }
+
   render() {
     return (
       <Layout
@@ -417,6 +440,7 @@ export class Onboarding extends Component {
         <Router basepath="/onboarding">
           <StepOne
             {...this.state}
+            {...this.stepsValidator}
             handleChange={this.handleChange}
             handleSelectChange={this.handleSelectChange}
             updateHeaderState={this.updateHeaderState}
@@ -427,6 +451,7 @@ export class Onboarding extends Component {
           />
           <StepTwo
             {...this.state}
+            {...this.stepsValidator}
             handleChange={this.handleChange}
             updateHeaderState={this.updateHeaderState}
             updateStepTwoButtonState={this.updateStepTwoButtonState}
@@ -435,6 +460,7 @@ export class Onboarding extends Component {
           />
           <StepThree
             {...this.state}
+            {...this.stepsValidator}
             handleChange={this.handleChange}
             updateHeaderState={this.updateHeaderState}
             updateStepThreeButtonState={this.updateStepThreeButtonState}

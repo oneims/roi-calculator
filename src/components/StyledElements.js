@@ -335,13 +335,20 @@ export const StyledFieldWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 2rem;
-    align-items: center;
+    // align-items: center;
   }
 `
 
 export const Label = styled.label`
   font-weight: 600;
   font-size: 0.9rem;
+`
+
+export const StyledInfoText = styled.span`
+  display: block;
+  font-size: 0.8rem;
+  color: rgb(51, 71, 91);
+  font-weight: 600;
 `
 
 export const StyledField = styled.div`
