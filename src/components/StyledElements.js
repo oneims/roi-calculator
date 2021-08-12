@@ -351,6 +351,13 @@ export const StyledInfoText = styled.span`
   font-weight: 600;
 `
 
+export const StyledInfoWrapper = styled.div`
+  display: block;
+  font-size: 1rem;
+  color: rgb(51, 71, 91);
+  font-weight: 600;
+`
+
 export const StyledField = styled.div`
   width: 100%;
   margin-bottom: 1.5rem;

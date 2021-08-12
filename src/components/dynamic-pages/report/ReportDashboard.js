@@ -20,6 +20,7 @@ import ReportPieChart from "src/components/report/ReportPieChart"
 import ReportSolidMetrics from "src/components/report/ReportSolidMetrics"
 import ReportBarChart from "src/components/report/ReportBarChart"
 import ReportImpactCards from "src/components/report/ReportImpactCards"
+import ReportGenericTips from "src/components/report/ReportGenericTips"
 import {
   Section,
   ContentCard,
@@ -31,7 +32,7 @@ import {
 
 let OPTIMIZED_revenue_change_default = []
 
-export class ReportDashboard extends Component {
+class ReportDashboard extends Component {
   componentDidMount() {
     this.props.handleUpdateIDState(this.props.id)
     this.props.handleGetDataByID(this.props.id)
@@ -73,37 +74,6 @@ export class ReportDashboard extends Component {
       handleHideRevenue,
       revenueVisible,
     } = this.props
-
-    const dummyData = [
-      {
-        name: "A",
-        Leads: 1400,
-      },
-      {
-        name: "B",
-        Leads: 400,
-      },
-      {
-        name: "C",
-        Leads: 4500,
-      },
-      {
-        name: "D",
-        Leads: 2500,
-      },
-      {
-        name: "E",
-        Leads: 9000,
-      },
-      {
-        name: "F",
-        Leads: 15000,
-      },
-      {
-        name: "G",
-        Leads: 2400,
-      },
-    ]
 
     const dummyDataTwo = [
       {
@@ -518,9 +488,7 @@ export class ReportDashboard extends Component {
                         </ContentCard>
                       </Col>
                       <Col lg="6" className="mt-4 mt-lg-0">
-                        <ContentCard>
-                          <ReportAreaGraph data={dummyDataTwo} />
-                        </ContentCard>
+                        <ReportGenericTips />
                       </Col>
                     </Row>
                   </Container>
@@ -678,13 +646,18 @@ export class ReportDashboard extends Component {
                             (elem, index) => (
                               <tr key={index}>
                                 <td>
-                                  <StyledInfoText>
+                                  <StyledInfoText
+                                    style={{ fontSize: "0.95rem" }}
+                                  >
                                     Conversion Rate Increased by {elem[6].value}
                                     %
                                   </StyledInfoText>
                                 </td>
                                 <td className="text-success">
-                                  <StyledInfoText className="text-success">
+                                  <StyledInfoText
+                                    className="text-success"
+                                    style={{ fontSize: "0.95rem" }}
+                                  >
                                     + ${numberWithCommas(elem[5].value)}
                                   </StyledInfoText>
                                 </td>
@@ -709,13 +682,18 @@ export class ReportDashboard extends Component {
                             (elem, index) => (
                               <tr key={index}>
                                 <td>
-                                  <StyledInfoText>
+                                  <StyledInfoText
+                                    style={{ fontSize: "0.95rem" }}
+                                  >
                                     Website Traffic Increased by {elem[6].value}
                                     %
                                   </StyledInfoText>
                                 </td>
                                 <td>
-                                  <StyledInfoText className="text-success">
+                                  <StyledInfoText
+                                    className="text-success"
+                                    style={{ fontSize: "0.95rem" }}
+                                  >
                                     + ${numberWithCommas(elem[5].value)}
                                   </StyledInfoText>
                                 </td>
