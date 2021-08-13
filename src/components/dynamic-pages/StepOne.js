@@ -1,31 +1,31 @@
 import React, { Component } from "react"
-import SEO from "src/components/Seo"
 import { Container } from "react-bootstrap"
-import { STATIC_Industries } from "src/util/STATIC_Data"
-import Select from "react-select"
-import NumberFormat from "react-number-format"
-import SimpleReactValidator from "simple-react-validator"
 import DatePicker from "react-datepicker"
-import { convertMBtoInt, convertToInt, checkAllValid } from "src/util/helpers"
+import NumberFormat from "react-number-format"
+import Select from "react-select"
+import SimpleReactValidator from "simple-react-validator"
+import SEO from "src/components/Seo"
 import {
-  Section,
-  ContentBox,
-  PageHeading,
-  Subtitle,
-  ProgressBarWrapper,
-  ProgressBar,
-  FormWrapper,
-  StyledFormWrapper,
-  StyledFieldWrapper,
-  Label,
-  StyledInfoText,
-  StyledField,
   ColorStyles,
-  StyledInput,
-  StyledChoiceWrapper,
+  ContentBox,
+  FormWrapper,
+  Label,
+  PageHeading,
+  ProgressBar,
+  ProgressBarWrapper,
+  Section,
   StyledChoiceColumn,
   StyledChoiceItem,
+  StyledChoiceWrapper,
+  StyledField,
+  StyledFieldWrapper,
+  StyledFormWrapper,
+  StyledInfoText,
+  StyledInput,
+  Subtitle,
 } from "src/components/StyledElements"
+import { checkAllValid, convertMBtoInt, convertToInt } from "src/util/helpers"
+import { STATIC_Industries } from "src/util/STATIC_Data"
 
 const options = STATIC_Industries
 

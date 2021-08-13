@@ -311,6 +311,8 @@ export const StyledLoaderWrapper = styled.div`
   height: 100%;
   z-index: ${props => (props.OverridePage ? "999999999999" : "999")};
   background-color: ${props => (props.White ? "rgba(255, 255, 255, 0.8)" : "")};
+  background-color: ${props =>
+    props.WhiteLess ? "rgba(255, 255, 255, 0.5)" : ""};
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -382,21 +384,12 @@ export const StyledInput = styled.div`
   border-style: solid;
   border-width: 1px;
   cursor: default;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-flex-wrap: wrap;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
   justify-content: space-between;
   min-height: 50px;
   outline: 0 !important;
   position: relative;
-  -webkit-transition: all 100ms;
   transition: all 100ms;
   box-sizing: border-box;
   font-weight: 600;
@@ -422,6 +415,16 @@ export const StyledInput = styled.div`
     height: 100%;
     padding: 0 0.6rem;
   }
+  ${props =>
+    props.TextField
+      ? css`
+          border: 0.0625rem solid #cbd6e2;
+          input {
+            background-color: #f5f8fa;
+            color: #33475b;
+          }
+        `
+      : ""}
 `
 
 export const StyledChoiceWrapper = styled.div`
@@ -547,9 +550,24 @@ export const StyledInfoDrawerHeader = styled.div`
 export const StyledInfoDrawerBody = styled.div`
   padding: 1.5rem 1rem;
   position: relative;
-  min-height: 80vh;
+  ${props =>
+    props.SetMinHeight
+      ? css`
+          min-height: 80vh;
+        `
+      : ""}
 `
-export const StyledInfoDrawerFooter = styled.div``
+export const StyledInfoDrawerFooter = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: ${colors.dashboardBackground};
+  border-top: 0.125rem solid #cbd6e2;
+`
+
+export const StyledInfoDrawerFooterContent = styled.div`
+  padding: 1rem;
+`
 
 export const StyledInfoDrawerCloseButtonWrapper = styled.div``
 

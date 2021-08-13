@@ -1,27 +1,27 @@
 import React, { Component } from "react"
-import SEO from "src/components/Seo"
-import Select from "react-select"
-import { Container, Row, Col } from "react-bootstrap"
-import { STATIC_Industries } from "src/util/STATIC_Data"
-import NumberFormat from "react-number-format"
+import { Col, Container, Row } from "react-bootstrap"
 import DatePicker from "react-datepicker"
+import NumberFormat from "react-number-format"
+import Select from "react-select"
+import SEO from "src/components/Seo"
 import {
-  Section,
-  ContentCard,
-  SubHeading,
-  StyledLoaderWrapper,
-  StyledLoader,
-  FormWrapper,
-  StyledFormWrapper,
-  StyledFieldWrapper,
-  Label,
-  StyledField,
   ColorStyles,
-  StyledInput,
-  StyledChoiceWrapper,
+  ContentCard,
+  FormWrapper,
+  Label,
+  Section,
   StyledChoiceColumn,
   StyledChoiceItem,
+  StyledChoiceWrapper,
+  StyledField,
+  StyledFieldWrapper,
+  StyledFormWrapper,
+  StyledInput,
+  StyledLoader,
+  StyledLoaderWrapper,
+  SubHeading,
 } from "src/components/StyledElements"
+import { STATIC_Industries } from "src/util/STATIC_Data"
 
 const options = STATIC_Industries
 

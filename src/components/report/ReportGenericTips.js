@@ -1,16 +1,16 @@
-import React, { Component } from "react"
 import parse from "html-react-parser"
-// Static Data
-import { STATIC_ROI_FACTS } from "src/util/STATIC_Data"
+import React, { Component } from "react"
 // Components
 import {
+  Button,
   ContentCard,
   StyledContentCardSpotlight,
-  Button,
-  StyledLoaderWrapper,
   StyledLoader,
+  StyledLoaderWrapper,
 } from "src/components/StyledElements"
-import styled, { css } from "styled-components"
+// Static Data
+import { STATIC_ROI_FACTS } from "src/util/STATIC_Data"
+import styled from "styled-components"
 
 const InfoAlertWrapper = styled.div`
   color: #33475b;

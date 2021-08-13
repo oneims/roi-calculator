@@ -1,34 +1,34 @@
 import React, { Component } from "react"
-import SEO from "src/components/Seo"
-// Static Data
-import { STATIC_Industry_Metrics } from "src/util/STATIC_Data"
-// Helpers
-import {
-  removeSpecialChars,
-  numberWithCommas,
-  printIndustryNeatly,
-  printCompanySizeAnnualRevenueNeatly,
-  roundToTwoDecimals,
-  getDifferenceBetweenCurrentAndTargetRevenue,
-} from "src/util/helpers"
 // Components
-import { Container, Table, Row, Col } from "react-bootstrap"
-import ReportFunnel from "src/components/report/ReportFunnel"
+import { Col, Container, Row, Table } from "react-bootstrap"
 import InfoAlert from "src/components/InfoAlert"
 import ReportAreaGraph from "src/components/report/ReportAreaGraph"
+import ReportBarChart from "src/components/report/ReportBarChart"
+import ReportFunnel from "src/components/report/ReportFunnel"
+import ReportGenericTips from "src/components/report/ReportGenericTips"
+import ReportImpactCards from "src/components/report/ReportImpactCards"
 import ReportPieChart from "src/components/report/ReportPieChart"
 import ReportSolidMetrics from "src/components/report/ReportSolidMetrics"
-import ReportBarChart from "src/components/report/ReportBarChart"
-import ReportImpactCards from "src/components/report/ReportImpactCards"
-import ReportGenericTips from "src/components/report/ReportGenericTips"
+import SEO from "src/components/Seo"
 import {
-  Section,
   ContentCard,
-  StyledLoaderWrapper,
-  StyledLoader,
+  Section,
   StyledContentCardSpotlight,
   StyledInfoText,
+  StyledLoader,
+  StyledLoaderWrapper,
 } from "src/components/StyledElements"
+// Helpers
+import {
+  getDifferenceBetweenCurrentAndTargetRevenue,
+  numberWithCommas,
+  printCompanySizeAnnualRevenueNeatly,
+  printIndustryNeatly,
+  removeSpecialChars,
+  roundToTwoDecimals,
+} from "src/util/helpers"
+// Static Data
+import { STATIC_Industry_Metrics } from "src/util/STATIC_Data"
 
 let OPTIMIZED_revenue_change_default = []
 

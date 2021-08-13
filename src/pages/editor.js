@@ -22,7 +22,7 @@ import {
 
 let originalFetchedData
 
-export class Editor extends Component {
+class Editor extends Component {
   state = {
     // Step One
     industry: null,

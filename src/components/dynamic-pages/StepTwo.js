@@ -1,28 +1,28 @@
-import React, { Component } from "react"
 import { navigate } from "gatsby"
-import SEO from "src/components/Seo"
+import React, { Component } from "react"
 import { Container } from "react-bootstrap"
 import NumberFormat from "react-number-format"
 import SimpleReactValidator from "simple-react-validator"
-import { convertToInt, checkAllValid } from "src/util/helpers"
+import SEO from "src/components/Seo"
 import {
-  Section,
   ContentBox,
-  PageHeading,
-  Subtitle,
-  ProgressBarWrapper,
-  ProgressBar,
   FormWrapper,
-  StyledFormWrapper,
-  StyledFieldWrapper,
   Label,
-  StyledInfoText,
-  StyledField,
-  StyledInput,
-  StyledChoiceWrapper,
+  PageHeading,
+  ProgressBar,
+  ProgressBarWrapper,
+  Section,
   StyledChoiceColumn,
   StyledChoiceItem,
+  StyledChoiceWrapper,
+  StyledField,
+  StyledFieldWrapper,
+  StyledFormWrapper,
+  StyledInfoText,
+  StyledInput,
+  Subtitle,
 } from "src/components/StyledElements"
+import { checkAllValid, convertToInt } from "src/util/helpers"
 
 export class StepTwo extends Component {
   componentWillMount() {
