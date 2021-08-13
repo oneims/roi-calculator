@@ -19,12 +19,13 @@ const { colors } = Theme
 const StyledReportHeaderParent = styled.div`
   width: 100%;
   position: sticky;
-  z-index: 999;
+  z-index: 9999;
   right: 0;
   top: 0;
   background-color: ${colors.white};
   @media (min-width: 992px) {
     position: absolute;
+    z-index: 999;
   }
 `
 
