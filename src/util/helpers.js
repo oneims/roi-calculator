@@ -327,14 +327,14 @@ export const createFunnel = (
   )
   closeRatio = convertToInt(removeSpecialChars(closeRatio))
 
-  const average_monthly_leads_from_website_OPTIMIZED = Math.ceil(
+  const average_monthly_leads_from_website_OPTIMIZED = Math.floor(
     (websiteTraffic * conversionRate) / 100
   )
-  const average_qualified_leads_per_month_OPTIMIZED = Math.ceil(
+  const average_qualified_leads_per_month_OPTIMIZED = Math.floor(
     (average_monthly_leads_from_website_OPTIMIZED * qualifiedLeadsPercentage) /
       100
   )
-  const average_new_customers_per_month_OPTIMIZED = Math.ceil(
+  const average_new_customers_per_month_OPTIMIZED = Math.floor(
     (average_qualified_leads_per_month_OPTIMIZED * closeRatio) / 100
   )
 

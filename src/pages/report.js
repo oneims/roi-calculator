@@ -343,8 +343,6 @@ export class Report extends Component {
               net_new_revenue
             )
 
-            console.log(MULTIPLE_PROJECTIONS)
-
             // Updating State
             this.setState({
               data: res.data,

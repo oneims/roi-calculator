@@ -503,6 +503,7 @@ body {
     width: 100%;
     cursor: pointer;
     max-width: 25%;
+    background-color: #f7f7f7;
     &:hover {
       background-color: #eee;
     }

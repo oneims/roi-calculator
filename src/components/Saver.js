@@ -11,7 +11,9 @@ const StyledSaver = styled.div`
   width: 100%;
   border-top: 2px solid rgb(234, 240, 246);
   background-color: #fff;
-  padding-left: 40px;
+  @media (min-width: 768px) {
+    padding-left: 40px;
+  }
   padding-top: 20px;
   z-index: 9999;
   padding-bottom: 20px;

@@ -145,11 +145,6 @@ class ReportDashboard extends Component {
       OPTIMIZED_revenue_change_default.push(OPTIMIZED_revenue_change)
 
       DATA_comparison_bar_chart = [
-        // {
-        //   name: "Average Conversion Rate",
-        //   Industry: STATIC_Industry_Metrics[industry].conversion_rate,
-        //   Yours: removeSpecialChars(conversion_rate),
-        // },
         {
           name: "Average Monthly Website Traffic",
           Industry:
@@ -212,7 +207,9 @@ class ReportDashboard extends Component {
           label: "Website Traffic",
           interactiveLabelName: `websiteTraffic`,
           interactiveLabel: `Traffic: `,
-          interactiveValue: `${numberWithCommas(OPTIMIZED_website_traffic)}`,
+          interactiveValue: `${numberWithCommas(
+            Math.floor(OPTIMIZED_website_traffic)
+          )}`,
           percentageChangeValue: OPTIMIZED_FUNNEL_DATA[0].percentageChange,
           percentageChange:
             OPTIMIZED_FUNNEL_DATA[0].percentageChange !== 0
