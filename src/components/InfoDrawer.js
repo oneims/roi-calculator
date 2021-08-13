@@ -150,8 +150,9 @@ const InfoDrawer = ({
                   )}
                   {error && (
                     <InfoAlert NoFigure Warning>
-                      <strong>Oops, something went wrong!</strong> It appears
-                      your email is not formatted correctly. Please try again.
+                      <strong>Oops, something went wrong!</strong> Please check
+                      and confirm that your email is formatted correctly and try
+                      again.
                       {errorResponse && (
                         <>
                           <br />

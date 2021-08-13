@@ -159,6 +159,7 @@ class ReportLayout extends Component {
           if (err.response) {
             console.log(err.response.data)
           }
+          console.log(err)
           this.setState({
             error: true,
             success: false,
