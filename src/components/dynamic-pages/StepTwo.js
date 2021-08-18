@@ -36,21 +36,21 @@ const SEO = () => {
       description={description}
       canonical={seoURL}
       openGraph={{
-        url: { seoURL },
-        title: { title },
-        description: { description },
+        url: seoURL,
+        title: title,
+        description: description,
         images: [
           {
             url: "/calculator-ss.jpg",
             width: 800,
             height: 600,
-            alt: { title },
+            alt: title,
           },
           {
             url: "/calculator-ss.jpg",
             width: 900,
             height: 800,
-            alt: { title },
+            alt: title,
           },
           { url: "/calculator-ss.jpg" },
           { url: "/calculator-ss.jpg" },
