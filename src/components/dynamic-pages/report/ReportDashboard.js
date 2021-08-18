@@ -1,3 +1,4 @@
+import { GatsbySeo } from "gatsby-plugin-next-seo"
 import React, { Component } from "react"
 // Components
 import { Col, Container, Row, Table } from "react-bootstrap"
@@ -9,7 +10,6 @@ import ReportGenericTips from "src/components/report/ReportGenericTips"
 import ReportImpactCards from "src/components/report/ReportImpactCards"
 import ReportPieChart from "src/components/report/ReportPieChart"
 import ReportSolidMetrics from "src/components/report/ReportSolidMetrics"
-import SEO from "src/components/Seo"
 import {
   ContentCard,
   Section,
@@ -29,6 +29,44 @@ import {
 } from "src/util/helpers"
 // Static Data
 import { STATIC_Industry_Metrics } from "src/util/STATIC_Data"
+
+const title = "Report | ROI Calculator"
+const description =
+  "See the numbers and measure your success with the ROI Calculator from the future!"
+const seoURL = "https://roicalculator.ai/report/"
+
+const SEO = () => {
+  return (
+    <GatsbySeo
+      title={title}
+      description={description}
+      canonical={seoURL}
+      noindex={true}
+      nofollow={true}
+      openGraph={{
+        url: { seoURL },
+        title: { title },
+        description: { description },
+        images: [
+          {
+            url: "/calculator-ss.jpg",
+            width: 800,
+            height: 600,
+            alt: { title },
+          },
+          {
+            url: "/calculator-ss.jpg",
+            width: 900,
+            height: 800,
+            alt: { title },
+          },
+          { url: "/calculator-ss.jpg" },
+          { url: "/calculator-ss.jpg" },
+        ],
+      }}
+    />
+  )
+}
 
 let OPTIMIZED_revenue_change_default = []
 
@@ -333,7 +371,7 @@ class ReportDashboard extends Component {
 
     return (
       <>
-        <SEO title="Report" />
+        <SEO />
         <Section MinHeight Small>
           {loading ? (
             <StyledLoaderWrapper>

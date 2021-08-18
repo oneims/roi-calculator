@@ -1,9 +1,9 @@
+import { GatsbySeo } from "gatsby-plugin-next-seo"
 import React, { Component } from "react"
 import { Col, Container, Row } from "react-bootstrap"
 import DatePicker from "react-datepicker"
 import NumberFormat from "react-number-format"
 import Select from "react-select"
-import SEO from "src/components/Seo"
 import {
   ColorStyles,
   ContentCard,
@@ -23,9 +23,47 @@ import {
 } from "src/components/StyledElements"
 import { STATIC_Industries } from "src/util/STATIC_Data"
 
+const title = "Editor | ROI Calculator"
+const description =
+  "See the numbers and measure your success with the ROI Calculator from the future!"
+const seoURL = "https://roicalculator.ai/editor/"
+
+const SEO = () => {
+  return (
+    <GatsbySeo
+      title={title}
+      description={description}
+      canonical={seoURL}
+      noindex={true}
+      nofollow={true}
+      openGraph={{
+        url: { seoURL },
+        title: { title },
+        description: { description },
+        images: [
+          {
+            url: "/calculator-ss.jpg",
+            width: 800,
+            height: 600,
+            alt: { title },
+          },
+          {
+            url: "/calculator-ss.jpg",
+            width: 900,
+            height: 800,
+            alt: { title },
+          },
+          { url: "/calculator-ss.jpg" },
+          { url: "/calculator-ss.jpg" },
+        ],
+      }}
+    />
+  )
+}
+
 const options = STATIC_Industries
 
-export class ReportEditor extends Component {
+class ReportEditor extends Component {
   componentDidMount() {
     this.props.handleUpdateIDState(this.props.id)
     this.props.handleGetDataByID(this.props.id)

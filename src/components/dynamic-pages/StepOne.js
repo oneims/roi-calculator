@@ -1,10 +1,10 @@
+import { GatsbySeo } from "gatsby-plugin-next-seo"
 import React, { Component } from "react"
 import { Container } from "react-bootstrap"
 import DatePicker from "react-datepicker"
 import NumberFormat from "react-number-format"
 import Select from "react-select"
 import SimpleReactValidator from "simple-react-validator"
-import SEO from "src/components/Seo"
 import {
   ColorStyles,
   ContentBox,
@@ -27,9 +27,45 @@ import {
 import { checkAllValid, convertMBtoInt, convertToInt } from "src/util/helpers"
 import { STATIC_Industries } from "src/util/STATIC_Data"
 
+const title = "Onboarding - Step One | ROI Calculator"
+const description =
+  "See the numbers and measure your success with the ROI Calculator from the future!"
+const seoURL = "https://roicalculator.ai/onboarding/step-one"
+
+const SEO = () => {
+  return (
+    <GatsbySeo
+      title={title}
+      description={description}
+      canonical={seoURL}
+      openGraph={{
+        url: { seoURL },
+        title: { title },
+        description: { description },
+        images: [
+          {
+            url: "/calculator-ss.jpg",
+            width: 800,
+            height: 600,
+            alt: { title },
+          },
+          {
+            url: "/calculator-ss.jpg",
+            width: 900,
+            height: 800,
+            alt: { title },
+          },
+          { url: "/calculator-ss.jpg" },
+          { url: "/calculator-ss.jpg" },
+        ],
+      }}
+    />
+  )
+}
+
 const options = STATIC_Industries
 
-export class StepOne extends Component {
+class StepOne extends Component {
   componentWillMount() {
     this.validator = new SimpleReactValidator()
   }
@@ -66,7 +102,7 @@ export class StepOne extends Component {
 
     return (
       <>
-        <SEO title="Onboarding" />
+        <SEO />
         <Section Small AppSection>
           <Container>
             <ContentBox MW800 className="text-center ml-auto mr-auto">

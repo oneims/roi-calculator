@@ -1,45 +1,39 @@
-import React, { Component } from "react"
 import { Router } from "@reach/router"
-import ReportLayout from "src/components/report/ReportLayout"
-import InfoDrawer from "src/components/InfoDrawer"
-// Helpers
-import { roundToTwoDecimals } from "src/util/helpers"
-// Pages
-import ReportDashboard from "src/components/dynamic-pages/report/ReportDashboard"
 // Axios
 import axios from "axios"
-// Static Data
-import { STATIC_Industry_Metrics } from "src/util/STATIC_Data"
+import React, { Component } from "react"
+// Pages
+import ReportDashboard from "src/components/dynamic-pages/report/ReportDashboard"
+import InfoDrawer from "src/components/InfoDrawer"
+import ReportLayout from "src/components/report/ReportLayout"
 // Helpers
 import {
-  // Calculation Helpers
-  getConversionRate,
-  getAverageQualifiedLeadsMonth,
-  getAverageNewCustomersMonth,
-  getOnlineMarketingInvestmentMonthly,
-  getAverageCostPerLead,
-  getCostPerCustomerAcquisition,
-  getNetNewRevenue,
-  getCostPerLead,
-  getCustomersNeededForRevenueTarget,
-  getCostPerNewCustomer,
-  getCompanySizeInRevenue,
-  getDifferenceInMonths,
-  parseISOString,
-  // Projection Helpers
-  getProjectionTwoParams,
-  getProjectionTwoParamsGraph,
-  PROJECTChangeInMonthlyTraffic,
-  getProjectionsForRevenue,
   // Budget Optimizer
   budgetOptimizer,
-  // Optimized Funnel
-  createFunnel,
-  reCreateFunnel,
   createOptimizedFunnel,
+  getAverageCostPerLead,
+  getAverageNewCustomersMonth,
+  getAverageQualifiedLeadsMonth,
+  getCompanySizeInRevenue,
+  // Calculation Helpers
+  getConversionRate,
+  getCostPerCustomerAcquisition,
+  getCostPerLead,
+  getCostPerNewCustomer,
+  getCustomersNeededForRevenueTarget,
+  getDifferenceInMonths,
+  getNetNewRevenue,
+  getOnlineMarketingInvestmentMonthly,
+  getProjectionsForRevenue,
+  // Projection Helpers
+  getProjectionTwoParams,
+  parseISOString,
+  PROJECTChangeInMonthlyTraffic,
+  reCreateFunnel,
+  roundToTwoDecimals,
 } from "src/util/helpers"
 
-export class Report extends Component {
+class Report extends Component {
   state = {
     id: null,
     data: null,

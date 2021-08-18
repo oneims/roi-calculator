@@ -2,7 +2,7 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import Layout from "src/components/Layout"
-import SEO from "src/components/Seo"
+import { GatsbySeo } from "gatsby-plugin-next-seo"
 import Pattern from "src/images/pattern.svg"
 import parse from "html-react-parser"
 import { Container, Row, Col } from "react-bootstrap"
@@ -11,7 +11,6 @@ import {
   ContentBox,
   PageHeading,
   Subtitle,
-  Button,
   PatternWrapper,
   ArticleCard,
   ArticleCardTop,
@@ -27,13 +26,46 @@ const BlogArchive = ({
   pageContext: { nextPagePath, previousPagePath },
 }) => {
   const posts = data.allWpPost.nodes
+  const title = "ROI Resources, Tips and Tricks | ROI Calculator"
+  const description =
+    "If you would like more information about return on investment, including industry updates and tips, visit the ROI Calculator blog here."
+  const seoURL = "https://roicalculator.ai/resources"
 
-  console.log(posts)
+  const SEO = () => {
+    return (
+      <GatsbySeo
+        title={title}
+        description={description}
+        canonical={seoURL}
+        openGraph={{
+          url: { seoURL },
+          title: { title },
+          description: { description },
+          images: [
+            {
+              url: "/calculator-ss.jpg",
+              width: 800,
+              height: 600,
+              alt: { title },
+            },
+            {
+              url: "/calculator-ss.jpg",
+              width: 900,
+              height: 800,
+              alt: { title },
+            },
+            { url: "/calculator-ss.jpg" },
+            { url: "/calculator-ss.jpg" },
+          ],
+        }}
+      />
+    )
+  }
 
   if (!posts.length) {
     return (
       <Layout isHomePage>
-        <Seo title="All posts" />
+        <SEO />
         <Section>
           <Container>
             <p>
@@ -48,7 +80,7 @@ const BlogArchive = ({
 
   return (
     <Layout>
-      <SEO title="All Resources" />
+      <SEO />
       <Section Small>
         <PatternWrapper PatternWrapperFull>
           <Pattern />

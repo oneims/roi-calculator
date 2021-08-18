@@ -68,7 +68,6 @@ class ReportLayout extends Component {
       .then(res => {
         if (res.data.length > 0) {
           const data = res.data[0]
-          console.log(data.email_address)
           setTimeout(() => {
             this.setState({
               loading: false,

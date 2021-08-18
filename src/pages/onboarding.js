@@ -1,24 +1,24 @@
-import React, { Component } from "react"
 import { Router } from "@reach/router"
-import Layout from "src/components/Layout"
+// Axios
+import axios from "axios"
 import { navigate } from "gatsby"
-// Pages
-import StepOne from "src/components/dynamic-pages/StepOne"
-import StepTwo from "src/components/dynamic-pages/StepTwo"
-import StepThree from "src/components/dynamic-pages/StepThree"
+import React, { Component } from "react"
 // Components
 import { Modal } from "react-bootstrap"
+// Pages
+import StepOne from "src/components/dynamic-pages/StepOne"
+import StepThree from "src/components/dynamic-pages/StepThree"
+import StepTwo from "src/components/dynamic-pages/StepTwo"
+import Layout from "src/components/Layout"
 import {
-  StyledLoaderWrapper,
-  StyledLoader,
   ContentBox,
+  StyledLoader,
+  StyledLoaderWrapper,
 } from "src/components/StyledElements"
 // Helpers
 import { generateToken } from "src/util/helpers"
-// Axios
-import axios from "axios"
 
-export class Onboarding extends Component {
+class Onboarding extends Component {
   state = {
     // Step One
     industry:

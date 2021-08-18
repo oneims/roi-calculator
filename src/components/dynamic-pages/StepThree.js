@@ -1,9 +1,9 @@
 import { navigate } from "gatsby"
+import { GatsbySeo } from "gatsby-plugin-next-seo"
 import React, { Component } from "react"
 import { Container } from "react-bootstrap"
 import NumberFormat from "react-number-format"
 import SimpleReactValidator from "simple-react-validator"
-import SEO from "src/components/Seo"
 import {
   ContentBox,
   FormWrapper,
@@ -21,7 +21,43 @@ import {
 } from "src/components/StyledElements"
 import { checkAllValid, convertToInt } from "src/util/helpers"
 
-export class StepThree extends Component {
+const title = "Onboarding - Step Three | ROI Calculator"
+const description =
+  "See the numbers and measure your success with the ROI Calculator from the future!"
+const seoURL = "https://roicalculator.ai/onboarding/step-three"
+
+const SEO = () => {
+  return (
+    <GatsbySeo
+      title={title}
+      description={description}
+      canonical={seoURL}
+      openGraph={{
+        url: { seoURL },
+        title: { title },
+        description: { description },
+        images: [
+          {
+            url: "/calculator-ss.jpg",
+            width: 800,
+            height: 600,
+            alt: { title },
+          },
+          {
+            url: "/calculator-ss.jpg",
+            width: 900,
+            height: 800,
+            alt: { title },
+          },
+          { url: "/calculator-ss.jpg" },
+          { url: "/calculator-ss.jpg" },
+        ],
+      }}
+    />
+  )
+}
+
+class StepThree extends Component {
   componentWillMount() {
     this.validator = new SimpleReactValidator()
   }
@@ -58,7 +94,7 @@ export class StepThree extends Component {
     } = this.props
     return (
       <>
-        <SEO title="Onboarding" />
+        <SEO />
         <Section Small AppSection>
           <Container>
             <ContentBox MW800 className="text-center ml-auto mr-auto">

@@ -2,7 +2,6 @@ const path = require("path")
 const chunk = require(`lodash/chunk`)
 
 exports.createPages = async gatsbyUtilities => {
-  // console.log(`Actions: ${gatsbyUtilities.actions}`)
   const posts = await getPosts(gatsbyUtilities)
   if (posts.length) {
     // If there are posts, create pages for them
@@ -25,7 +24,6 @@ async function createIndividualMDPages({ pages, gatsbyUtilities }) {
     HomepageTemplate: path.resolve("./src/templates/HomepageTemplate.js"),
   }
   // Create pages for each markdown file.
-  console.log(templates.HomepageTemplate)
   return Promise.all(
     pages.map(async ({ node }) => {
       const path = node.frontmatter.path

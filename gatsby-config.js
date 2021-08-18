@@ -13,6 +13,18 @@ module.exports = {
     `gatsby-transformer-remark`,
     `gatsby-plugin-no-index`,
     "gatsby-plugin-root-import",
+    // SEO
+    {
+      resolve: "gatsby-plugin-next-seo",
+      options: {
+        openGraph: {
+          type: "website",
+          locale: "en_IE",
+          url: "https://roicalculator.ai",
+          site_name: "ROI Calculator",
+        },
+      },
+    },
     // Wordpress
     {
       resolve: `gatsby-source-wordpress`,

@@ -2,7 +2,7 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import Layout from "src/components/Layout"
-import SEO from "src/components/Seo"
+import { GatsbySeo, ArticleJsonLd } from "gatsby-plugin-next-seo"
 import parse from "html-react-parser"
 import Pattern from "src/images/pattern.svg"
 import { Container, Row, Col } from "react-bootstrap"
@@ -11,7 +11,6 @@ import {
   ContentBox,
   PageHeading,
   ArticleWrapper,
-  Button,
   PatternWrapper,
   FeaturedImageWrapper,
   ArticleCard,
@@ -30,7 +29,7 @@ const relatedArticlesStyles = {
 
 const BlogPost = ({ data: { post, relatedArticles } }) => {
   relatedArticles = relatedArticles.nodes.filter(elem => elem.id != post.id)
-  console.log(relatedArticles)
+  const seoMeta = post.seo
   relatedArticles = relatedArticles.slice(0, 3)
   const featuredImage = {
     fluid: post.featuredImage?.node?.localFile?.childImageSharp?.fluid,
@@ -39,9 +38,51 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
 
   return (
     <Layout>
-      <SEO title={post.title} description={post.title} />
       {!!post.content && (
         <>
+          <GatsbySeo
+            title={seoMeta.title}
+            description={seoMeta.metaDesc}
+            canonical={seoMeta.canonical}
+            // nofollow={seoMeta.metaRobotsNofollow === "nofollow" ? true : false}
+            // noindex={seoMeta.metaRobotsNofollow === "noindex" ? true : false}
+            openGraph={{
+              url: seoMeta.opengraphUrl,
+              title: seoMeta.opengraphTitle,
+              description: seoMeta.opengraphDescription,
+              images: [
+                {
+                  url: featuredImage.fluid,
+                  width: 800,
+                  height: 600,
+                  alt: seoMeta.opengraphTitle,
+                },
+                {
+                  url: featuredImage.fluid,
+                  width: 900,
+                  height: 800,
+                  alt: seoMeta.opengraphTitle,
+                },
+                { url: featuredImage.fluid },
+                { url: featuredImage.fluid },
+              ],
+            }}
+          />
+
+          <ArticleJsonLd
+            url="https://example.com/article"
+            headline={post.title}
+            images={[featuredImage.fluid]}
+            datePublished={seoMeta.opengraphPublishedTime}
+            dateModified={seoMeta.opengraphModifiedTime}
+            authorName="ROI Calculator"
+            publisherName="ROI Calculator"
+            publisherLogo="https://roicalculator.ai/favicon-32x32.png?v=8a01c478c47ee0de0bd87e25ed4216fe"
+            description={seoMeta.opengraphDescription}
+            overrides={{
+              "@type": "BlogPosting",
+            }}
+          />
           <Section Small>
             <PatternWrapper PatternWrapperFull>
               <Pattern />
@@ -64,7 +105,10 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
                 <ContentBox className="mw-700 ml-auto mr-auto">
                   <ArticleCardMeta className="mt-2 mb-2 d-block">
                     <p>
-                      <time>{post.date}</time>
+                      <time datetime={seoMeta.opengraphPublishedTime}>
+                        {post.date}
+                      </time>{" "}
+                      | <span>{seoMeta.readingTime} min read</span>
                     </p>
                   </ArticleCardMeta>
                   {parse(post.content)}
@@ -161,7 +205,6 @@ export const pageQuery = graphql`
       content
       title
       date(formatString: "MMMM DD, YYYY")
-
       featuredImage {
         node {
           altText
@@ -173,6 +216,24 @@ export const pageQuery = graphql`
             }
           }
         }
+      }
+      seo {
+        canonical
+        metaRobotsNofollow
+        metaRobotsNoindex
+        title
+        metaDesc
+        metaKeywords
+        opengraphAuthor
+        opengraphDescription
+        opengraphSiteName
+        opengraphTitle
+        readingTime
+        opengraphModifiedTime
+        opengraphPublishedTime
+        opengraphPublisher
+        opengraphType
+        opengraphUrl
       }
     }
 
