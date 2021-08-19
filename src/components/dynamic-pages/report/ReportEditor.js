@@ -4,6 +4,7 @@ import { Col, Container, Row } from "react-bootstrap"
 import DatePicker from "react-datepicker"
 import NumberFormat from "react-number-format"
 import Select from "react-select"
+import SimpleReactValidator from "simple-react-validator"
 import {
   ColorStyles,
   ContentCard,
@@ -15,12 +16,14 @@ import {
   StyledChoiceWrapper,
   StyledField,
   StyledFieldWrapper,
+  StyledInfoText,
   StyledFormWrapper,
   StyledInput,
   StyledLoader,
   StyledLoaderWrapper,
   SubHeading,
 } from "src/components/StyledElements"
+import { checkAllValid, convertMBtoInt, convertToInt } from "src/util/helpers"
 import { STATIC_Industries } from "src/util/STATIC_Data"
 
 const title = "Editor | ROI Calculator"
@@ -64,6 +67,10 @@ const SEO = () => {
 const options = STATIC_Industries
 
 class ReportEditor extends Component {
+  componentWillMount() {
+    this.validator = new SimpleReactValidator()
+  }
+
   componentDidMount() {
     this.props.handleUpdateIDState(this.props.id)
     this.props.handleGetDataByID(this.props.id)
@@ -73,6 +80,7 @@ class ReportEditor extends Component {
       loading,
       error,
       industry,
+      setValidForm,
       current_annual_revenue,
       current_annual_revenue_selector,
       yoy_growth_rate,
@@ -121,14 +129,17 @@ class ReportEditor extends Component {
                   <Row>
                     <Col lg="6" className="mb-4">
                       <ContentCard>
-                        <SubHeading>Basics</SubHeading>
+                        <SubHeading>Step One</SubHeading>
                         <FormWrapper>
                           <StyledFormWrapper NoMinHeight>
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="industry">
+                                <Label htmlFor="industry" className="mb-0">
                                   Select Industry
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  Industry of your business
+                                </StyledInfoText>
                                 <Select
                                   className="roi-input roi-input__select"
                                   name="industry"
@@ -141,13 +152,20 @@ class ReportEditor extends Component {
                             </StyledFieldWrapper>
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="current_annual_revenue">
+                                <Label
+                                  htmlFor="current_annual_revenue"
+                                  className="mb-0"
+                                >
                                   Current Annual Revenue
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  Annual Revenue in Millions or Billions
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
                                     placeholder="$"
+                                    decimalScale={2}
                                     prefix={"$"}
                                     suffix={
                                       current_annual_revenue_selector ===
@@ -157,7 +175,14 @@ class ReportEditor extends Component {
                                     }
                                     name="current_annual_revenue"
                                     value={current_annual_revenue}
-                                    onChange={handleChange}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "current_annual_revenue",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                   <StyledChoiceWrapper>
                                     <StyledChoiceColumn>
@@ -202,34 +227,66 @@ class ReportEditor extends Component {
                                     </StyledChoiceColumn>
                                   </StyledChoiceWrapper>
                                 </StyledInput>
+                                {this.validator.message(
+                                  "current_annual_revenue",
+                                  convertMBtoInt(current_annual_revenue),
+                                  "required|min:1,num",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="yoy_growth_rate">
+                                <Label
+                                  htmlFor="yoy_growth_rate"
+                                  className="mb-0"
+                                >
                                   YOY Growth Rate in %
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  In percentage
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
-                                    allowNegative={false}
-                                    isAllowed={({ value }) => value <= 100}
                                     name="yoy_growth_rate"
                                     value={yoy_growth_rate}
-                                    onChange={handleChange}
+                                    isAllowed={({ value }) => value <= 1000}
+                                    decimalSeparator={false}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "yoy_growth_rate",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "yoy_growth_rate",
+                                  convertToInt(yoy_growth_rate),
+                                  "required|between:1,1000,num",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="revenue_growth_goal">
+                                <Label
+                                  htmlFor="revenue_growth_goal"
+                                  className="mb-0"
+                                >
                                   Revenue Growth Goal
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  Must be greater than Current Annual Revenue
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
+                                    decimalScale={2}
                                     placeholder="$"
                                     prefix={"$"}
                                     suffix={
@@ -239,7 +296,14 @@ class ReportEditor extends Component {
                                     }
                                     name="revenue_growth_goal"
                                     value={revenue_growth_goal}
-                                    onChange={handleChange}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "revenue_growth_goal",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                   <StyledChoiceWrapper>
                                     <StyledChoiceColumn>
@@ -284,13 +348,27 @@ class ReportEditor extends Component {
                                     </StyledChoiceColumn>
                                   </StyledChoiceWrapper>
                                 </StyledInput>
+                                {this.validator.message(
+                                  "revenue_growth_goal",
+                                  convertMBtoInt(revenue_growth_goal),
+                                  `required|min:${convertMBtoInt(
+                                    current_annual_revenue
+                                  )},num`,
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="target_date_to_reach_revenue">
+                                <Label
+                                  htmlFor="target_date_to_reach_revenue"
+                                  className="mb-0"
+                                >
                                   Target Date to Reach Revenue
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  Select date to reach target revenue
+                                </StyledInfoText>
                                 <DatePicker
                                   selected={
                                     new Date(target_date_to_reach_revenue)
@@ -316,91 +394,178 @@ class ReportEditor extends Component {
 
                     <Col lg="6" className="mb-4">
                       <ContentCard>
-                        <SubHeading>Additional</SubHeading>
+                        <SubHeading>Step Two</SubHeading>
                         <FormWrapper>
                           <StyledFormWrapper NoMinHeight>
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="average_revenue_per_customer">
+                                <Label
+                                  htmlFor="average_revenue_per_customer"
+                                  className="mb-0"
+                                >
                                   Average Revenue Per Customer or Deal
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  in USD
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
+                                    decimalSeparator={false}
                                     placeholder="$"
                                     prefix={"$"}
                                     name="average_revenue_per_customer"
                                     value={average_revenue_per_customer}
-                                    onChange={handleChange}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "average_revenue_per_customer",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "average_revenue_per_customer",
+                                  average_revenue_per_customer,
+                                  "required",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="gross_margin_per_sale">
+                                <Label
+                                  htmlFor="gross_margin_per_sale"
+                                  className="mb-0"
+                                >
                                   Estimated Gross Margin Per Sale
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  in Percentage
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
-                                    allowNegative={false}
-                                    isAllowed={({ value }) => value <= 100}
                                     name="gross_margin_per_sale"
+                                    decimalSeparator={false}
                                     value={gross_margin_per_sale}
-                                    onChange={handleChange}
+                                    isAllowed={({ value }) => value <= 1000}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "gross_margin_per_sale",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "gross_margin_per_sale",
+                                  convertToInt(gross_margin_per_sale),
+                                  "required|between:1,1000,num",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="average_conversion_rate_on_meetings_to_opportunities">
+                                <Label
+                                  htmlFor="average_conversion_rate_on_meetings_to_opportunities"
+                                  className="mb-0"
+                                >
                                   Average Conversion Rate on Meetings to
                                   Opportunities
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  in Percentage
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
-                                    allowNegative={false}
-                                    isAllowed={({ value }) => value <= 100}
                                     name="average_conversion_rate_on_meetings_to_opportunities"
+                                    isAllowed={({ value }) => value <= 100}
+                                    decimalSeparator={false}
                                     value={
                                       average_conversion_rate_on_meetings_to_opportunities
                                     }
-                                    onChange={handleChange}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "average_conversion_rate_on_meetings_to_opportunities",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "average_conversion_rate_on_meetings_to_opportunities",
+                                  convertToInt(
+                                    average_conversion_rate_on_meetings_to_opportunities
+                                  ),
+                                  "required|between:1,100,num",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="average_close_ratio_from_opportunities_to_deals">
+                                <Label
+                                  htmlFor="average_close_ratio_from_opportunities_to_deals"
+                                  className="mb-0"
+                                >
                                   Average Close Ratio from Opportunities to
                                   Deals
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  in Percentage
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
-                                    allowNegative={false}
+                                    decimalSeparator={false}
                                     isAllowed={({ value }) => value <= 100}
                                     name="average_close_ratio_from_opportunities_to_deals"
                                     value={
                                       average_close_ratio_from_opportunities_to_deals
                                     }
-                                    onChange={handleChange}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "average_close_ratio_from_opportunities_to_deals",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "average_close_ratio_from_opportunities_to_deals",
+                                  convertToInt(
+                                    average_close_ratio_from_opportunities_to_deals
+                                  ),
+                                  "required|between:1,100,num",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="estimated_sales_cycle">
+                                <Label
+                                  htmlFor="estimated_sales_cycle"
+                                  className="mb-0"
+                                >
                                   Estimated Sales Cycle
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  in Months or Years
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     suffix={
@@ -417,7 +582,16 @@ class ReportEditor extends Component {
                                     }
                                     name="estimated_sales_cycle"
                                     value={estimated_sales_cycle}
-                                    onChange={handleChange}
+                                    decimalSeparator={false}
+                                    isAllowed={({ value }) => value <= 100}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "estimated_sales_cycle",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                   <StyledChoiceWrapper>
                                     <StyledChoiceColumn>
@@ -462,6 +636,12 @@ class ReportEditor extends Component {
                                     </StyledChoiceColumn>
                                   </StyledChoiceWrapper>
                                 </StyledInput>
+                                {this.validator.message(
+                                  "estimated_sales_cycle",
+                                  convertToInt(estimated_sales_cycle),
+                                  "required|between:1,100,num",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
                           </StyledFormWrapper>
@@ -476,39 +656,85 @@ class ReportEditor extends Component {
                           <StyledFormWrapper NoMinHeight>
                             <StyledFieldWrapper>
                               <StyledField TwoColumn>
-                                <Label htmlFor="average_monthly_website_traffic">
+                                <Label
+                                  htmlFor="average_monthly_website_traffic"
+                                  className="mb-0"
+                                >
                                   Average Monthly Website Traffic
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  Required
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
                                     placeholder=""
+                                    decimalSeparator={false}
                                     name="average_monthly_website_traffic"
                                     value={average_monthly_website_traffic}
-                                    onChange={handleChange}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "average_monthly_website_traffic",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "average_monthly_website_traffic",
+                                  average_monthly_website_traffic,
+                                  "required",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                               <StyledField TwoColumn>
-                                <Label htmlFor="average_monthly_leads_from_website">
+                                <Label
+                                  htmlFor="average_monthly_leads_from_website"
+                                  className="mb-0"
+                                >
                                   Average Monthly Leads from Website
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  Required
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
                                     name="average_monthly_leads_from_website"
                                     value={average_monthly_leads_from_website}
-                                    onChange={handleChange}
+                                    decimalSeparator={false}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "average_monthly_leads_from_website",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "average_monthly_leads_from_website",
+                                  average_monthly_leads_from_website,
+                                  "required",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
 
                             <StyledFieldWrapper>
                               <StyledField TwoColumn>
-                                <Label htmlFor="average_monthly_leads_from_all_other_sources">
+                                <Label
+                                  htmlFor="average_monthly_leads_from_all_other_sources"
+                                  className="mb-0"
+                                >
                                   Average Monthly Leads From All Other Sources
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  Excludes Site Traffic
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
@@ -516,33 +742,72 @@ class ReportEditor extends Component {
                                     value={
                                       average_monthly_leads_from_all_other_sources
                                     }
-                                    onChange={handleChange}
+                                    decimalSeparator={false}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "average_monthly_leads_from_all_other_sources",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "average_monthly_leads_from_all_other_sources",
+                                  average_monthly_leads_from_all_other_sources,
+                                  "required",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                               <StyledField TwoColumn>
-                                <Label htmlFor="percentage_of_qualified_leads">
+                                <Label
+                                  htmlFor="percentage_of_qualified_leads"
+                                  className="mb-0"
+                                >
                                   Percentage of Qualified Leads
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  in Percentage
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
                                     name="percentage_of_qualified_leads"
-                                    allowNegative={false}
-                                    isAllowed={({ value }) => value <= 100}
                                     value={percentage_of_qualified_leads}
-                                    onChange={handleChange}
+                                    decimalSeparator={false}
+                                    isAllowed={({ value }) => value <= 100}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "percentage_of_qualified_leads",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "percentage_of_qualified_leads",
+                                  convertToInt(percentage_of_qualified_leads),
+                                  "required|between:1,100,num",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
 
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="current_annual_marketing_budget">
+                                <Label
+                                  htmlFor="current_annual_marketing_budget"
+                                  className="mb-0"
+                                >
                                   Current Annual Marketing Budget
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  in USD
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
@@ -550,31 +815,66 @@ class ReportEditor extends Component {
                                     prefix={"$"}
                                     name="current_annual_marketing_budget"
                                     value={current_annual_marketing_budget}
-                                    onChange={handleChange}
+                                    decimalSeparator={false}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "current_annual_marketing_budget",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "current_annual_marketing_budget",
+                                  current_annual_marketing_budget,
+                                  "required",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
 
                             <StyledFieldWrapper>
                               <StyledField>
-                                <Label htmlFor="percentage_of_marketing_budget_spent_on_online_advertisement">
+                                <Label
+                                  htmlFor="percentage_of_marketing_budget_spent_on_online_advertisement"
+                                  className="mb-0"
+                                >
                                   Percentage of Marketing Budget Spent on Online
                                   Advertisement
                                 </Label>
+                                <StyledInfoText className="mb-2">
+                                  in Percentage
+                                </StyledInfoText>
                                 <StyledInput>
                                   <NumberFormat
                                     name="percentage_of_marketing_budget_spent_on_online_advertisement"
                                     suffix={"%"}
                                     placeholder="%"
-                                    allowNegative={false}
                                     isAllowed={({ value }) => value <= 100}
                                     value={
                                       percentage_of_marketing_budget_spent_on_online_advertisement
                                     }
-                                    onChange={handleChange}
+                                    decimalSeparator={false}
+                                    onChange={e => {
+                                      handleChange(e)
+                                      checkAllValid(
+                                        this.validator,
+                                        "percentage_of_marketing_budget_spent_on_online_advertisement",
+                                        setValidForm
+                                      )
+                                    }}
                                   />
                                 </StyledInput>
+                                {this.validator.message(
+                                  "percentage_of_marketing_budget_spent_on_online_advertisement",
+                                  convertToInt(
+                                    percentage_of_marketing_budget_spent_on_online_advertisement
+                                  ),
+                                  "required|between:1,100,num",
+                                  { className: "validation-error" }
+                                )}
                               </StyledField>
                             </StyledFieldWrapper>
                           </StyledFormWrapper>

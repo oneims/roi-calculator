@@ -169,7 +169,7 @@ input::-webkit-inner-spin-button {
 
 body {
   .disabled {
-    filter: grayscale(100);
+    background-color: #999;
     opacity: 1;
     pointer-events: none;
     box-shadow: none;

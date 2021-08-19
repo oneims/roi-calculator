@@ -266,9 +266,12 @@ class StepTwo extends Component {
 
                   <StyledFieldWrapper>
                     <StyledField>
-                      <Label htmlFor="estimated_sales_cycle">
+                      <Label htmlFor="estimated_sales_cycle" className="mb-0">
                         Estimated Sales Cycle
                       </Label>
+                      <StyledInfoText className="mb-2">
+                        in Months or Years
+                      </StyledInfoText>
                       <StyledInput>
                         <NumberFormat
                           suffix={

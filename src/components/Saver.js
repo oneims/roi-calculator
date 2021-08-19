@@ -46,6 +46,7 @@ const Saver = props => {
               <StyledToolTip data-tip="Some fields are empty">
                 <Button
                   Dashboard
+                  Secondary
                   className="mr-3 disabled"
                   onClick={props.handleSubmit}
                 >
@@ -55,7 +56,12 @@ const Saver = props => {
               <ReactTooltip place="top" type="dark" effect="solid" />
             </>
           ) : (
-            <Button Dashboard className="mr-3" onClick={props.handleSubmit}>
+            <Button
+              Dashboard
+              Secondary
+              className="mr-3"
+              onClick={props.handleSubmit}
+            >
               Save
             </Button>
           )}
@@ -63,7 +69,7 @@ const Saver = props => {
             onClick={props.handleCancel}
             className="mr-md-3"
             Dashboard
-            Secondary
+            Tertiary
           >
             Cancel
           </Button>

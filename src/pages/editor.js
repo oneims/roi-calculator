@@ -1,21 +1,20 @@
-import React, { Component } from "react"
 import { Router } from "@reach/router"
-import ReportLayout from "src/components/report/ReportLayout"
-// Pages
-import ReportEditor from "src/components/dynamic-pages/report/ReportEditor"
-// Components
-import Saver from "src/components/Saver"
-import { Modal } from "react-bootstrap"
-import {
-  StyledLoaderWrapper,
-  StyledLoader,
-  ContentBox,
-} from "src/components/StyledElements"
 // Axios
 import axios from "axios"
+import React, { Component } from "react"
+import { Modal } from "react-bootstrap"
+// Pages
+import ReportEditor from "src/components/dynamic-pages/report/ReportEditor"
+import ReportLayout from "src/components/report/ReportLayout"
+// Components
+import Saver from "src/components/Saver"
+import {
+  ContentBox,
+  StyledLoader,
+  StyledLoaderWrapper,
+} from "src/components/StyledElements"
 // Helpers
 import {
-  capitalizeFirstLetter,
   checkValidObjectProperties,
   printIndustryNeatly,
 } from "src/util/helpers"
@@ -64,6 +63,10 @@ class Editor extends Component {
         ? this.setState({ validForm: true })
         : this.setState({ validForm: false })
     }, 50)
+  }
+
+  setValidForm = bool => {
+    this.setState({ validForm: bool })
   }
 
   handleUpdateIDState = id => {
@@ -213,7 +216,7 @@ class Editor extends Component {
                   notificationVisibility: false,
                 })
                 originalFetchedData = { ...this.state }
-              }, 2000)
+              }, 1000)
             }
           )
         }, timer)
@@ -291,6 +294,7 @@ class Editor extends Component {
           <Router basepath="/editor">
             <ReportEditor
               {...this.state}
+              setValidForm={this.setValidForm}
               handleUpdateIDState={this.handleUpdateIDState}
               handleGetDataByID={this.handleGetDataByID}
               handleChange={this.handleChange}
