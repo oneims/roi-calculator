@@ -651,7 +651,7 @@ class ReportEditor extends Component {
 
                     <Col lg="12" className="mb-4">
                       <ContentCard>
-                        <SubHeading>Final</SubHeading>
+                        <SubHeading>Step Three</SubHeading>
                         <FormWrapper>
                           <StyledFormWrapper NoMinHeight>
                             <StyledFieldWrapper>
