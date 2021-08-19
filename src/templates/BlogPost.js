@@ -36,6 +36,8 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
     alt: post.featuredImage?.node?.alt || ``,
   }
 
+  console.log(featuredImage.fluid.src)
+
   return (
     <Layout>
       {!!post.content && (
@@ -52,19 +54,19 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
               description: seoMeta.opengraphDescription,
               images: [
                 {
-                  url: featuredImage.fluid,
+                  url: featuredImage.fluid.src,
                   width: 800,
                   height: 600,
                   alt: seoMeta.opengraphTitle,
                 },
                 {
-                  url: featuredImage.fluid,
+                  url: featuredImage.fluid.src,
                   width: 900,
                   height: 800,
                   alt: seoMeta.opengraphTitle,
                 },
-                { url: featuredImage.fluid },
-                { url: featuredImage.fluid },
+                { url: featuredImage.fluid.src },
+                { url: featuredImage.fluid.src },
               ],
             }}
           />
@@ -72,7 +74,7 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
           <ArticleJsonLd
             url="https://example.com/article"
             headline={post.title}
-            images={[featuredImage.fluid]}
+            images={[featuredImage.fluid.src]}
             datePublished={seoMeta.opengraphPublishedTime}
             dateModified={seoMeta.opengraphModifiedTime}
             authorName="ROI Calculator"
@@ -105,7 +107,7 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
                 <ContentBox className="mw-700 ml-auto mr-auto">
                   <ArticleCardMeta className="mt-2 mb-2 d-block">
                     <p>
-                      <time datetime={seoMeta.opengraphPublishedTime}>
+                      <time dateTime={seoMeta.opengraphPublishedTime}>
                         {post.date}
                       </time>{" "}
                       | <span>{seoMeta.readingTime} min read</span>
