@@ -36,8 +36,6 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
     alt: post.featuredImage?.node?.alt || ``,
   }
 
-  console.log(featuredImage.fluid.src)
-
   return (
     <Layout>
       {!!post.content && (
