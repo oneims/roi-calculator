@@ -43,7 +43,7 @@ const Saver = props => {
         <StyledSaverWrapper>
           {props.disabled ? (
             <>
-              <StyledToolTip data-tip="Please fix any validation errors">
+              <StyledToolTip data-tip="Oops. Validation Errors">
                 <Button
                   Dashboard
                   Secondary
