@@ -175,7 +175,14 @@ class StepOne extends Component {
                               }
                               data-name="current_annual_revenue_selector"
                               data-value="million"
-                              onClick={handleSelectorChoice}
+                              onClick={e => {
+                                handleSelectorChoice(e)
+                                checkAllValid(
+                                  this.validator,
+                                  "current_annual_revenue",
+                                  this.props.stepOneValidator
+                                )
+                              }}
                               className={
                                 current_annual_revenue_selector === "million"
                                   ? "active"
@@ -194,7 +201,14 @@ class StepOne extends Component {
                               }
                               data-name="current_annual_revenue_selector"
                               data-value="billion"
-                              onClick={handleSelectorChoice}
+                              onClick={e => {
+                                handleSelectorChoice(e)
+                                checkAllValid(
+                                  this.validator,
+                                  "current_annual_revenue",
+                                  this.props.stepOneValidator
+                                )
+                              }}
                               className={
                                 current_annual_revenue_selector === "billion"
                                   ? "active"
@@ -286,7 +300,14 @@ class StepOne extends Component {
                               }
                               data-name="revenue_growth_goal_selector"
                               data-value="million"
-                              onClick={handleSelectorChoice}
+                              onClick={e => {
+                                handleSelectorChoice(e)
+                                checkAllValid(
+                                  this.validator,
+                                  "revenue_growth_goal",
+                                  this.props.stepOneValidator
+                                )
+                              }}
                               className={
                                 revenue_growth_goal_selector === "million"
                                   ? "active"
@@ -304,7 +325,14 @@ class StepOne extends Component {
                               }
                               data-name="revenue_growth_goal_selector"
                               data-value="billion"
-                              onClick={handleSelectorChoice}
+                              onClick={e => {
+                                handleSelectorChoice(e)
+                                checkAllValid(
+                                  this.validator,
+                                  "revenue_growth_goal",
+                                  this.props.stepOneValidator
+                                )
+                              }}
                               className={
                                 revenue_growth_goal_selector === "billion"
                                   ? "active"

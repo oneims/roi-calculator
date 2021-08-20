@@ -194,7 +194,14 @@ class ReportEditor extends Component {
                                         }
                                         data-name="current_annual_revenue_selector"
                                         data-value="million"
-                                        onClick={handleSelectorChoice}
+                                        onClick={e => {
+                                          handleSelectorChoice(e)
+                                          checkAllValid(
+                                            this.validator,
+                                            "current_annual_revenue",
+                                            setValidForm
+                                          )
+                                        }}
                                         className={
                                           current_annual_revenue_selector ===
                                           "million"
@@ -214,7 +221,14 @@ class ReportEditor extends Component {
                                         }
                                         data-name="current_annual_revenue_selector"
                                         data-value="billion"
-                                        onClick={handleSelectorChoice}
+                                        onClick={e => {
+                                          handleSelectorChoice(e)
+                                          checkAllValid(
+                                            this.validator,
+                                            "current_annual_revenue",
+                                            setValidForm
+                                          )
+                                        }}
                                         className={
                                           current_annual_revenue_selector ===
                                           "billion"
@@ -315,7 +329,14 @@ class ReportEditor extends Component {
                                         }
                                         data-name="revenue_growth_goal_selector"
                                         data-value="million"
-                                        onClick={handleSelectorChoice}
+                                        onClick={e => {
+                                          handleSelectorChoice(e)
+                                          checkAllValid(
+                                            this.validator,
+                                            "revenue_growth_goal",
+                                            setValidForm
+                                          )
+                                        }}
                                         className={
                                           revenue_growth_goal_selector ===
                                           "million"
@@ -335,7 +356,14 @@ class ReportEditor extends Component {
                                         }
                                         data-name="revenue_growth_goal_selector"
                                         data-value="billion"
-                                        onClick={handleSelectorChoice}
+                                        onClick={e => {
+                                          handleSelectorChoice(e)
+                                          checkAllValid(
+                                            this.validator,
+                                            "revenue_growth_goal",
+                                            setValidForm
+                                          )
+                                        }}
                                         className={
                                           revenue_growth_goal_selector ===
                                           "billion"
