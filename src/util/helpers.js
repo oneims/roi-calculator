@@ -649,6 +649,7 @@ export const getProjectionsForRevenue = (
     let multipleConversionRateProjections = []
     let counter = 0.25
     for (let i = 0; i < 10; i++) {
+      counter = counter + 0.25
       let crIncremental = createFunnel(
         websiteTraffic,
         Number(conversionRate + counter),
@@ -656,7 +657,6 @@ export const getProjectionsForRevenue = (
         closeRatio
       )
       revenueCalculator(crIncremental)
-      counter = counter + 0.25
       crIncremental.push({
         name: "change_in_conversion_rate",
         label: "Change in Conversion Rate",
@@ -672,6 +672,7 @@ export const getProjectionsForRevenue = (
     let multipleTrafficIncreaseProjections = []
     let counter = 5
     for (let i = 0; i < 10; i++) {
+      counter = counter + 5
       let trafficIncremental = createFunnel(
         roundToTwoDecimals(
           convertToInt(websiteTraffic) +
@@ -682,7 +683,6 @@ export const getProjectionsForRevenue = (
         closeRatio
       )
       revenueCalculator(trafficIncremental)
-      counter = counter + 5
       trafficIncremental.push({
         name: "change_in_traffic_percentage",
         label: "Change in Traffic Percentage",
