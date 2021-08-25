@@ -118,7 +118,7 @@ class Report extends Component {
     axios
       .get(`${process.env.GATSBY_API_URL}/reports?record_uid=${id}`, {
         headers: {
-          Authorization: `Bearer ${process.env.JWT_SECRET}`,
+          Authorization: `Bearer ${process.env.GATSBY_JWT_SECRET}`,
         },
       })
       .then(res => {

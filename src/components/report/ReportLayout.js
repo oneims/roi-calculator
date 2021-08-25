@@ -66,7 +66,7 @@ class ReportLayout extends Component {
     axios
       .get(`${process.env.GATSBY_API_URL}/reports?record_uid=${id}`, {
         headers: {
-          Authorization: `Bearer ${process.env.JWT_SECRET}`,
+          Authorization: `Bearer ${process.env.GATSBY_JWT_SECRET}`,
         },
       })
       .then(res => {
@@ -142,7 +142,7 @@ class ReportLayout extends Component {
       .all([
         axios.post(`${process.env.GATSBY_API_URL}/emails`, emailData, {
           headers: {
-            Authorization: `Bearer ${process.env.JWT_SECRET}`,
+            Authorization: `Bearer ${process.env.GATSBY_JWT_SECRET}`,
           },
         }),
         axios.put(
@@ -150,7 +150,7 @@ class ReportLayout extends Component {
           data,
           {
             headers: {
-              Authorization: `Bearer ${process.env.JWT_SECRET}`,
+              Authorization: `Bearer ${process.env.GATSBY_JWT_SECRET}`,
             },
           }
         ),

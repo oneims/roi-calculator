@@ -353,7 +353,7 @@ class Onboarding extends Component {
     axios
       .post(`${process.env.GATSBY_API_URL}/reports`, reportData, {
         headers: {
-          Authorization: `Bearer ${process.env.JWT_SECRET}`,
+          Authorization: `Bearer ${process.env.GATSBY_JWT_SECRET}`,
         },
       })
       .then(res => {
