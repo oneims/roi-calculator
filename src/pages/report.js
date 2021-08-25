@@ -116,7 +116,11 @@ class Report extends Component {
     const timer = 150
 
     axios
-      .get(`${process.env.GATSBY_API_URL}/reports?record_uid=${id}`)
+      .get(`${process.env.GATSBY_API_URL}/reports?record_uid=${id}`, {
+        headers: {
+          Authorization: `Bearer ${process.env.JWT_SECRET}`,
+        },
+      })
       .then(res => {
         if (res.data.length > 0) {
           setTimeout(() => {

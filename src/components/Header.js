@@ -117,9 +117,9 @@ const Header = ({
                 </Link>
               </StyledLogoBox>
               <div className="d-sm-flex">
-                <Link to="/resources" className="d-none d-sm-inline mr-3">
+                {/* <Link to="/resources" className="d-none d-sm-inline mr-3">
                   <Button Tertiary>Resources</Button>
-                </Link>
+                </Link> */}
                 <Link to="/onboarding/step-one">
                   <Button>Get Started</Button>
                 </Link>

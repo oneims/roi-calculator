@@ -83,7 +83,11 @@ class Editor extends Component {
     const timer = 500
 
     axios
-      .get(`${process.env.GATSBY_API_URL}/reports?record_uid=${id}`)
+      .get(`${process.env.GATSBY_API_URL}/reports?record_uid=${id}`, {
+        headers: {
+          Authorization: `Bearer ${process.env.JWT_SECRET}`,
+        },
+      })
       .then(res => {
         if (res.data.length > 0) {
           const data = res.data[0]
@@ -198,7 +202,12 @@ class Editor extends Component {
     axios
       .put(
         `${process.env.GATSBY_API_URL}/reports/${this.state.strapiID}`,
-        reportData
+        reportData,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.JWT_SECRET}`,
+          },
+        }
       )
       .then(res => {
         this.pendingChangesStateChanger(false)

@@ -64,7 +64,11 @@ class ReportLayout extends Component {
       id: this.props.reportID,
     })
     axios
-      .get(`${process.env.GATSBY_API_URL}/reports?record_uid=${id}`)
+      .get(`${process.env.GATSBY_API_URL}/reports?record_uid=${id}`, {
+        headers: {
+          Authorization: `Bearer ${process.env.JWT_SECRET}`,
+        },
+      })
       .then(res => {
         if (res.data.length > 0) {
           const data = res.data[0]
@@ -136,10 +140,19 @@ class ReportLayout extends Component {
 
     axios
       .all([
-        axios.post(`${process.env.GATSBY_API_URL}/emails`, emailData),
+        axios.post(`${process.env.GATSBY_API_URL}/emails`, emailData, {
+          headers: {
+            Authorization: `Bearer ${process.env.JWT_SECRET}`,
+          },
+        }),
         axios.put(
           `${process.env.GATSBY_API_URL}/reports/${this.state.strapiID}`,
-          data
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.JWT_SECRET}`,
+            },
+          }
         ),
       ])
       .then(

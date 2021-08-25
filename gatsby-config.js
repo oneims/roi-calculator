@@ -11,7 +11,6 @@ module.exports = {
     `gatsby-plugin-sass`,
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-remark`,
-    `gatsby-plugin-no-index`,
     "gatsby-plugin-root-import",
     // SEO
     {

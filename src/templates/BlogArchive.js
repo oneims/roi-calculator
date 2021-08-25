@@ -37,6 +37,8 @@ const BlogArchive = ({
         title={title}
         description={description}
         canonical={seoURL}
+        noindex={true}
+        nofollow={true}
         openGraph={{
           url: seoURL,
           title: title,
