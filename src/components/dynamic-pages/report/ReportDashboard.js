@@ -604,7 +604,7 @@ class ReportDashboard extends Component {
                                       ) / months_to_reach_target
                                     )
                                   )
-                                : `few`}
+                                : `a few`}
                             </strong>{" "}
                             new customers every month. See how your monthly
                             funnel for{" "}
