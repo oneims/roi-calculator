@@ -693,9 +693,13 @@ class ReportDashboard extends Component {
                                     className="text-success"
                                     style={{ fontSize: "0.95rem" }}
                                   >
-                                    {numberWithCommas(elem[5].value) > 0
-                                      ? `+ ${numberWithCommas(elem[5].value)}`
-                                      : `No change`}
+                                    {elem[5].value > 0 ? (
+                                      `+ ${numberWithCommas(elem[5].value)}`
+                                    ) : (
+                                      <span className="text-secondary">
+                                        No Change
+                                      </span>
+                                    )}
                                   </StyledInfoText>
                                 </td>
                               </tr>
@@ -731,9 +735,13 @@ class ReportDashboard extends Component {
                                     className="text-success"
                                     style={{ fontSize: "0.95rem" }}
                                   >
-                                    {numberWithCommas(elem[5].value) > 0
-                                      ? `+ ${numberWithCommas(elem[5].value)}`
-                                      : `No Change`}
+                                    {elem[5].value > 0 ? (
+                                      `+ ${numberWithCommas(elem[5].value)}`
+                                    ) : (
+                                      <span className="text-secondary">
+                                        No Change
+                                      </span>
+                                    )}
                                   </StyledInfoText>
                                 </td>
                               </tr>
