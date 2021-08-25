@@ -23,7 +23,12 @@ import {
   StyledLoaderWrapper,
   SubHeading,
 } from "src/components/StyledElements"
-import { checkAllValid, convertMBtoInt, convertToInt } from "src/util/helpers"
+import {
+  checkAllValid,
+  convertMBtoInt,
+  convertToInt,
+  addMonthsToDate,
+} from "src/util/helpers"
 import { STATIC_Industries } from "src/util/STATIC_Data"
 
 const title = "Editor | ROI Calculator"
@@ -164,6 +169,7 @@ class ReportEditor extends Component {
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
+                                    allowNegative={false}
                                     placeholder="$"
                                     decimalScale={2}
                                     prefix={"$"}
@@ -264,6 +270,7 @@ class ReportEditor extends Component {
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
+                                    allowNegative={false}
                                     name="yoy_growth_rate"
                                     value={yoy_growth_rate}
                                     isAllowed={({ value }) => value <= 1000}
@@ -300,6 +307,7 @@ class ReportEditor extends Component {
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
+                                    allowNegative={false}
                                     decimalScale={2}
                                     placeholder="$"
                                     prefix={"$"}
@@ -379,9 +387,14 @@ class ReportEditor extends Component {
                                 {this.validator.message(
                                   "revenue_growth_goal",
                                   convertMBtoInt(revenue_growth_goal),
-                                  `required|min:${convertMBtoInt(
-                                    current_annual_revenue
-                                  )},num`,
+                                  `required|min:${
+                                    Number(
+                                      convertMBtoInt(current_annual_revenue)
+                                    )
+                                      ? convertMBtoInt(current_annual_revenue) +
+                                        1
+                                      : 1
+                                  },num`,
                                   { className: "validation-error" }
                                 )}
                               </StyledField>
@@ -409,7 +422,7 @@ class ReportEditor extends Component {
                                       "target_date_to_reach_revenue"
                                     )
                                   }
-                                  minDate={new Date()}
+                                  minDate={addMonthsToDate(2)}
                                   dateFormat="MM/yyyy"
                                   showMonthYearPicker
                                 />
@@ -440,6 +453,7 @@ class ReportEditor extends Component {
                                   <NumberFormat
                                     thousandSeparator={true}
                                     decimalSeparator={false}
+                                    allowNegative={false}
                                     placeholder="$"
                                     prefix={"$"}
                                     name="average_revenue_per_customer"
@@ -478,6 +492,7 @@ class ReportEditor extends Component {
                                     suffix={"%"}
                                     placeholder="%"
                                     name="gross_margin_per_sale"
+                                    allowNegative={false}
                                     decimalSeparator={false}
                                     value={gross_margin_per_sale}
                                     isAllowed={({ value }) => value <= 1000}
@@ -515,6 +530,7 @@ class ReportEditor extends Component {
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
+                                    allowNegative={false}
                                     name="average_conversion_rate_on_meetings_to_opportunities"
                                     isAllowed={({ value }) => value <= 100}
                                     decimalSeparator={false}
@@ -557,6 +573,7 @@ class ReportEditor extends Component {
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
+                                    allowNegative={false}
                                     decimalSeparator={false}
                                     isAllowed={({ value }) => value <= 100}
                                     name="average_close_ratio_from_opportunities_to_deals"
@@ -610,6 +627,7 @@ class ReportEditor extends Component {
                                     }
                                     name="estimated_sales_cycle"
                                     value={estimated_sales_cycle}
+                                    allowNegative={false}
                                     decimalSeparator={false}
                                     isAllowed={({ value }) => value <= 100}
                                     onChange={e => {
@@ -696,6 +714,7 @@ class ReportEditor extends Component {
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
+                                    allowNegative={false}
                                     placeholder=""
                                     decimalSeparator={false}
                                     name="average_monthly_website_traffic"
@@ -712,8 +731,8 @@ class ReportEditor extends Component {
                                 </StyledInput>
                                 {this.validator.message(
                                   "average_monthly_website_traffic",
-                                  average_monthly_website_traffic,
-                                  "required",
+                                  convertToInt(average_monthly_website_traffic),
+                                  "required|min:100,num",
                                   { className: "validation-error" }
                                 )}
                               </StyledField>
@@ -730,6 +749,7 @@ class ReportEditor extends Component {
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
+                                    allowNegative={false}
                                     name="average_monthly_leads_from_website"
                                     value={average_monthly_leads_from_website}
                                     decimalSeparator={false}
@@ -745,8 +765,10 @@ class ReportEditor extends Component {
                                 </StyledInput>
                                 {this.validator.message(
                                   "average_monthly_leads_from_website",
-                                  average_monthly_leads_from_website,
-                                  "required",
+                                  convertToInt(
+                                    average_monthly_leads_from_website
+                                  ),
+                                  "required|min:1,num",
                                   { className: "validation-error" }
                                 )}
                               </StyledField>
@@ -766,6 +788,7 @@ class ReportEditor extends Component {
                                 <StyledInput>
                                   <NumberFormat
                                     thousandSeparator={true}
+                                    allowNegative={false}
                                     name="average_monthly_leads_from_all_other_sources"
                                     value={
                                       average_monthly_leads_from_all_other_sources
@@ -802,6 +825,7 @@ class ReportEditor extends Component {
                                   <NumberFormat
                                     suffix={"%"}
                                     placeholder="%"
+                                    allowNegative={false}
                                     name="percentage_of_qualified_leads"
                                     value={percentage_of_qualified_leads}
                                     decimalSeparator={false}
@@ -840,6 +864,7 @@ class ReportEditor extends Component {
                                   <NumberFormat
                                     thousandSeparator={true}
                                     placeholder="$"
+                                    allowNegative={false}
                                     prefix={"$"}
                                     name="current_annual_marketing_budget"
                                     value={current_annual_marketing_budget}
@@ -880,6 +905,7 @@ class ReportEditor extends Component {
                                     name="percentage_of_marketing_budget_spent_on_online_advertisement"
                                     suffix={"%"}
                                     placeholder="%"
+                                    allowNegative={false}
                                     isAllowed={({ value }) => value <= 100}
                                     value={
                                       percentage_of_marketing_budget_spent_on_online_advertisement

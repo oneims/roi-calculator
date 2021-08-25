@@ -128,6 +128,7 @@ class StepTwo extends Component {
                         <NumberFormat
                           thousandSeparator={true}
                           decimalSeparator={false}
+                          allowNegative={false}
                           placeholder="$"
                           prefix={"$"}
                           name="average_revenue_per_customer"
@@ -162,6 +163,7 @@ class StepTwo extends Component {
                           placeholder="%"
                           name="gross_margin_per_sale"
                           decimalSeparator={false}
+                          allowNegative={false}
                           value={gross_margin_per_sale}
                           isAllowed={({ value }) => value <= 1000}
                           onChange={e => {
@@ -197,6 +199,7 @@ class StepTwo extends Component {
                       <StyledInput>
                         <NumberFormat
                           suffix={"%"}
+                          allowNegative={false}
                           placeholder="%"
                           name="average_conversion_rate_on_meetings_to_opportunities"
                           isAllowed={({ value }) => value <= 100}
@@ -237,6 +240,7 @@ class StepTwo extends Component {
                         <NumberFormat
                           suffix={"%"}
                           placeholder="%"
+                          allowNegative={false}
                           decimalSeparator={false}
                           isAllowed={({ value }) => value <= 100}
                           name="average_close_ratio_from_opportunities_to_deals"
@@ -286,9 +290,17 @@ class StepTwo extends Component {
                           }
                           name="estimated_sales_cycle"
                           value={estimated_sales_cycle}
+                          allowNegative={false}
                           decimalSeparator={false}
                           isAllowed={({ value }) => value <= 100}
-                          onChange={handleChange}
+                          onChange={e => {
+                            handleChange(e)
+                            checkAllValid(
+                              this.validator,
+                              "estimated_sales_cycle",
+                              this.props.stepTwoValidator
+                            )
+                          }}
                         />
                         <StyledChoiceWrapper>
                           <StyledChoiceColumn>
@@ -329,6 +341,12 @@ class StepTwo extends Component {
                           </StyledChoiceColumn>
                         </StyledChoiceWrapper>
                       </StyledInput>
+                      {this.validator.message(
+                        "estimated_sales_cycle",
+                        convertToInt(estimated_sales_cycle),
+                        "required|between:1,100,num",
+                        { className: "validation-error" }
+                      )}
                     </StyledField>
                   </StyledFieldWrapper>
                 </StyledFormWrapper>

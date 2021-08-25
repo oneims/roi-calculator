@@ -16,9 +16,16 @@ const ReportImpactCards = props => {
       <Col lg="6" xl="4" className="mb-3">
         <ContentCard style={{ backgroundColor: "#f5f6f9" }}>
           <div className="text-center">
-            <StyledContentCardSpotlight Gradient>
-              + ${numberWithCommas(data.cr_increase[5].value)}
-            </StyledContentCardSpotlight>
+            {data.cr_increase[5].value > 0 ? (
+              <StyledContentCardSpotlight Gradient>
+                + ${numberWithCommas(data.cr_increase[5].value)}
+              </StyledContentCardSpotlight>
+            ) : (
+              <StyledContentCardSpotlight className="text-secondary">
+                No Change
+              </StyledContentCardSpotlight>
+            )}
+
             <StyledInfoText>With 1% Increase in Conversion Rate</StyledInfoText>
           </div>
         </ContentCard>
@@ -26,9 +33,15 @@ const ReportImpactCards = props => {
       <Col lg="6" xl="4" className="mb-3">
         <ContentCard style={{ backgroundColor: "#f5f6f9" }}>
           <div className="text-center">
-            <StyledContentCardSpotlight Gradient>
-              + ${numberWithCommas(data.traffic_increase[5].value)}
-            </StyledContentCardSpotlight>
+            {data.traffic_increase[5].value > 0 ? (
+              <StyledContentCardSpotlight Gradient>
+                + ${numberWithCommas(data.traffic_increase[5].value)}
+              </StyledContentCardSpotlight>
+            ) : (
+              <StyledContentCardSpotlight className="text-secondary">
+                No Change
+              </StyledContentCardSpotlight>
+            )}
             <StyledInfoText>
               With 30% increase in Website Traffic
             </StyledInfoText>
@@ -38,9 +51,15 @@ const ReportImpactCards = props => {
       <Col lg="6" xl="4" className="mb-3">
         <ContentCard style={{ backgroundColor: "#f5f6f9" }}>
           <div className="text-center">
-            <StyledContentCardSpotlight Gradient>
-              + ${numberWithCommas(data.cr_and_traffic_increase[5].value)}
-            </StyledContentCardSpotlight>
+            {data.cr_and_traffic_increase[5].value > 0 ? (
+              <StyledContentCardSpotlight Gradient>
+                + ${numberWithCommas(data.cr_and_traffic_increase[5].value)}
+              </StyledContentCardSpotlight>
+            ) : (
+              <StyledContentCardSpotlight className="text-secondary">
+                No Change
+              </StyledContentCardSpotlight>
+            )}
             <StyledInfoText>
               With 1% Increase in Conversion Rate & 30% in Website Traffic
             </StyledInfoText>

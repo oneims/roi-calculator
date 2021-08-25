@@ -27,6 +27,12 @@ export const generateToken = length => {
   return b.join("")
 }
 
+export const addMonthsToDate = n => {
+  const date = new Date()
+  const newDate = new Date(date.setMonth(date.getMonth() + n))
+  return newDate
+}
+
 export const capitalizeFirstLetter = string => {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }

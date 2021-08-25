@@ -16,7 +16,7 @@ import {
   StyledLoaderWrapper,
 } from "src/components/StyledElements"
 // Helpers
-import { generateToken } from "src/util/helpers"
+import { generateToken, addMonthsToDate } from "src/util/helpers"
 
 class Onboarding extends Component {
   state = {
@@ -54,7 +54,7 @@ class Onboarding extends Component {
       typeof window !== "undefined" &&
       window.localStorage.getItem("target_date_to_reach_revenue")
         ? JSON.parse(localStorage.target_date_to_reach_revenue)
-        : new Date(),
+        : addMonthsToDate(2),
     // Step Two
     average_revenue_per_customer:
       typeof window !== "undefined" &&

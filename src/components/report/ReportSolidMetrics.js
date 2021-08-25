@@ -40,7 +40,7 @@ const ReportSolidMetrics = ({
             </StyledSidebarMenuIcon>
             <div>
               <StyledContentCardLabel>Conversion Rate</StyledContentCardLabel>
-              <StyledContentCardSpotlight Gradient>
+              <StyledContentCardSpotlight Gradient Trim>
                 {conversion_rate}%
               </StyledContentCardSpotlight>
             </div>
@@ -65,7 +65,7 @@ const ReportSolidMetrics = ({
               <StyledContentCardLabel>
                 Average Qualified Leads
               </StyledContentCardLabel>
-              <StyledContentCardSpotlight Gradient>
+              <StyledContentCardSpotlight Gradient Trim>
                 {average_qualified_leads_per_month}
               </StyledContentCardSpotlight>
             </div>
@@ -91,7 +91,7 @@ const ReportSolidMetrics = ({
               <StyledContentCardLabel>
                 Average New Customers
               </StyledContentCardLabel>
-              <StyledContentCardSpotlight Gradient>
+              <StyledContentCardSpotlight Gradient Trim>
                 {Math.floor(average_new_customers_per_month)}
               </StyledContentCardSpotlight>
             </div>
@@ -117,7 +117,7 @@ const ReportSolidMetrics = ({
               <StyledContentCardLabel>
                 Marketing Investment
               </StyledContentCardLabel>
-              <StyledContentCardSpotlight Gradient>
+              <StyledContentCardSpotlight Gradient Trim>
                 $
                 {numberWithCommas(
                   Number(average_monthly_online_marketing_investment)
@@ -146,8 +146,10 @@ const ReportSolidMetrics = ({
               <StyledContentCardLabel>
                 Average Cost Per Lead
               </StyledContentCardLabel>
-              <StyledContentCardSpotlight Gradient>
-                ${numberWithCommas(Number(average_cost_per_lead))}
+              <StyledContentCardSpotlight Gradient Trim>
+                {average_cost_per_lead > 0
+                  ? `${numberWithCommas(Number(average_cost_per_lead))}`
+                  : `0`}
               </StyledContentCardSpotlight>
             </div>
           </div>
@@ -170,7 +172,7 @@ const ReportSolidMetrics = ({
             </StyledSidebarMenuIcon>
             <div>
               <StyledContentCardLabel>Cost Per Customer</StyledContentCardLabel>
-              <StyledContentCardSpotlight Gradient>
+              <StyledContentCardSpotlight Gradient Trim>
                 ${numberWithCommas(Number(cost_per_customer_acquisition))}
               </StyledContentCardSpotlight>
             </div>
@@ -196,7 +198,7 @@ const ReportSolidMetrics = ({
               <StyledContentCardLabel>
                 Customers to Reach Goal
               </StyledContentCardLabel>
-              <StyledContentCardSpotlight Gradient>
+              <StyledContentCardSpotlight Gradient Trim>
                 {numberWithCommas(
                   Math.floor(Number(customers_needed_for_revenue_target))
                 )}
@@ -222,7 +224,7 @@ const ReportSolidMetrics = ({
             </StyledSidebarMenuIcon>
             <div>
               <StyledContentCardLabel>Monthly Revenue</StyledContentCardLabel>
-              <StyledContentCardSpotlight Gradient>
+              <StyledContentCardSpotlight Gradient Trim>
                 {numberWithCommas(Math.floor(Number(net_new_revenue)))}
               </StyledContentCardSpotlight>
             </div>
@@ -246,7 +248,7 @@ const ReportSolidMetrics = ({
             </StyledSidebarMenuIcon>
             <div>
               <StyledContentCardLabel>Expected Revenue</StyledContentCardLabel>
-              <StyledContentCardSpotlight Gradient>
+              <StyledContentCardSpotlight Gradient Trim>
                 $
                 {numberWithCommas(
                   Math.floor(net_new_revenue * months_to_reach_target)

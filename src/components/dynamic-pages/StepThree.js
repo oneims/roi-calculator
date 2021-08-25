@@ -123,6 +123,7 @@ class StepThree extends Component {
                       <StyledInput>
                         <NumberFormat
                           thousandSeparator={true}
+                          allowNegative={false}
                           placeholder=""
                           decimalSeparator={false}
                           name="average_monthly_website_traffic"
@@ -139,8 +140,8 @@ class StepThree extends Component {
                       </StyledInput>
                       {this.validator.message(
                         "average_monthly_website_traffic",
-                        average_monthly_website_traffic,
-                        "required",
+                        convertToInt(average_monthly_website_traffic),
+                        "required|min:100,num",
                         { className: "validation-error" }
                       )}
                     </StyledField>
@@ -155,6 +156,7 @@ class StepThree extends Component {
                       <StyledInput>
                         <NumberFormat
                           thousandSeparator={true}
+                          allowNegative={false}
                           name="average_monthly_leads_from_website"
                           value={average_monthly_leads_from_website}
                           decimalSeparator={false}
@@ -170,8 +172,8 @@ class StepThree extends Component {
                       </StyledInput>
                       {this.validator.message(
                         "average_monthly_leads_from_website",
-                        average_monthly_leads_from_website,
-                        "required",
+                        convertToInt(average_monthly_leads_from_website),
+                        "required|min:1,num",
                         { className: "validation-error" }
                       )}
                     </StyledField>
@@ -191,6 +193,7 @@ class StepThree extends Component {
                       <StyledInput>
                         <NumberFormat
                           thousandSeparator={true}
+                          allowNegative={false}
                           name="average_monthly_leads_from_all_other_sources"
                           value={average_monthly_leads_from_all_other_sources}
                           decimalSeparator={false}
@@ -224,6 +227,7 @@ class StepThree extends Component {
                       <StyledInput>
                         <NumberFormat
                           suffix={"%"}
+                          allowNegative={false}
                           placeholder="%"
                           name="percentage_of_qualified_leads"
                           value={percentage_of_qualified_leads}
@@ -260,6 +264,7 @@ class StepThree extends Component {
                       <StyledInput>
                         <NumberFormat
                           thousandSeparator={true}
+                          allowNegative={false}
                           placeholder="$"
                           prefix={"$"}
                           name="current_annual_marketing_budget"
@@ -300,6 +305,7 @@ class StepThree extends Component {
                         <NumberFormat
                           name="percentage_of_marketing_budget_spent_on_online_advertisement"
                           suffix={"%"}
+                          allowNegative={false}
                           placeholder="%"
                           isAllowed={({ value }) => value <= 100}
                           value={

@@ -273,6 +273,15 @@ export const StyledContentCardSpotlight = styled.span`
           -webkit-box-decoration-break: clone;
         `
       : ""}
+  ${props =>
+    props.Trim
+      ? css`
+          max-width: 232px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        `
+      : ``}
 `
 
 // Progress Bar

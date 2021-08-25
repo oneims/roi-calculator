@@ -24,7 +24,12 @@ import {
   StyledInput,
   Subtitle,
 } from "src/components/StyledElements"
-import { checkAllValid, convertMBtoInt, convertToInt } from "src/util/helpers"
+import {
+  checkAllValid,
+  convertMBtoInt,
+  convertToInt,
+  addMonthsToDate,
+} from "src/util/helpers"
 import { STATIC_Industries } from "src/util/STATIC_Data"
 
 const title = "Onboarding - Step One | ROI Calculator"
@@ -145,6 +150,7 @@ class StepOne extends Component {
                       </StyledInfoText>
                       <StyledInput>
                         <NumberFormat
+                          allowNegative={false}
                           thousandSeparator={true}
                           placeholder="$"
                           decimalScale={2}
@@ -240,6 +246,7 @@ class StepOne extends Component {
                       <StyledInput>
                         <NumberFormat
                           suffix={"%"}
+                          allowNegative={false}
                           placeholder="%"
                           name="yoy_growth_rate"
                           value={yoy_growth_rate}
@@ -272,6 +279,7 @@ class StepOne extends Component {
                       <StyledInput>
                         <NumberFormat
                           thousandSeparator={true}
+                          allowNegative={false}
                           decimalScale={2}
                           placeholder="$"
                           prefix={"$"}
@@ -347,9 +355,11 @@ class StepOne extends Component {
                       {this.validator.message(
                         "revenue_growth_goal",
                         convertMBtoInt(revenue_growth_goal),
-                        `required|min:${convertMBtoInt(
-                          current_annual_revenue
-                        )},num`,
+                        `required|min:${
+                          Number(convertMBtoInt(current_annual_revenue))
+                            ? convertMBtoInt(current_annual_revenue) + 1
+                            : 1
+                        },num`,
                         { className: "validation-error" }
                       )}
                     </StyledField>
@@ -372,7 +382,7 @@ class StepOne extends Component {
                         onChange={date =>
                           handleDateChange(date, "target_date_to_reach_revenue")
                         }
-                        minDate={new Date()}
+                        minDate={addMonthsToDate(2)}
                         dateFormat="MM/yyyy"
                         showMonthYearPicker
                       />
