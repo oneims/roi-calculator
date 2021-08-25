@@ -595,16 +595,13 @@ class ReportDashboard extends Component {
                             reach your target revenue of{" "}
                             <strong>{revenue_growth_goal}</strong>. That's about{" "}
                             <strong>
-                              {Math.floor(customers_needed_for_revenue_target) >
-                              0
-                                ? numberWithCommas(
-                                    Math.floor(
-                                      Math.floor(
-                                        customers_needed_for_revenue_target
-                                      ) / months_to_reach_target
-                                    )
-                                  )
-                                : `a few`}
+                              {numberWithCommas(
+                                Math.floor(
+                                  Math.floor(
+                                    customers_needed_for_revenue_target
+                                  ) / months_to_reach_target
+                                )
+                              )}
                             </strong>{" "}
                             new customers every month. See how your monthly
                             funnel for{" "}
@@ -630,13 +627,17 @@ class ReportDashboard extends Component {
                             reach your target revenue of{" "}
                             <strong>{revenue_growth_goal}</strong>. That's about{" "}
                             <strong>
-                              {numberWithCommas(
-                                Math.floor(
-                                  Math.floor(
-                                    customers_needed_for_revenue_target
-                                  ) / months_to_reach_target
-                                )
-                              )}
+                              {customers_needed_for_revenue_target /
+                                months_to_reach_target >
+                              1
+                                ? numberWithCommas(
+                                    Math.floor(
+                                      Math.floor(
+                                        customers_needed_for_revenue_target
+                                      ) / months_to_reach_target
+                                    )
+                                  )
+                                : "a few"}
                             </strong>{" "}
                             new customers every month. You're already acquiring{" "}
                             <strong>
