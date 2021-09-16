@@ -114,73 +114,75 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
               </ArticleWrapper>
             </Container>
           </Section>
-          <Section Small style={relatedArticlesStyles}>
-            <Container>
-              <ContentBox className="mw-600 ml-auto mr-auto text-center">
-                <h2 style={{ fontSize: "2.25rem" }}>Explore More</h2>
-                <p>View more articles from our catalog</p>
-              </ContentBox>
-            </Container>
-            <Container className="mt-4 pt-4">
-              <Row>
-                {relatedArticles.map(post => {
-                  const title = post.title
-                  const featuredImage = {
-                    fluid:
-                      post.featuredImage?.node?.localFile?.childImageSharp
-                        ?.fluid,
-                    alt: post.featuredImage?.node?.alt || title,
-                  }
-                  const excerpt =
-                    post.excerpt
-                      .replace(/(<([^>]+)>)/gi, "")
-                      .substring(0, 120) + "..."
-                  return (
-                    <Col md="6" lg="4" key={post.uri} className="mb-4">
-                      <Link to={post.uri} className="no-styles">
-                        <ArticleCard
-                          itemScope
-                          itemType="http://schema.org/Article"
-                        >
-                          <ArticleCardTop>
-                            {featuredImage.fluid && (
-                              <Img
-                                className=""
-                                fluid={featuredImage.fluid}
-                                alt={featuredImage.alt}
-                              />
-                            )}
-                          </ArticleCardTop>
-                          <ArticleCardBottom>
-                            <ContentBox className="mb-3">
-                              <Link to={post.uri}>
-                                <ArticleCardTitle>
-                                  {parse(title)}
-                                </ArticleCardTitle>
-                              </Link>
-                              <ArticleCardMeta className="mt-2 mb-2 d-block">
-                                <p>{post.date}</p>
-                              </ArticleCardMeta>
-                            </ContentBox>
-                            <ContentBox>
-                              <ArticleCardDesc>
-                                {parse(excerpt)}
-                              </ArticleCardDesc>
-                            </ContentBox>
-                            <ContentBox className="mt-3">
-                              <ArticleCardLink>
-                                <Link to={post.uri}>Read More</Link>
-                              </ArticleCardLink>
-                            </ContentBox>
-                          </ArticleCardBottom>
-                        </ArticleCard>
-                      </Link>
-                    </Col>
-                  )
-                })}
-              </Row>
-            </Container>
-          </Section>
+          {relatedArticles.length > 3 && (
+            <Section Small style={relatedArticlesStyles}>
+              <Container>
+                <ContentBox className="mw-600 ml-auto mr-auto text-center">
+                  <h2 style={{ fontSize: "2.25rem" }}>Explore More</h2>
+                  <p>View more articles from our catalog</p>
+                </ContentBox>
+              </Container>
+              <Container className="mt-4 pt-4">
+                <Row>
+                  {relatedArticles.map(post => {
+                    const title = post.title
+                    const featuredImage = {
+                      fluid:
+                        post.featuredImage?.node?.localFile?.childImageSharp
+                          ?.fluid,
+                      alt: post.featuredImage?.node?.alt || title,
+                    }
+                    const excerpt =
+                      post.excerpt
+                        .replace(/(<([^>]+)>)/gi, "")
+                        .substring(0, 120) + "..."
+                    return (
+                      <Col md="6" lg="4" key={post.uri} className="mb-4">
+                        <Link to={post.uri} className="no-styles">
+                          <ArticleCard
+                            itemScope
+                            itemType="http://schema.org/Article"
+                          >
+                            <ArticleCardTop>
+                              {featuredImage.fluid && (
+                                <Img
+                                  className=""
+                                  fluid={featuredImage.fluid}
+                                  alt={featuredImage.alt}
+                                />
+                              )}
+                            </ArticleCardTop>
+                            <ArticleCardBottom>
+                              <ContentBox className="mb-3">
+                                <Link to={post.uri}>
+                                  <ArticleCardTitle>
+                                    {parse(title)}
+                                  </ArticleCardTitle>
+                                </Link>
+                                <ArticleCardMeta className="mt-2 mb-2 d-block">
+                                  <p>{post.date}</p>
+                                </ArticleCardMeta>
+                              </ContentBox>
+                              <ContentBox>
+                                <ArticleCardDesc>
+                                  {parse(excerpt)}
+                                </ArticleCardDesc>
+                              </ContentBox>
+                              <ContentBox className="mt-3">
+                                <ArticleCardLink>
+                                  <Link to={post.uri}>Read More</Link>
+                                </ArticleCardLink>
+                              </ContentBox>
+                            </ArticleCardBottom>
+                          </ArticleCard>
+                        </Link>
+                      </Col>
+                    )
+                  })}
+                </Row>
+              </Container>
+            </Section>
+          )}
         </>
       )}
     </Layout>

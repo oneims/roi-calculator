@@ -3,6 +3,7 @@ module.exports = {
     title: `ROI Calculator`,
     description: ``,
     author: `Paras Bokhari`,
+    siteUrl: `https://roicalculator.ai`,
   },
   plugins: [
     `gatsby-transformer-sharp`,
@@ -11,7 +12,23 @@ module.exports = {
     `gatsby-plugin-sass`,
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-remark`,
-    "gatsby-plugin-root-import",
+    `gatsby-plugin-root-import`,
+    // Sitemap
+    {
+      resolve: `gatsby-plugin-advanced-sitemap`,
+      options: {
+        exclude: [
+          `/404`,
+          `/404.html`,
+          `/offline-plugin-app-shell-fallback`,
+          "/report/",
+          "/editor/",
+          "/onboarding/",
+        ],
+        createLinkInHead: true, // optional: create a link in the `<head>` of your site
+        addUncaughtPages: true, // optional: will fill up pages that are not caught by queries and mapping and list them under `sitemap-pages.xml`
+      },
+    },
     // SEO
     {
       resolve: "gatsby-plugin-next-seo",
