@@ -37,8 +37,6 @@ const BlogArchive = ({
         title={title}
         description={description}
         canonical={seoURL}
-        noindex={true}
-        nofollow={true}
         openGraph={{
           url: seoURL,
           title: title,
@@ -93,7 +91,7 @@ const BlogArchive = ({
             <Subtitle>Explore financial articles below</Subtitle>
           </ContentBox>
         </Container>
-        <Container className="mt-4 pt-4">
+        <Container className={`mt-4 pt-4 ${posts.length < 2 && `mw-500`}`}>
           <Row>
             {posts.map(post => {
               const title = post.title
@@ -105,8 +103,14 @@ const BlogArchive = ({
               const excerpt =
                 post.excerpt.replace(/(<([^>]+)>)/gi, "").substring(0, 120) +
                 "..."
+              const postsLength = posts.length
               return (
-                <Col md="6" lg="4" key={post.uri} className="mb-4">
+                <Col
+                  md={postsLength > 2 ? `6` : `12`}
+                  lg={postsLength > 2 ? `4` : `12`}
+                  key={post.uri}
+                  className="mb-4"
+                >
                   <Link to={post.uri} className="no-styles">
                     <ArticleCard itemScope itemType="http://schema.org/Article">
                       <ArticleCardTop>

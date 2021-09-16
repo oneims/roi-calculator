@@ -44,8 +44,6 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
             title={seoMeta.title}
             description={seoMeta.metaDesc}
             canonical={seoMeta.canonical}
-            noindex={true}
-            nofollow={true}
             openGraph={{
               url: seoMeta.opengraphUrl,
               title: seoMeta.opengraphTitle,

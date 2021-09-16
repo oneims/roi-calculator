@@ -37,6 +37,15 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/onboarding/*`, `/report/*`, `/editor/*`] },
     },
+    // Robots
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        host: "https://roicalculator.ai",
+        sitemap: "https://roicalculator.ai/sitemap.xml",
+        policy: [{ userAgent: "*", allow: "/" }],
+      },
+    },
     // Netlify
     {
       resolve: `gatsby-plugin-netlify`,
