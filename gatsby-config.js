@@ -39,6 +39,7 @@ module.exports = {
           url: "https://roicalculator.ai",
           site_name: "ROI Calculator",
         },
+        language: "en",
       },
     },
     // Wordpress
