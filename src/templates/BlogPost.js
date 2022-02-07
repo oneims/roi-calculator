@@ -36,6 +36,11 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
     alt: post.featuredImage?.node?.alt || ``,
   }
 
+  const currentURL =
+    typeof window !== "undefined"
+      ? window.location.href.replace(/\/+$/, "")
+      : ""
+
   return (
     <Layout>
       {!!post.content && (
@@ -43,7 +48,7 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
           <GatsbySeo
             title={seoMeta.title}
             description={seoMeta.metaDesc}
-            canonical={seoMeta.canonical}
+            canonical={seoMeta.canonical ? seoMeta.canonical : currentURL}
             openGraph={{
               url: seoMeta.opengraphUrl,
               title: seoMeta.opengraphTitle,
@@ -68,7 +73,7 @@ const BlogPost = ({ data: { post, relatedArticles } }) => {
           />
 
           <ArticleJsonLd
-            url="https://example.com/article"
+            url={currentURL}
             headline={post.title}
             images={[featuredImage.fluid.src]}
             datePublished={seoMeta.opengraphPublishedTime}
